@@ -326,11 +326,10 @@ body {
   text-overflow: ellipsis;
 }
 .item-title-link:hover { color: var(--accent-light); text-decoration: underline; }
-.item-actions { display: flex; gap: 8px; margin-top: 6px; }
 .action-link {
-  font-size: 11px;
-  padding: 2px 10px;
-  border-radius: 10px;
+  font-size: 10px;
+  padding: 1px 8px;
+  border-radius: 8px;
   text-decoration: none;
   transition: all 0.15s;
   white-space: nowrap;
@@ -776,6 +775,7 @@ function renderItems(items) {
     const scoreClass = item.score_total >= 9 ? 'score-high' : item.score_total >= 7 ? 'score-mid' : 'score-low';
     const bmActive = isBookmarked(item) ? ' bm-active' : '';
     const bmIcon = isBookmarked(item) ? '★' : '☆';
+    const briefAnchor = 'brief-' + item.brief_date + '.html#article-' + item.brief_date + '_' + item.number;
     return `<tr>
       <td class="bm-cell"><button class="bm-btn${bmActive}" data-idx="${idx}" title="ブックマーク">${bmIcon}</button></td>
       <td><span class="cat-badge ${catClass}">${catEmoji} ${item.category}</span></td>
@@ -783,18 +783,16 @@ function renderItems(items) {
       <td class="title-cell">
         ${item.url ? '<a href="' + item.url + '" target="_blank" rel="noopener" class="item-title-link">' + item.title + '</a>' : '<span class="item-title">' + item.title + '</span>'}
         ${item.summary ? '<div class="item-summary">' + item.summary.slice(0,120) + '...</div>' : ''}
-        <div class="item-actions">
-          <a href="brief-${item.brief_date}.html" class="action-link action-brief">ブリーフ詳細</a>
-        </div>
       </td>
       <td><span class="source-badge">${item.source_type || '—'}</span></td>
       <td class="date-cell">${item.date}</td>
-      <td><a href="brief-${item.brief_date}.html" class="brief-link">${item.brief_date}</a></td>
+      <td><a href="${briefAnchor}" class="brief-link">${item.brief_date}</a></td>
       <td class="meta-mobile">
         <span class="cat-badge ${catClass}">${catEmoji} ${item.category}</span>
         <span class="score-badge ${scoreClass}">${item.score_total}点</span>
         <span class="source-badge">${item.source_type || '—'}</span>
         <span class="date-cell">${item.date}</span>
+        <a href="${briefAnchor}" class="action-link action-brief">詳細</a>
       </td>
     </tr>`;
   }).join('');
