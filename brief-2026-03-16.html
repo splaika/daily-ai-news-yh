@@ -316,6 +316,16 @@ body {
 .brief-link:hover { text-decoration: underline; }
 .meta-mobile { display: none; }
 .item-title { color: var(--text); font-weight: 500; font-size: 13px; }
+.item-title-link {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 13px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.item-title-link:hover { color: var(--accent-light); text-decoration: underline; }
 .item-actions { display: flex; gap: 8px; margin-top: 6px; }
 .action-link {
   font-size: 11px;
@@ -325,12 +335,6 @@ body {
   transition: all 0.15s;
   white-space: nowrap;
 }
-.action-article {
-  background: rgba(108,123,247,0.15);
-  color: var(--accent-light);
-  border: 1px solid rgba(108,123,247,0.3);
-}
-.action-article:hover { background: rgba(108,123,247,0.3); }
 .action-brief {
   background: rgba(139,143,163,0.1);
   color: var(--text-dim);
@@ -486,7 +490,8 @@ body {
     flex: 1;
     min-width: 0;
   }
-  .items-table td.title-cell .item-title { white-space: normal; font-size: 14px; }
+  .items-table td.title-cell .item-title,
+  .items-table td.title-cell .item-title-link { white-space: normal; font-size: 14px; }
   /* Meta row below title */
   .items-table td.meta-mobile {
     display: flex;
@@ -577,7 +582,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-03-12</span>
-          <span class="source-badge">海外メディア</span>
+          <span class="source-badge">Healthcare-brew</span>
           <span class="score-detail">📌 A3 B3 C1 D3</span>
         </div>
         <div class="article-section"><strong>要点:</strong> Microsoftが個人の健康データ（ウェアラブル、EHR、検査結果）を統合・分析するCopilot Healthを発表しました。50,000以上の米国医療機関からのデータ連携に対応し、OpenAI ChatGPT Health、Anthropic Claude for Healthcareと直接競合します。</div>
@@ -593,7 +598,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-03-12</span>
-          <span class="source-badge">海外メディア</span>
+          <span class="source-badge">The Next Web</span>
           <span class="score-detail">📌 A2 B3 C1 D3</span>
         </div>
         <div class="article-section"><strong>要点:</strong> Anthropicが$100Mのパートナーネットワークを立ち上げ、Accenture（3万人研修）、Deloitte、Cognizant（35万人にClaudeアクセス）、Infosysが参画しました。コンサル・SIerへのClaude導入が組織的に進みます。</div>
@@ -609,7 +614,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-01-14</span>
-          <span class="source-badge">海外メディア</span>
+          <span class="source-badge">EMA</span>
           <span class="score-detail">📌 A3 B2 C3 D3</span>
         </div>
         <div class="article-section"><strong>要点:</strong> FDAとEMAが共同で「Guiding Principles of Good AI Practice in Drug Development」10原則を発行しました。現時点では非拘束ですが、将来の規制要件の基盤となります。</div>
@@ -625,7 +630,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-01-08</span>
-          <span class="source-badge">海外メディア</span>
+          <span class="source-badge">BCG</span>
           <span class="score-detail">📌 A3 B3 C1 D3</span>
         </div>
         <div class="article-section"><strong>要点:</strong> BCGとHippocratic AIがバイオ製薬・メドテック向けエージェンティックAI展開で戦略的提携を発表しました。Hippocratic AIはGrove AIを買収し、治験オペレーション自動化で1,000万件以上の患者インタラクションを実現しています。</div>
@@ -641,7 +646,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">海外メディア</span>
+          <span class="source-badge">Iliomad Health Data</span>
           <span class="score-detail">📌 A3 B2 C3 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> EU AI Actの高リスクAI規定が2026年8月2日に施行されます。医療アクセス、トリアージ、臨床意思決定支援などのAIシステムが高リスクに分類され、違反時は最大€35Mまたはグローバル売上高7%の罰金が課されます。一方、創薬R&D目的のAIは適用除外です。</div>
@@ -657,7 +662,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-01</span>
-          <span class="source-badge">海外メディア</span>
+          <span class="source-badge">Drug Target Review</span>
           <span class="score-detail">📌 A3 B1 C1 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> フランスのAI創薬企業IktosがServierとの間で潜在的総額€12億超のAI創薬コラボレーション契約を締結しました。AI創薬分野の商業的価値が具体的な金額で示された象徴的なディールです。</div>
@@ -673,7 +678,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">国内メディア</span>
+          <span class="source-badge">PharmaI Lab</span>
           <span class="score-detail">📌 A3 B3 C1 D3</span>
         </div>
         <div class="article-section"><strong>要点:</strong> 第一三共がAWSと協働し、AIエージェント統合型の創薬プラットフォーム構築プロジェクトを開始しました。2026年中の運用開始を目指しています。</div>
@@ -689,7 +694,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026</span>
-          <span class="source-badge">海外メディア</span>
+          <span class="source-badge">IBA</span>
           <span class="score-detail">📌 A3 B2 C3 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> PMDAが内部AI Action Planを策定し、臨床試験データ審査、安全性情報分析、市販後パフォーマンス予測へのAI技術活用方針を示しました。DASH for SaMD戦略も推進中で、2026年4月からはeCTD v4.0のみの申請に移行します。</div>
@@ -705,7 +710,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">国内メディア</span>
+          <span class="source-badge">日経新聞</span>
           <span class="score-detail">📌 A3 B2 C2 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> NTTと愛知県がんセンターが、がん治療の臨床試験DXを共同推進すると発表しました。2026年度上期までに近隣5医療機関にデジタルシステムを導入し、全国展開を計画。ドラッグラグ・ドラッグロス解消を目指します。</div>
@@ -721,7 +726,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">海外メディア</span>
+          <span class="source-badge">Applied Clinical Trials</span>
           <span class="score-detail">📌 A3 B2 C1 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> 分散型臨床試験のリーディング企業Medableが、治験開発向け業界初のAgentic AIプラットフォーム「Agent Studio」を発表しました。ハイブリッド・完全分散型治験の運用を自動化します。</div>
@@ -741,7 +746,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">海外メディア</span>
+          <span class="source-badge">Pasqualepillitteri</span>
           <span class="score-detail">📌 A1 B2 C0 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> Claude Codeがv2.1.63〜2.1.76で大幅アップデート。プッシュトゥトーク音声モード、/loopによるリカーリングタスク、100万トークンコンテキスト、Opus 4.6デフォルト化を実装。製薬DX開発の生産性向上ツールとして注目。</div>
@@ -755,7 +760,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-01-11</span>
-          <span class="source-badge">海外メディア</span>
+          <span class="source-badge">Microsoft</span>
           <span class="score-detail">📌 A2 B2 C0 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> MicrosoftがAzure Foundryに医療・ライフサイエンス向けClaude AIモデルを統合。事前承認、請求処理、患者ケアコーディネーションなどのエージェンティックワークフローに対応。</div>
@@ -769,7 +774,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">海外メディア</span>
+          <span class="source-badge">PharmaI Lab</span>
           <span class="score-detail">📌 A3 B1 C0 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> Eli Lillyが自社をテクノロジー企業と再定義し、巨大なAIコンピューティング基盤「AIファクトリー」を構築・稼働開始。24時間体制で新薬候補を自動生成。</div>
@@ -783,7 +788,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">国内メディア</span>
+          <span class="source-badge">PharmaI Lab</span>
           <span class="score-detail">📌 A3 B1 C0 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> アステラス製薬がAI活用で僅か7カ月で新薬候補物質を特定。従来プロセスを大幅に短縮し、業界に衝撃を与えた。</div>
@@ -797,7 +802,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">海外メディア</span>
+          <span class="source-badge">BioSpace</span>
           <span class="score-detail">📌 A3 B1 C0 D1</span>
         </div>
         <div class="article-section"><strong>要点:</strong> Insilico MedicineがPharma.AIプラットフォームで前臨床候補を12-18カ月で同定。業界平均4.5年と比較して大幅な短縮を実現。</div>
@@ -811,7 +816,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-02</span>
-          <span class="source-badge">海外メディア</span>
+          <span class="source-badge">RAPS</span>
           <span class="score-detail">📌 A2 B1 C3 D1</span>
         </div>
         <div class="article-section"><strong>要点:</strong> FDA CDERが年間ガイダンス計画を公開。デジタルヘルス技術とAI製造に関する新ガイダンスの発行を予定。</div>
@@ -825,7 +830,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">海外メディア</span>
+          <span class="source-badge">McKinsey</span>
           <span class="score-detail">📌 A2 B1 C1 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> ModernaがOpenAI GPT-4アーキテクチャベースのAIエージェントを全社展開。規制文書ドラフト、患者コミュニケーションの個別化など750以上のユースケースを特定。</div>
@@ -839,7 +844,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026</span>
-          <span class="source-badge">国内メディア</span>
+          <span class="source-badge">Go</span>
           <span class="score-detail">📌 A2 B1 C1 D1</span>
         </div>
         <div class="article-section"><strong>要点:</strong> NEDOが日本語医療特化型LLMの安全性検証・実証プロジェクトを推進。医療現場で安全に利用できるAI実現を目指す国策プロジェクト。</div>
@@ -853,7 +858,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">国内メディア</span>
+          <span class="source-badge">Enterprisezine</span>
           <span class="score-detail">📌 A2 B1 C1 D1</span>
         </div>
         <div class="article-section"><strong>要点:</strong> 那須赤十字病院がオンプレミス環境で生成AIサーバーを構築し、退院時サマリの自動作成を実装。患者データセキュリティを確保しつつ日本語AIを活用。</div>
@@ -867,7 +872,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">海外メディア</span>
+          <span class="source-badge">Clinicalleader</span>
           <span class="score-detail">📌 A2 B2 C0 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> CROがトランザクション型ベンダーから、テクノロジー・治療専門性・規制インテリジェンスを統合した戦略的共同開発パートナーへ進化。</div>
@@ -881,7 +886,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-03-13</span>
-          <span class="source-badge">海外メディア</span>
+          <span class="source-badge">Cri</span>
           <span class="score-detail">📌 A2 B1 C1 D1</span>
         </div>
         <div class="article-section"><strong>要点:</strong> 中国で病理画像AI解析によるプレ診断、遠隔診断システム、BMI臨床応用が急速に進展。</div>
@@ -895,7 +900,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
         </div>
         <div class="article-meta">
           <span>📅 2026-03-05</span>
-          <span class="source-badge">海外メディア</span>
+          <span class="source-badge">Or</span>
           <span class="score-detail">📌 A2 B1 C2 D1</span>
         </div>
         <div class="article-section"><strong>要点:</strong> AI搭載乳がん手術イメージング機器のFDA承認や医療画像AI企業のM&Aなど、AI医療機器の商業化が加速。</div>
@@ -928,7 +933,7 @@ FDA-EMA共同AIガイドライン原則が発行され、製薬AI規制の国際
 </div>
 
 <script>
-const briefItems = [{"number": 1, "title": "Microsoft、Copilot Healthを発表 — 医療AIプラットフォーム戦争が本格化", "source_type": "海外メディア", "date": "2026-03-12", "url": "https://www.healthcare-brew.com/stories/2026/03/12/microsoft-launches-ai-platform-copilot-health", "score": "A3 B3 C1 D3", "score_total": 10, "summary": "Microsoftが個人の健康データ（ウェアラブル、EHR、検査結果）を統合・分析するCopilot Healthを発表しました。50,000以上の米国医療機関からのデータ連携に対応し、OpenAI ChatGPT Health、Anthropic Claude for Healthcareと直接競合します。", "point": "製薬クライアントのオムニチャネル戦略・患者エンゲージメント施策に直結するプラットフォームです。M365/Power Platform開発を強みとするSTOにとって、Copilot Health連携ソリューション開発は即座に提案可能な領域です。", "action": "Copilot Health APIドキュメント入手後、製薬クライアント向けPatient Engagement連携デモの開発を検討すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 2, "title": "Anthropic、Claude Partner Network発足 — $100M投資でエンタープライズ展開加速", "source_type": "海外メディア", "date": "2026-03-12", "url": "https://thenextweb.com/news/anthropic-commits-100m-to-claude-partner-network", "score": "A2 B3 C1 D3", "score_total": 9, "summary": "Anthropicが$100Mのパートナーネットワークを立ち上げ、Accenture（3万人研修）、Deloitte、Cognizant（35万人にClaudeアクセス）、Infosysが参画しました。コンサル・SIerへのClaude導入が組織的に進みます。", "point": "STOがClaudeベースの製薬DXソリューションを展開する上で、パートナーネットワーク参画は差別化要因となります。大手コンサルがClaude活用を進める中、製薬特化の専門性がSTOの競争優位となります。", "action": "Claude Partner Networkの参画要件を確認し、製薬DX特化パートナーとしてのエントリーを検討すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 3, "title": "FDA・EMA共同「AIグッドプラクティス原則」10原則を発行", "source_type": "海外メディア", "date": "2026-01-14", "url": "https://www.ema.europa.eu/en/news/ema-fda-set-common-principles-ai-medicine-development-0", "score": "A3 B2 C3 D3", "score_total": 11, "summary": "FDAとEMAが共同で「Guiding Principles of Good AI Practice in Drug Development」10原則を発行しました。現時点では非拘束ですが、将来の規制要件の基盤となります。", "point": "製薬企業のAIガバナンス体制構築が急務となっています。STOのDXコンサルティングにおいて、この10原則に準拠したAIガバナンスフレームワーク策定支援は高付加価値サービスとなります。GxP対応のAI導入支援に直結します。", "action": "10原則の詳細分析を行い、「製薬AI導入ガバナンス・チェックリスト」を作成してクライアント提案資料に組み込むこと。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 4, "title": "エージェンティックAIが製薬バリューチェーン全体で実装段階に — BCG×Hippocratic AI提携", "source_type": "海外メディア", "date": "2026-01-08", "url": "https://www.bcg.com/news/8january2026-strategic-collaboration-agentic-ai-across-biopharma-medtech", "score": "A3 B3 C1 D3", "score_total": 10, "summary": "BCGとHippocratic AIがバイオ製薬・メドテック向けエージェンティックAI展開で戦略的提携を発表しました。Hippocratic AIはGrove AIを買収し、治験オペレーション自動化で1,000万件以上の患者インタラクションを実現しています。", "point": "エージェンティックAIは治験のサイトアクティベーション率を2倍、人員要件を30-50%削減する実績があります。STOの治験支援事業にとって、エージェンティックAI統合型のソリューション開発は差別化の鍵です。", "action": "Hippocratic AIのGrove AI統合事例をベースに、STOの治験DXソリューションへのAgentic AI統合ロードマップを策定すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 5, "title": "EU AI Act高リスク規定、2026年8月施行 — 製薬企業のコンプライアンス準備が急務", "source_type": "海外メディア", "date": "2026-03", "url": "https://www.iliomadhealthdata.com/post/eu-ai-act-for-healthcare-what-life-sciences-companies-need-to-know-before-august-2026", "score": "A3 B2 C3 D2", "score_total": 10, "summary": "EU AI Actの高リスクAI規定が2026年8月2日に施行されます。医療アクセス、トリアージ、臨床意思決定支援などのAIシステムが高リスクに分類され、違反時は最大€35Mまたはグローバル売上高7%の罰金が課されます。一方、創薬R&D目的のAIは適用除外です。", "point": "グローバル展開する製薬企業にとって、EU AI Actへの準拠は必須です。STOは規制コンプライアンス対応コンサルティングのサービスメニューに追加することで、既存クライアントへのアップセルが可能です。", "action": "EU AI Act製薬向けコンプライアンス・アセスメントサービスの企画書を作成すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 6, "title": "Iktos×Servier、AI創薬史上最大級€12億ディールを締結", "source_type": "海外メディア", "date": "2026-01", "url": "https://www.drugtargetreview.com/article/192962/ai-in-drug-discovery-predictions-for-2026/", "score": "A3 B1 C1 D2", "score_total": 7, "summary": "フランスのAI創薬企業IktosがServierとの間で潜在的総額€12億超のAI創薬コラボレーション契約を締結しました。AI創薬分野の商業的価値が具体的な金額で示された象徴的なディールです。", "point": "AI創薬の商業価値が証明されたことで、中堅製薬企業のAI投資判断が加速します。STOの提案において、ROI事例としてIktos/Servierの実績を引用することで、クライアントの投資判断を後押しできます。", "action": "AI創薬投資ROIケーススタディとして資料化し、クライアントプレゼンテーション素材に追加すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 7, "title": "第一三共、AWS協働で「AIエージェント統合型創薬基盤」構築へ", "source_type": "国内メディア", "date": "2026-03", "url": "https://pharmailab.net/%E5%8C%BB%E8%96%AC%E5%93%81%E9%96%8B%E7%99%BA%E3%81%AE%E3%83%91%E3%83%A9%E3%83%80%E3%82%A4%E3%83%A0%E3%82%B7%E3%83%95%E3%83%88%EF%BD%9C%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%86%E3%82%A3/", "score": "A3 B3 C1 D3", "score_total": 10, "summary": "第一三共がAWSと協働し、AIエージェント統合型の創薬プラットフォーム構築プロジェクトを開始しました。2026年中の運用開始を目指しています。", "point": "国内メガファーマがAIエージェント統合型基盤に本格投資する先例です。STOにとって、類似の基盤構築・M365/Power Platform連携支援の提案機会が生まれます。第一三共の取り組みは他の国内製薬企業のベンチマークとなります。", "action": "第一三共のAIエージェント基盤の技術スタックを分析し、STOの提供可能な支援領域をマッピングすること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 8, "title": "PMDA、AI Action Plan策定 — 審査業務へのAI活用を本格化", "source_type": "海外メディア", "date": "2026", "url": "https://www.ibanet.org/japan-ai-digital-health-regulations", "score": "A3 B2 C3 D2", "score_total": 10, "summary": "PMDAが内部AI Action Planを策定し、臨床試験データ審査、安全性情報分析、市販後パフォーマンス予測へのAI技術活用方針を示しました。DASH for SaMD戦略も推進中で、2026年4月からはeCTD v4.0のみの申請に移行します。", "point": "規制当局自身のAI活用は、製薬企業のAI対応の加速を意味します。eCTD v4.0移行は製薬企業のシステム対応が必要であり、STOのシステム開発・DX支援の直接的な受注機会です。", "action": "eCTD v4.0対応支援サービスとPMDA AI対応コンサルティングを組み合わせたパッケージ提案を企画すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 9, "title": "NTT×愛知県がんセンター、分散型臨床試験（DCT）のDXを共同推進", "source_type": "国内メディア", "date": "2026-03", "url": "https://www.nikkei.com/article/DGXZQOUC162U30W5A211C2000000/", "score": "A3 B2 C2 D2", "score_total": 9, "summary": "NTTと愛知県がんセンターが、がん治療の臨床試験DXを共同推進すると発表しました。2026年度上期までに近隣5医療機関にデジタルシステムを導入し、全国展開を計画。ドラッグラグ・ドラッグロス解消を目指します。", "point": "DCTは治験DXの中核であり、日本での本格実装が始まりました。STOの治験支援事業にとって、DCTプラットフォーム構築・データ連携の技術支援は重要な事業機会です。", "action": "DCT関連技術（eConsent、ePRO、遠隔モニタリング）の知見を整理し、治験DX提案メニューに追加すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 10, "title": "Medable、業界初のAgentic AIプラットフォーム「Agent Studio」を治験向けに発表", "source_type": "海外メディア", "date": "2026-03", "url": "https://www.appliedclinicaltrialsonline.com/view/clinical-trials-2026-platformization-ai-fluency-value-chain", "score": "A3 B2 C1 D2", "score_total": 8, "summary": "分散型臨床試験のリーディング企業Medableが、治験開発向け業界初のAgentic AIプラットフォーム「Agent Studio」を発表しました。ハイブリッド・完全分散型治験の運用を自動化します。", "point": "治験オペレーションのAgentic AI化が専用プラットフォームとして商品化された初のケースです。STOの治験DXソリューションにおいて、こうしたプラットフォームとの連携・統合提案が重要になります。", "action": "Medable Agent Studioの機能・API仕様を調査し、STOの治験DXサービスとの連携可能性を評価すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 11, "title": "Claude Code大型アップデート — ボイスモード、100万トークンコンテキスト、Opus 4.6デフォルト化", "source_type": "海外メディア", "date": "2026-03", "url": "https://pasqualepillitteri.it/en/news/381/claude-code-march-2026-updates", "score": "A1 B2 C0 D2", "score_total": 5, "summary": "Claude Codeがv2.1.63〜2.1.76で大幅アップデート。プッシュトゥトーク音声モード、/loopによるリカーリングタスク、100万トークンコンテキスト、Opus 4.6デフォルト化を実装。製薬DX開発の生産性向上ツールとして注目。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 12, "title": "Microsoft Foundry、医療・ライフサイエンス向けにClaude AI統合を発表", "source_type": "海外メディア", "date": "2026-01-11", "url": "https://www.microsoft.com/en-us/industry/blog/healthcare/2026/01/11/bridging-the-gap-between-ai-and-medicine-claude-in-microsoft-foundry-advances-capabilities-for-healthcare-and-life-sciences-customers/", "score": "A2 B2 C0 D2", "score_total": 6, "summary": "MicrosoftがAzure Foundryに医療・ライフサイエンス向けClaude AIモデルを統合。事前承認、請求処理、患者ケアコーディネーションなどのエージェンティックワークフローに対応。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 13, "title": "Eli Lilly「AIファクトリー」2026年初頭稼働開始 — 24時間体制で新薬候補を生成", "source_type": "海外メディア", "date": "2026-03", "url": "https://pharmailab.net/%E5%8C%BB%E8%96%AC%E5%93%81%E9%96%8B%E7%99%BA%E3%81%AE%E3%83%91%E3%83%A9%E3%83%80%E3%82%A4%E3%83%A0%E3%82%B7%E3%83%95%E3%83%88%EF%BD%9C%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%86%E3%82%A3/", "score": "A3 B1 C0 D2", "score_total": 6, "summary": "Eli Lillyが自社をテクノロジー企業と再定義し、巨大なAIコンピューティング基盤「AIファクトリー」を構築・稼働開始。24時間体制で新薬候補を自動生成。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 14, "title": "アステラス製薬、AIで7カ月で新薬候補特定に成功", "source_type": "国内メディア", "date": "2026-03", "url": "https://pharmailab.net/%E5%8C%BB%E8%96%AC%E5%93%81%E9%96%8B%E7%99%BA%E3%81%AE%E3%83%91%E3%83%A9%E3%83%80%E3%82%A4%E3%83%A0%E3%82%B7%E3%83%95%E3%83%88%EF%BD%9C%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%86%E3%82%A3/", "score": "A3 B1 C0 D2", "score_total": 6, "summary": "アステラス製薬がAI活用で僅か7カ月で新薬候補物質を特定。従来プロセスを大幅に短縮し、業界に衝撃を与えた。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 15, "title": "Insilico Medicine、AI創薬で前臨床候補を12-18カ月で同定 — 業界平均4.5年を大幅短縮", "source_type": "海外メディア", "date": "2026-03", "url": "https://www.biospace.com/policy/as-fda-deploys-agentic-ai-pharma-begins-testing-the-next-frontier-of-intelligent-automation", "score": "A3 B1 C0 D1", "score_total": 5, "summary": "Insilico MedicineがPharma.AIプラットフォームで前臨床候補を12-18カ月で同定。業界平均4.5年と比較して大幅な短縮を実現。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 16, "title": "FDA CDERが2026年ガイダンス計画を公開 — デジタルヘルス技術・AI製造ガイダンスを予定", "source_type": "海外メディア", "date": "2026-02", "url": "https://www.raps.org/news-and-articles/news-articles/2026/2/fda-s-cder-agenda-includes-new-guidance-on-digital", "score": "A2 B1 C3 D1", "score_total": 7, "summary": "FDA CDERが年間ガイダンス計画を公開。デジタルヘルス技術とAI製造に関する新ガイダンスの発行を予定。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 17, "title": "Moderna、GPT-4ベースのAIエージェントを全社展開 — 750以上のユースケースを特定", "source_type": "海外メディア", "date": "2026-03", "url": "https://www.mckinsey.com/industries/life-sciences/our-insights/the-synthesis/agentic-ai-unlocking-peak-performance-in-biopharma-development", "score": "A2 B1 C1 D2", "score_total": 6, "summary": "ModernaがOpenAI GPT-4アーキテクチャベースのAIエージェントを全社展開。規制文書ドラフト、患者コミュニケーションの個別化など750以上のユースケースを特定。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 18, "title": "NEDO「日本語版医療特化型LLMの社会実装に向けた安全性検証・実証」プロジェクト推進", "source_type": "国内メディア", "date": "2026", "url": "https://www.nedo.go.jp/koubo/CD2_100392.html", "score": "A2 B1 C1 D1", "score_total": 5, "summary": "NEDOが日本語医療特化型LLMの安全性検証・実証プロジェクトを推進。医療現場で安全に利用できるAI実現を目指す国策プロジェクト。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 19, "title": "那須赤十字病院、オンプレミス生成AIで退院時サマリ自動作成を実装", "source_type": "国内メディア", "date": "2026-03", "url": "https://enterprisezine.jp/article/detail/22457", "score": "A2 B1 C1 D1", "score_total": 5, "summary": "那須赤十字病院がオンプレミス環境で生成AIサーバーを構築し、退院時サマリの自動作成を実装。患者データセキュリティを確保しつつ日本語AIを活用。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 20, "title": "CRO業界がインテリジェンス駆動型パートナーに進化 — 2026年治験変革の次段階", "source_type": "海外メディア", "date": "2026-03", "url": "https://www.clinicalleader.com/doc/cro-industry-outlook-the-next-stage-of-clinical-trial-transformation-0001", "score": "A2 B2 C0 D2", "score_total": 6, "summary": "CROがトランザクション型ベンダーから、テクノロジー・治療専門性・規制インテリジェンスを統合した戦略的共同開発パートナーへ進化。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 21, "title": "中国AI医療が急進展 — 病理画像AI診断・遠隔診断・BMI臨床応用", "source_type": "海外メディア", "date": "2026-03-13", "url": "https://japanese.cri.cn/2026/03/14/ARTI1773463468078929", "score": "A2 B1 C1 D1", "score_total": 5, "summary": "中国で病理画像AI解析によるプレ診断、遠隔診断システム、BMI臨床応用が急速に進展。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 22, "title": "AI医療機器のFDA承認・M&A加速 — 乳がんAIイメージング機器承認", "source_type": "海外メディア", "date": "2026-03-05", "url": "https://blog.rso.or.jp/%E5%8C%BB%E7%99%82%E6%A9%9F%E5%99%A8%E9%96%A2%E9%80%A3%E3%83%8B%E3%83%A5%E3%83%BC%E3%82%B9%EF%BC%882026%E5%B9%B42%E6%9C%8827%E6%97%A5%E3%80%9C3%E6%9C%885%E6%97%A5%EF%BC%89/", "score": "A2 B1 C2 D1", "score_total": 6, "summary": "AI搭載乳がん手術イメージング機器のFDA承認や医療画像AI企業のM&Aなど、AI医療機器の商業化が加速。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}];
+const briefItems = [{"number": 1, "title": "Microsoft、Copilot Healthを発表 — 医療AIプラットフォーム戦争が本格化", "source_type": "Healthcare-brew", "source_region": "海外", "date": "2026-03-12", "url": "https://www.healthcare-brew.com/stories/2026/03/12/microsoft-launches-ai-platform-copilot-health", "score": "A3 B3 C1 D3", "score_total": 10, "summary": "Microsoftが個人の健康データ（ウェアラブル、EHR、検査結果）を統合・分析するCopilot Healthを発表しました。50,000以上の米国医療機関からのデータ連携に対応し、OpenAI ChatGPT Health、Anthropic Claude for Healthcareと直接競合します。", "point": "製薬クライアントのオムニチャネル戦略・患者エンゲージメント施策に直結するプラットフォームです。M365/Power Platform開発を強みとするSTOにとって、Copilot Health連携ソリューション開発は即座に提案可能な領域です。", "action": "Copilot Health APIドキュメント入手後、製薬クライアント向けPatient Engagement連携デモの開発を検討すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 2, "title": "Anthropic、Claude Partner Network発足 — $100M投資でエンタープライズ展開加速", "source_type": "The Next Web", "source_region": "海外", "date": "2026-03-12", "url": "https://thenextweb.com/news/anthropic-commits-100m-to-claude-partner-network", "score": "A2 B3 C1 D3", "score_total": 9, "summary": "Anthropicが$100Mのパートナーネットワークを立ち上げ、Accenture（3万人研修）、Deloitte、Cognizant（35万人にClaudeアクセス）、Infosysが参画しました。コンサル・SIerへのClaude導入が組織的に進みます。", "point": "STOがClaudeベースの製薬DXソリューションを展開する上で、パートナーネットワーク参画は差別化要因となります。大手コンサルがClaude活用を進める中、製薬特化の専門性がSTOの競争優位となります。", "action": "Claude Partner Networkの参画要件を確認し、製薬DX特化パートナーとしてのエントリーを検討すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 3, "title": "FDA・EMA共同「AIグッドプラクティス原則」10原則を発行", "source_type": "EMA", "source_region": "海外", "date": "2026-01-14", "url": "https://www.ema.europa.eu/en/news/ema-fda-set-common-principles-ai-medicine-development-0", "score": "A3 B2 C3 D3", "score_total": 11, "summary": "FDAとEMAが共同で「Guiding Principles of Good AI Practice in Drug Development」10原則を発行しました。現時点では非拘束ですが、将来の規制要件の基盤となります。", "point": "製薬企業のAIガバナンス体制構築が急務となっています。STOのDXコンサルティングにおいて、この10原則に準拠したAIガバナンスフレームワーク策定支援は高付加価値サービスとなります。GxP対応のAI導入支援に直結します。", "action": "10原則の詳細分析を行い、「製薬AI導入ガバナンス・チェックリスト」を作成してクライアント提案資料に組み込むこと。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 4, "title": "エージェンティックAIが製薬バリューチェーン全体で実装段階に — BCG×Hippocratic AI提携", "source_type": "BCG", "source_region": "海外", "date": "2026-01-08", "url": "https://www.bcg.com/news/8january2026-strategic-collaboration-agentic-ai-across-biopharma-medtech", "score": "A3 B3 C1 D3", "score_total": 10, "summary": "BCGとHippocratic AIがバイオ製薬・メドテック向けエージェンティックAI展開で戦略的提携を発表しました。Hippocratic AIはGrove AIを買収し、治験オペレーション自動化で1,000万件以上の患者インタラクションを実現しています。", "point": "エージェンティックAIは治験のサイトアクティベーション率を2倍、人員要件を30-50%削減する実績があります。STOの治験支援事業にとって、エージェンティックAI統合型のソリューション開発は差別化の鍵です。", "action": "Hippocratic AIのGrove AI統合事例をベースに、STOの治験DXソリューションへのAgentic AI統合ロードマップを策定すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 5, "title": "EU AI Act高リスク規定、2026年8月施行 — 製薬企業のコンプライアンス準備が急務", "source_type": "Iliomad Health Data", "source_region": "海外", "date": "2026-03", "url": "https://www.iliomadhealthdata.com/post/eu-ai-act-for-healthcare-what-life-sciences-companies-need-to-know-before-august-2026", "score": "A3 B2 C3 D2", "score_total": 10, "summary": "EU AI Actの高リスクAI規定が2026年8月2日に施行されます。医療アクセス、トリアージ、臨床意思決定支援などのAIシステムが高リスクに分類され、違反時は最大€35Mまたはグローバル売上高7%の罰金が課されます。一方、創薬R&D目的のAIは適用除外です。", "point": "グローバル展開する製薬企業にとって、EU AI Actへの準拠は必須です。STOは規制コンプライアンス対応コンサルティングのサービスメニューに追加することで、既存クライアントへのアップセルが可能です。", "action": "EU AI Act製薬向けコンプライアンス・アセスメントサービスの企画書を作成すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 6, "title": "Iktos×Servier、AI創薬史上最大級€12億ディールを締結", "source_type": "Drug Target Review", "source_region": "海外", "date": "2026-01", "url": "https://www.drugtargetreview.com/article/192962/ai-in-drug-discovery-predictions-for-2026/", "score": "A3 B1 C1 D2", "score_total": 7, "summary": "フランスのAI創薬企業IktosがServierとの間で潜在的総額€12億超のAI創薬コラボレーション契約を締結しました。AI創薬分野の商業的価値が具体的な金額で示された象徴的なディールです。", "point": "AI創薬の商業価値が証明されたことで、中堅製薬企業のAI投資判断が加速します。STOの提案において、ROI事例としてIktos/Servierの実績を引用することで、クライアントの投資判断を後押しできます。", "action": "AI創薬投資ROIケーススタディとして資料化し、クライアントプレゼンテーション素材に追加すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 7, "title": "第一三共、AWS協働で「AIエージェント統合型創薬基盤」構築へ", "source_type": "PharmaI Lab", "source_region": "国内", "date": "2026-03", "url": "https://pharmailab.net/%E5%8C%BB%E8%96%AC%E5%93%81%E9%96%8B%E7%99%BA%E3%81%AE%E3%83%91%E3%83%A9%E3%83%80%E3%82%A4%E3%83%A0%E3%82%B7%E3%83%95%E3%83%88%EF%BD%9C%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%86%E3%82%A3/", "score": "A3 B3 C1 D3", "score_total": 10, "summary": "第一三共がAWSと協働し、AIエージェント統合型の創薬プラットフォーム構築プロジェクトを開始しました。2026年中の運用開始を目指しています。", "point": "国内メガファーマがAIエージェント統合型基盤に本格投資する先例です。STOにとって、類似の基盤構築・M365/Power Platform連携支援の提案機会が生まれます。第一三共の取り組みは他の国内製薬企業のベンチマークとなります。", "action": "第一三共のAIエージェント基盤の技術スタックを分析し、STOの提供可能な支援領域をマッピングすること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 8, "title": "PMDA、AI Action Plan策定 — 審査業務へのAI活用を本格化", "source_type": "IBA", "source_region": "海外", "date": "2026", "url": "https://www.ibanet.org/japan-ai-digital-health-regulations", "score": "A3 B2 C3 D2", "score_total": 10, "summary": "PMDAが内部AI Action Planを策定し、臨床試験データ審査、安全性情報分析、市販後パフォーマンス予測へのAI技術活用方針を示しました。DASH for SaMD戦略も推進中で、2026年4月からはeCTD v4.0のみの申請に移行します。", "point": "規制当局自身のAI活用は、製薬企業のAI対応の加速を意味します。eCTD v4.0移行は製薬企業のシステム対応が必要であり、STOのシステム開発・DX支援の直接的な受注機会です。", "action": "eCTD v4.0対応支援サービスとPMDA AI対応コンサルティングを組み合わせたパッケージ提案を企画すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 9, "title": "NTT×愛知県がんセンター、分散型臨床試験（DCT）のDXを共同推進", "source_type": "日経新聞", "source_region": "国内", "date": "2026-03", "url": "https://www.nikkei.com/article/DGXZQOUC162U30W5A211C2000000/", "score": "A3 B2 C2 D2", "score_total": 9, "summary": "NTTと愛知県がんセンターが、がん治療の臨床試験DXを共同推進すると発表しました。2026年度上期までに近隣5医療機関にデジタルシステムを導入し、全国展開を計画。ドラッグラグ・ドラッグロス解消を目指します。", "point": "DCTは治験DXの中核であり、日本での本格実装が始まりました。STOの治験支援事業にとって、DCTプラットフォーム構築・データ連携の技術支援は重要な事業機会です。", "action": "DCT関連技術（eConsent、ePRO、遠隔モニタリング）の知見を整理し、治験DX提案メニューに追加すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 10, "title": "Medable、業界初のAgentic AIプラットフォーム「Agent Studio」を治験向けに発表", "source_type": "Applied Clinical Trials", "source_region": "海外", "date": "2026-03", "url": "https://www.appliedclinicaltrialsonline.com/view/clinical-trials-2026-platformization-ai-fluency-value-chain", "score": "A3 B2 C1 D2", "score_total": 8, "summary": "分散型臨床試験のリーディング企業Medableが、治験開発向け業界初のAgentic AIプラットフォーム「Agent Studio」を発表しました。ハイブリッド・完全分散型治験の運用を自動化します。", "point": "治験オペレーションのAgentic AI化が専用プラットフォームとして商品化された初のケースです。STOの治験DXソリューションにおいて、こうしたプラットフォームとの連携・統合提案が重要になります。", "action": "Medable Agent Studioの機能・API仕様を調査し、STOの治験DXサービスとの連携可能性を評価すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-16"}, {"number": 11, "title": "Claude Code大型アップデート — ボイスモード、100万トークンコンテキスト、Opus 4.6デフォルト化", "source_type": "Pasqualepillitteri", "source_region": "海外", "date": "2026-03", "url": "https://pasqualepillitteri.it/en/news/381/claude-code-march-2026-updates", "score": "A1 B2 C0 D2", "score_total": 5, "summary": "Claude Codeがv2.1.63〜2.1.76で大幅アップデート。プッシュトゥトーク音声モード、/loopによるリカーリングタスク、100万トークンコンテキスト、Opus 4.6デフォルト化を実装。製薬DX開発の生産性向上ツールとして注目。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 12, "title": "Microsoft Foundry、医療・ライフサイエンス向けにClaude AI統合を発表", "source_type": "Microsoft", "source_region": "海外", "date": "2026-01-11", "url": "https://www.microsoft.com/en-us/industry/blog/healthcare/2026/01/11/bridging-the-gap-between-ai-and-medicine-claude-in-microsoft-foundry-advances-capabilities-for-healthcare-and-life-sciences-customers/", "score": "A2 B2 C0 D2", "score_total": 6, "summary": "MicrosoftがAzure Foundryに医療・ライフサイエンス向けClaude AIモデルを統合。事前承認、請求処理、患者ケアコーディネーションなどのエージェンティックワークフローに対応。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 13, "title": "Eli Lilly「AIファクトリー」2026年初頭稼働開始 — 24時間体制で新薬候補を生成", "source_type": "PharmaI Lab", "source_region": "海外", "date": "2026-03", "url": "https://pharmailab.net/%E5%8C%BB%E8%96%AC%E5%93%81%E9%96%8B%E7%99%BA%E3%81%AE%E3%83%91%E3%83%A9%E3%83%80%E3%82%A4%E3%83%A0%E3%82%B7%E3%83%95%E3%83%88%EF%BD%9C%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%86%E3%82%A3/", "score": "A3 B1 C0 D2", "score_total": 6, "summary": "Eli Lillyが自社をテクノロジー企業と再定義し、巨大なAIコンピューティング基盤「AIファクトリー」を構築・稼働開始。24時間体制で新薬候補を自動生成。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 14, "title": "アステラス製薬、AIで7カ月で新薬候補特定に成功", "source_type": "PharmaI Lab", "source_region": "国内", "date": "2026-03", "url": "https://pharmailab.net/%E5%8C%BB%E8%96%AC%E5%93%81%E9%96%8B%E7%99%BA%E3%81%AE%E3%83%91%E3%83%A9%E3%83%80%E3%82%A4%E3%83%A0%E3%82%B7%E3%83%95%E3%83%88%EF%BD%9C%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%86%E3%82%A3/", "score": "A3 B1 C0 D2", "score_total": 6, "summary": "アステラス製薬がAI活用で僅か7カ月で新薬候補物質を特定。従来プロセスを大幅に短縮し、業界に衝撃を与えた。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 15, "title": "Insilico Medicine、AI創薬で前臨床候補を12-18カ月で同定 — 業界平均4.5年を大幅短縮", "source_type": "BioSpace", "source_region": "海外", "date": "2026-03", "url": "https://www.biospace.com/policy/as-fda-deploys-agentic-ai-pharma-begins-testing-the-next-frontier-of-intelligent-automation", "score": "A3 B1 C0 D1", "score_total": 5, "summary": "Insilico MedicineがPharma.AIプラットフォームで前臨床候補を12-18カ月で同定。業界平均4.5年と比較して大幅な短縮を実現。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 16, "title": "FDA CDERが2026年ガイダンス計画を公開 — デジタルヘルス技術・AI製造ガイダンスを予定", "source_type": "RAPS", "source_region": "海外", "date": "2026-02", "url": "https://www.raps.org/news-and-articles/news-articles/2026/2/fda-s-cder-agenda-includes-new-guidance-on-digital", "score": "A2 B1 C3 D1", "score_total": 7, "summary": "FDA CDERが年間ガイダンス計画を公開。デジタルヘルス技術とAI製造に関する新ガイダンスの発行を予定。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 17, "title": "Moderna、GPT-4ベースのAIエージェントを全社展開 — 750以上のユースケースを特定", "source_type": "McKinsey", "source_region": "海外", "date": "2026-03", "url": "https://www.mckinsey.com/industries/life-sciences/our-insights/the-synthesis/agentic-ai-unlocking-peak-performance-in-biopharma-development", "score": "A2 B1 C1 D2", "score_total": 6, "summary": "ModernaがOpenAI GPT-4アーキテクチャベースのAIエージェントを全社展開。規制文書ドラフト、患者コミュニケーションの個別化など750以上のユースケースを特定。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 18, "title": "NEDO「日本語版医療特化型LLMの社会実装に向けた安全性検証・実証」プロジェクト推進", "source_type": "Go", "source_region": "国内", "date": "2026", "url": "https://www.nedo.go.jp/koubo/CD2_100392.html", "score": "A2 B1 C1 D1", "score_total": 5, "summary": "NEDOが日本語医療特化型LLMの安全性検証・実証プロジェクトを推進。医療現場で安全に利用できるAI実現を目指す国策プロジェクト。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 19, "title": "那須赤十字病院、オンプレミス生成AIで退院時サマリ自動作成を実装", "source_type": "Enterprisezine", "source_region": "国内", "date": "2026-03", "url": "https://enterprisezine.jp/article/detail/22457", "score": "A2 B1 C1 D1", "score_total": 5, "summary": "那須赤十字病院がオンプレミス環境で生成AIサーバーを構築し、退院時サマリの自動作成を実装。患者データセキュリティを確保しつつ日本語AIを活用。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 20, "title": "CRO業界がインテリジェンス駆動型パートナーに進化 — 2026年治験変革の次段階", "source_type": "Clinicalleader", "source_region": "海外", "date": "2026-03", "url": "https://www.clinicalleader.com/doc/cro-industry-outlook-the-next-stage-of-clinical-trial-transformation-0001", "score": "A2 B2 C0 D2", "score_total": 6, "summary": "CROがトランザクション型ベンダーから、テクノロジー・治療専門性・規制インテリジェンスを統合した戦略的共同開発パートナーへ進化。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 21, "title": "中国AI医療が急進展 — 病理画像AI診断・遠隔診断・BMI臨床応用", "source_type": "Cri", "source_region": "海外", "date": "2026-03-13", "url": "https://japanese.cri.cn/2026/03/14/ARTI1773463468078929", "score": "A2 B1 C1 D1", "score_total": 5, "summary": "中国で病理画像AI解析によるプレ診断、遠隔診断システム、BMI臨床応用が急速に進展。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}, {"number": 22, "title": "AI医療機器のFDA承認・M&A加速 — 乳がんAIイメージング機器承認", "source_type": "Or", "source_region": "海外", "date": "2026-03-05", "url": "https://blog.rso.or.jp/%E5%8C%BB%E7%99%82%E6%A9%9F%E5%99%A8%E9%96%A2%E9%80%A3%E3%83%8B%E3%83%A5%E3%83%BC%E3%82%B9%EF%BC%882026%E5%B9%B42%E6%9C%8827%E6%97%A5%E3%80%9C3%E6%9C%885%E6%97%A5%EF%BC%89/", "score": "A2 B1 C2 D1", "score_total": 6, "summary": "AI搭載乳がん手術イメージング機器のFDA承認や医療画像AI企業のM&Aなど、AI医療機器の商業化が加速。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-16"}];
 
 let bookmarks = {};
 try {
