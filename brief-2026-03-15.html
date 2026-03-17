@@ -158,7 +158,9 @@ body {
   margin-left: 260px;
   flex: 1;
   padding: 24px 32px;
-  max-width: none;
+  max-width: calc(100vw - 260px);
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 .header {
   margin-bottom: 28px;
@@ -324,7 +326,7 @@ body {
 }
 .brief-link:hover { text-decoration: underline; }
 /* meta-mobile: hidden on desktop, shown on mobile */
-.meta-mobile { display: none; }
+.meta-mobile { display: none; width: 0; padding: 0 !important; border: none !important; overflow: hidden; }
 .action-link {
   font-size: 12px;
   padding: 2px 8px;
