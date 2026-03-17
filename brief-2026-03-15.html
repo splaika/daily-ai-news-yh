@@ -208,38 +208,34 @@ body {
   border-radius: 12px;
   font-weight: 500;
 }
-.filter-card { padding: 10px 14px; }
-.filter-bar { display: flex; flex-direction: column; gap: 8px; }
-.filter-search-wrap { width: 100%; }
-.search-input {
-  padding: 7px 14px;
-  border-radius: 20px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text);
-  font-size: 13px;
-  width: 100%;
-  box-sizing: border-box;
-}
-.search-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 2px rgba(108,123,247,0.2); }
-.filter-chips { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
-.filter-buttons { display: flex; gap: 4px; }
-.filter-sep { color: var(--border); font-size: 14px; margin: 0 2px; user-select: none; }
+.filter-card h2 { margin-bottom: 12px; }
+.filter-row { display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-end; }
+.filter-group label { display: block; font-size: 12px; color: var(--text-dim); margin-bottom: 6px; }
+.filter-buttons { display: flex; gap: 6px; }
 .filter-btn {
-  padding: 4px 10px;
-  border-radius: 14px;
+  padding: 6px 14px;
+  border-radius: 8px;
   border: 1px solid var(--border);
   background: transparent;
   color: var(--text-dim);
-  font-size: 12px;
+  font-size: 13px;
   cursor: pointer;
   transition: all 0.15s;
-  white-space: nowrap;
 }
 .filter-btn:hover { border-color: var(--accent); color: var(--text); }
 .filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
 .filter-btn.red.active { background: var(--red); border-color: var(--red); }
 .filter-btn.yellow.active { background: #b8960a; border-color: #b8960a; }
+.search-input {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13px;
+  width: 200px;
+}
+.search-input:focus { outline: none; border-color: var(--accent); }
 .table-wrapper { overflow-x: auto; }
 .items-table {
   width: 100%;
@@ -292,11 +288,16 @@ body {
 .title-cell {
   overflow: hidden;
 }
-.title-cell .item-title {
+.title-cell a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 13px;
   display: block;
   overflow: hidden;
   text-overflow: ellipsis;
 }
+.title-cell a:hover { color: var(--accent-light); text-decoration: underline; }
 .item-summary { font-size: 11px; color: var(--text-dim); margin-top: 2px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .source-badge {
   font-size: 12px;
@@ -314,32 +315,6 @@ body {
   white-space: nowrap;
 }
 .brief-link:hover { text-decoration: underline; }
-.meta-mobile { display: none; }
-.item-title { color: var(--text); font-weight: 500; font-size: 13px; }
-.item-title-link {
-  color: var(--text);
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 13px;
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.item-title-link:hover { color: var(--accent-light); text-decoration: underline; }
-.action-link {
-  font-size: 10px;
-  padding: 1px 8px;
-  border-radius: 8px;
-  text-decoration: none;
-  transition: all 0.15s;
-  white-space: nowrap;
-}
-.action-brief {
-  background: rgba(139,143,163,0.1);
-  color: var(--text-dim);
-  border: 1px solid var(--border);
-}
-.action-brief:hover { background: rgba(139,143,163,0.2); color: var(--text); }
 .brief-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
 .brief-card-link { text-decoration: none; color: inherit; }
 .brief-card {
@@ -459,11 +434,10 @@ body {
   .stat-label { font-size: 11px; }
   .card { padding: 14px; margin-bottom: 12px; }
   .card h2 { font-size: 16px; margin-bottom: 10px; }
-  .filter-card { padding: 8px 10px; }
-  .filter-chips { gap: 4px; }
-  .filter-sep { display: none; }
-  .filter-btn { padding: 4px 8px; font-size: 11px; border-radius: 12px; }
-  .search-input { font-size: 13px; padding: 6px 12px; }
+  .filter-row { flex-direction: column; gap: 10px; }
+  .filter-buttons { flex-wrap: wrap; }
+  .filter-btn { padding: 6px 10px; font-size: 12px; }
+  .search-input { width: 100%; }
   .highlight-card p { font-size: 13px; }
 
   /* Table: switch to card layout on mobile */
@@ -471,35 +445,40 @@ body {
   .items-table colgroup { display: none; }
   .items-table thead { display: none; }
   .items-table tbody tr {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: 4px 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
+    gap: 4px 10px;
     padding: 12px 0;
     border-bottom: 1px solid var(--border);
   }
-  .items-table td { padding: 0; border: none; display: none; }
+  .items-table td { padding: 0; border: none; }
   .items-table td.bm-cell {
+    grid-row: 1 / 3;
+    grid-column: 1;
     display: flex;
     align-items: center;
-    margin-right: 8px;
   }
   .items-table td.title-cell {
-    display: block;
-    flex: 1;
-    min-width: 0;
+    grid-column: 2;
+    grid-row: 1;
   }
-  .items-table td.title-cell .item-title,
-  .items-table td.title-cell .item-title-link { white-space: normal; font-size: 14px; }
-  /* Meta row below title */
-  .items-table td.meta-mobile {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    align-items: center;
-    width: 100%;
-    padding-left: 36px;
-    margin-top: 4px;
+  .items-table td.title-cell a { white-space: normal; font-size: 14px; }
+  .items-table td:nth-child(2),
+  .items-table td:nth-child(3),
+  .items-table td:nth-child(5),
+  .items-table td:nth-child(6),
+  .items-table td:nth-child(7) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  /* Show category, score, source, date inline */
+  .items-table tbody tr td:nth-child(2),
+  .items-table tbody tr td:nth-child(3),
+  .items-table tbody tr td:nth-child(5),
+  .items-table tbody tr td:nth-child(6),
+  .items-table tbody tr td:nth-child(7) {
+    display: inline;
     font-size: 11px;
   }
 
@@ -522,7 +501,7 @@ body {
   .stat-card { padding: 10px 8px; }
   .stat-value { font-size: 18px; }
   .main { padding: 12px; padding-top: 68px; }
-  .filter-btn { padding: 3px 7px; font-size: 10px; }
+  .filter-btn { padding: 5px 8px; font-size: 11px; }
 }
 
 </style>
@@ -579,7 +558,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-03-12</span>
-          <span class="source-badge">The Next Web</span>
+          <span class="source-badge">海外メディア</span>
           <span class="score-detail">📌 A2 B3 C1 D3</span>
         </div>
         <div class="article-section"><strong>要点:</strong> Anthropicは3月12日、Claude Partner Networkを正式発表しました。初期投資$100Mで、Accenture（3万人のClaude研修）、Cognizant（35万人へのアクセス展開）、Infosys（Claude Codeをアジェンティックプラットフォームへ統合）、Deloitteなどが参画しています。</div>
@@ -595,7 +574,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-03-09</span>
-          <span class="source-badge">Microsoft</span>
+          <span class="source-badge">海外メディア</span>
           <span class="score-detail">📌 A2 B3 C0 D3</span>
         </div>
         <div class="article-section"><strong>要点:</strong> MicrosoftがM365 Copilotの第3波として「Copilot Cowork」を発表しました。Anthropicとの提携で構築されたクラウドAIエージェントが、Outlook/Teams/Excelなどを横断してタスクを自動実行します。Agent 365（$15/user/月）によるエージェント管理基盤も5月GA予定です。</div>
@@ -611,7 +590,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-03-12</span>
-          <span class="source-badge">Healthcare-brew</span>
+          <span class="source-badge">海外メディア</span>
           <span class="score-detail">📌 A3 B2 C3 D3</span>
         </div>
         <div class="article-section"><strong>要点:</strong> FDA長官Marty Makary氏が、150の新AIシステムを構築済みであること、既存のデジタルヘルスガイダンスの半数以上を廃止する計画、リスクベースの新AIフレームワークを「脱規制方向」で策定中であることを表明しました。</div>
@@ -627,7 +606,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-01-14</span>
-          <span class="source-badge">EMA</span>
+          <span class="source-badge">海外メディア</span>
           <span class="score-detail">📌 A3 B2 C3 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> FDAとEMAが1月14日、「医薬品開発におけるGood AI Practiceの基本原則」を共同発表しました。全10原則で、AIの安全かつ責任ある使用を研究・臨床試験・製造・安全性監視の全ライフサイクルにわたってカバーしています。</div>
@@ -643,7 +622,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">Iliomad Health Data</span>
+          <span class="source-badge">海外メディア</span>
           <span class="score-detail">📌 A3 B2 C3 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> EU AI Actの高リスクAI規定が2026年8月2日に施行されます。診断AI、臨床判断支援システム、患者トリアージツール、遠隔モニタリング、治験リクルートAIが高リスクに分類されます。違反時の罰則は最大3,500万ユーロまたは全世界売上の7%です。</div>
@@ -659,7 +638,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">McKinsey</span>
+          <span class="source-badge">海外メディア</span>
           <span class="score-detail">📌 A3 B3 C1 D3</span>
         </div>
         <div class="article-section"><strong>要点:</strong> McKinsey、BCGがエージェンティックAIのバイオファーマ実装レポートを発表しました。82%のバイオファーマ幹部がAIによるR&D変革を確信し、41%のR&Dリーダーが発見ワークフロー全体のAI自動化を計画中です。治験サイト活性化率2倍、スタッフ需要30-50%削減の実績が報告されています。</div>
@@ -675,7 +654,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-01</span>
-          <span class="source-badge">Pharmaphorum</span>
+          <span class="source-badge">海外メディア</span>
           <span class="score-detail">📌 A3 B1 C1 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> Iktos社がServier社と、がん・神経領域での複数ターゲットAI創薬パートナーシップを締結しました。潜在的契約総額は10億ユーロ超です。Servierは同時期にInsilico Medicineとも$8.88億の契約を結んでおり、AI創薬の大型提携が加速しています。</div>
@@ -691,7 +670,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">AWS</span>
+          <span class="source-badge">国内メディア</span>
           <span class="score-detail">📌 A3 B2 C1 D3</span>
         </div>
         <div class="article-section"><strong>要点:</strong> 第一三共がAWSと協働で、AI・クラウド・実験自動化技術を融合した「AIエージェント統合型創薬基盤」の構築を開始しました。Amazon Bedrock/SageMakerを活用し、DMTA（Design-Make-Test-Analyze）サイクルの大幅短縮を目指しています。</div>
@@ -707,7 +686,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">Insilico</span>
+          <span class="source-badge">海外メディア</span>
           <span class="score-detail">📌 A3 B1 C2 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> Insilico MedicineのRentosertib（旧ISM001-055）は、ターゲットと化合物の両方をAIで発見した世界初の薬剤です。IPF（特発性肺線維症）を対象としたPhase 2a試験で、肺機能を98.4mL改善する結果がNature Medicineに掲載されました。現在、より大規模な臨床試験に向けて規制当局と協議中です。</div>
@@ -723,7 +702,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">Applied Clinical Trials</span>
+          <span class="source-badge">海外メディア</span>
           <span class="score-detail">📌 A3 B2 C1 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> CROがトランザクショナルなベンダーから戦略的共同開発パートナーへと進化しています。AIは臨床開発の基盤インフラとなり、「AI fluency」が組織の最大の差別化要因になると報告されています。分散型治験（DCT）、デジタルパスウェイ設計、ワークフォース変革が主要テーマです。</div>
@@ -743,7 +722,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">Releasebot</span>
+          <span class="source-badge">海外メディア</span>
           <span class="score-detail">📌 A1 B3 C0 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> Anthropicが最新モデルClaude Opus 4.6とSonnet 4.6を発表しました。1Mトークンコンテキスト、コーディング能力の向上、エージェント計画の改善など、製薬DXワークフローでの活用可能性が広がっています。</div>
@@ -757,7 +736,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">Mean</span>
+          <span class="source-badge">海外メディア</span>
           <span class="score-detail">📌 A1 B1 C2 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> DeepSeek、Moonshot AI、MiniMaxが2.4万以上の不正アカウントで1,600万回以上Claudeにアクセスし、モデルの不正蒸留を行っていた疑いが判明しました。AIのIP保護とセキュリティに関する製薬業界への教訓があります。</div>
@@ -771,7 +750,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-01-08</span>
-          <span class="source-badge">BCG</span>
+          <span class="source-badge">海外メディア</span>
           <span class="score-detail">📌 A3 B1 C0 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> BCGがHippocratic AIと戦略的協業を発表し、バイオファーマ・メドテック業界でのエージェンティックAI展開を加速しています。Hippocratic AIはGrove AIを買収し、治験オペレーションへのAI適用を拡大中です。</div>
@@ -785,7 +764,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">Seekingalpha</span>
+          <span class="source-badge">海外メディア</span>
           <span class="score-detail">📌 A3 B0 C1 D1</span>
         </div>
         <div class="article-section"><strong>要点:</strong> RecursionがRoche/Genentech（最大40プログラム）、Bayer（最大$15億）との大型提携を進行中。BioHive-2スーパーコンピュータ（504 H100 GPU）で世界最大級の製薬AIインフラを運用しています。2025-2026年に10以上の臨床読出しを予定。</div>
@@ -799,7 +778,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">日経新聞</span>
+          <span class="source-badge">国内メディア</span>
           <span class="score-detail">📌 A3 B1 C1 D1</span>
         </div>
         <div class="article-section"><strong>要点:</strong> NTTと愛知県がんセンターが、がん治療の臨床試験DXを共同推進しています。分散型臨床試験（DCT）の社会実装を通じ、ドラッグロス（新薬の国内到達遅延）の解消を目指しています。</div>
@@ -813,7 +792,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">Medinew</span>
+          <span class="source-badge">国内メディア</span>
           <span class="score-detail">📌 A3 B1 C0 D1</span>
         </div>
         <div class="article-section"><strong>要点:</strong> 2025年の「議論と実装のギャップ」を埋める転換点として2026年が位置づけられています。AI活用の成熟度が将来の競争優位性を左右するとの分析が示されました。MR認定制度も2026年4月改定で生成AI活用力が問われます。</div>
@@ -827,7 +806,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-02</span>
-          <span class="source-badge">RAPS</span>
+          <span class="source-badge">海外メディア</span>
           <span class="score-detail">📌 A2 B1 C3 D1</span>
         </div>
         <div class="article-section"><strong>要点:</strong> CDERが2026年のガイダンスアジェンダを公開し、デジタルヘルス技術およびAI製造に関する新規・改定ガイダンスの発出を計画しています。</div>
@@ -841,7 +820,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">Biopharminternational</span>
+          <span class="source-badge">海外メディア</span>
           <span class="score-detail">📌 A3 B1 C0 D2</span>
         </div>
         <div class="article-section"><strong>要点:</strong> ModernaがGPT-4ベースのAIエージェントを社内に展開し、規制文書作成から患者コミュニケーションまで750以上のユースケースを運用中です。</div>
@@ -855,7 +834,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">PharmaI Lab</span>
+          <span class="source-badge">国内メディア</span>
           <span class="score-detail">📌 A3 B1 C0 D1</span>
         </div>
         <div class="article-section"><strong>要点:</strong> イーライリリーが構築した「AIファクトリー」が2026年初頭から本格稼働を開始しました。24時間体制で新薬候補を自動生成し、メガファーマの「テクノロジー企業化」を象徴しています。</div>
@@ -869,7 +848,7 @@ body {
         </div>
         <div class="article-meta">
           <span>📅 2026-03</span>
-          <span class="source-badge">Hcinnovationgroup</span>
+          <span class="source-badge">海外メディア</span>
           <span class="score-detail">📌 A2 B1 C1 D1</span>
         </div>
         <div class="article-section"><strong>要点:</strong> Labcorpが全米規模でデジタルパソロジー（デジタル病理）プラットフォームを展開しています。AIによる病理診断の効率化が、治験のバイオマーカー解析などにも影響します。</div>
@@ -911,7 +890,7 @@ body {
 </div>
 
 <script>
-const briefItems = [{"number": 1, "title": "Anthropic、$100MのClaude Partner Networkを発表", "source_type": "The Next Web", "source_region": "海外", "date": "2026-03-12", "url": "https://thenextweb.com/news/anthropic-commits-100m-to-claude-partner-network", "score": "A2 B3 C1 D3", "score_total": 9, "summary": "Anthropicは3月12日、Claude Partner Networkを正式発表しました。初期投資$100Mで、Accenture（3万人のClaude研修）、Cognizant（35万人へのアクセス展開）、Infosys（Claude Codeをアジェンティックプラットフォームへ統合）、Deloitteなどが参画しています。", "point": "STO社にとって、製薬クライアントのDX提案でClaude活用を前面に押し出すチャンスです。パートナーネットワーク参画やClaude Certified Architect資格取得が、競合との差別化に直結します。Accenture/Deloitteなど大手コンサルとの協業・棲み分け戦略の検討も重要です。", "action": "Claude Partner Network参画条件の調査と、Claude Certified Architect資格取得のロードマップを策定する。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 2, "title": "Microsoft Copilot Cowork（Wave 3）発表 — Anthropicとの協業", "source_type": "Microsoft", "source_region": "海外", "date": "2026-03-09", "url": "https://www.microsoft.com/en-us/microsoft-365/blog/2026/03/09/copilot-cowork-a-new-way-of-getting-work-done/", "score": "A2 B3 C0 D3", "score_total": 8, "summary": "MicrosoftがM365 Copilotの第3波として「Copilot Cowork」を発表しました。Anthropicとの提携で構築されたクラウドAIエージェントが、Outlook/Teams/Excelなどを横断してタスクを自動実行します。Agent 365（$15/user/月）によるエージェント管理基盤も5月GA予定です。", "point": "STOのM365/Power Platform開発事業に直接的なインパクトがあります。製薬クライアントのM365環境にCopilot Coworkを組み込むDX提案は、即座に商機に繋がります。新料金体系（E7: $99/user/月）の費用対効果分析も提案材料になります。", "action": "Copilot Cowork Research Preview への早期参加申請を行い、製薬ユースケースのPoCを設計する。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 3, "title": "FDA長官がAI規制の「脱規制方向」転換を明言", "source_type": "Healthcare-brew", "source_region": "海外", "date": "2026-03-12", "url": "https://www.healthcare-brew.com/stories/2026/03/12/fda-commissioner-marty-makary-ai-fda", "score": "A3 B2 C3 D3", "score_total": 11, "summary": "FDA長官Marty Makary氏が、150の新AIシステムを構築済みであること、既存のデジタルヘルスガイダンスの半数以上を廃止する計画、リスクベースの新AIフレームワークを「脱規制方向」で策定中であることを表明しました。", "point": "FDAのAI規制緩和は、製薬クライアントのAI導入を加速させる追い風です。特にAI-SaMD（医療機器としてのAI）領域で、申請プロセスの簡素化が見込まれます。クライアント向けに「FDA AI規制動向アップデート」を提供する機会です。", "action": "FDA新AIフレームワークのドラフト公開に備え、製薬DXクライアント向けの規制アップデートセミナーを企画する。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 4, "title": "FDA・EMA共同：AIを用いた医薬品開発の基本原則10項目を発表", "source_type": "EMA", "source_region": "海外", "date": "2026-01-14", "url": "https://www.ema.europa.eu/en/news/ema-fda-set-common-principles-ai-medicine-development-0", "score": "A3 B2 C3 D2", "score_total": 10, "summary": "FDAとEMAが1月14日、「医薬品開発におけるGood AI Practiceの基本原則」を共同発表しました。全10原則で、AIの安全かつ責任ある使用を研究・臨床試験・製造・安全性監視の全ライフサイクルにわたってカバーしています。", "point": "日米欧のAI規制が収斂する方向にあり、グローバル製薬クライアントへのDXコンサルにおいて「三極対応」の視点が重要です。GxP環境でのAIバリデーション、データガバナンスの強化提案に活用できます。", "action": "10原則をSTO社内で精読し、製薬クライアント向けのGxP-AI適合チェックリストを作成する。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 5, "title": "EU AI Act高リスク規定、2026年8月施行 — 製薬業界への影響", "source_type": "Iliomad Health Data", "source_region": "海外", "date": "2026-03", "url": "https://www.iliomadhealthdata.com/post/eu-ai-act-for-healthcare-what-life-sciences-companies-need-to-know-before-august-2026", "score": "A3 B2 C3 D2", "score_total": 10, "summary": "EU AI Actの高リスクAI規定が2026年8月2日に施行されます。診断AI、臨床判断支援システム、患者トリアージツール、遠隔モニタリング、治験リクルートAIが高リスクに分類されます。違反時の罰則は最大3,500万ユーロまたは全世界売上の7%です。", "point": "EU展開する製薬クライアントにとって、AI適合性評価・リスク管理・市販後モニタリングの体制構築が急務です。STOのコンプライアンスコンサルとしての価値が高まる領域です。R&D目的のAI利用は免除される点も正確に伝える必要があります。", "action": "EU AI Act対応コンサルティングサービスのメニュー化を検討し、8月施行前の準備支援を営業提案に組み込む。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 6, "title": "エージェンティックAIがバイオファーマの標準インフラに", "source_type": "McKinsey", "source_region": "海外", "date": "2026-03", "url": "https://www.mckinsey.com/industries/life-sciences/our-insights/the-synthesis/agentic-ai-unlocking-peak-performance-in-biopharma-development", "score": "A3 B3 C1 D3", "score_total": 10, "summary": "McKinsey、BCGがエージェンティックAIのバイオファーマ実装レポートを発表しました。82%のバイオファーマ幹部がAIによるR&D変革を確信し、41%のR&Dリーダーが発見ワークフロー全体のAI自動化を計画中です。治験サイト活性化率2倍、スタッフ需要30-50%削減の実績が報告されています。", "point": "エージェンティックAIの製薬実装は、STOの治験支援・DXコンサル事業の中核テーマになります。特にPower Platformを活用したAIエージェント構築は、STOのM365開発力を直接活かせる領域です。", "action": "製薬向けエージェンティックAIソリューションのプロトタイプを、Power Platform + Claude APIで開発する。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 7, "title": "Iktos × Servier：€10億超のAI創薬パートナーシップ", "source_type": "Pharmaphorum", "source_region": "海外", "date": "2026-01", "url": "https://pharmaphorum.com/news/servier-signs-eu1bn-plus-ai-pact-iktos", "score": "A3 B1 C1 D2", "score_total": 7, "summary": "Iktos社がServier社と、がん・神経領域での複数ターゲットAI創薬パートナーシップを締結しました。潜在的契約総額は10億ユーロ超です。Servierは同時期にInsilico Medicineとも$8.88億の契約を結んでおり、AI創薬の大型提携が加速しています。", "point": "AI創薬の大型ディールが続出していることは、製薬クライアントのAI投資意欲を裏付けます。クライアントへのDX提案において「業界全体がAIファーストに移行中」という文脈を補強する材料として活用できます。", "action": "AI創薬ディール動向を定期ウォッチし、クライアント提案資料のマーケット分析セクションに反映する。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 8, "title": "第一三共、AWSと「AIエージェント統合型創薬基盤」構築を開始", "source_type": "AWS", "source_region": "国内", "date": "2026-03", "url": "https://aws.amazon.com/jp/blogs/news/daiichi-sankyo-ai-agent-integrated-drug-discovery/", "score": "A3 B2 C1 D3", "score_total": 9, "summary": "第一三共がAWSと協働で、AI・クラウド・実験自動化技術を融合した「AIエージェント統合型創薬基盤」の構築を開始しました。Amazon Bedrock/SageMakerを活用し、DMTA（Design-Make-Test-Analyze）サイクルの大幅短縮を目指しています。", "point": "国内メガファーマがAWSベースでAIエージェント基盤を構築する事例は、STOの国内製薬クライアントへのDX提案に直接活用できます。特にデータメッシュアーキテクチャやBedrock AgentCoreの知見は、提案の技術的裏付けになります。", "action": "第一三共の事例をベンチマークとして、国内製薬クライアント向けAIエージェント基盤提案テンプレートを作成する。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 9, "title": "Insilico Medicine、世界初のAI創薬 Rentosertib がPhase 2aで良好な結果", "source_type": "Insilico", "source_region": "海外", "date": "2026-03", "url": "https://insilico.com/blog/first_phase2", "score": "A3 B1 C2 D2", "score_total": 8, "summary": "Insilico MedicineのRentosertib（旧ISM001-055）は、ターゲットと化合物の両方をAIで発見した世界初の薬剤です。IPF（特発性肺線維症）を対象としたPhase 2a試験で、肺機能を98.4mL改善する結果がNature Medicineに掲載されました。現在、より大規模な臨床試験に向けて規制当局と協議中です。", "point": "AI創薬の臨床的有効性が実証されたことは、業界全体のAI投資加速につながります。「AIで作った薬が実際に効く」という事実は、製薬クライアントへのAI-DX提案における最も説得力のあるエビデンスです。", "action": "Rentosertibの臨床データをキラーコンテンツとして、クライアント向けAI創薬ブリーフィング資料に組み込む。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 10, "title": "CRO業界2026展望：臨床試験DXの次のステージ", "source_type": "Applied Clinical Trials", "source_region": "海外", "date": "2026-03", "url": "https://www.appliedclinicaltrialsonline.com/view/clinical-trials-2026-platformization-ai-fluency-value-chain", "score": "A3 B2 C1 D2", "score_total": 8, "summary": "CROがトランザクショナルなベンダーから戦略的共同開発パートナーへと進化しています。AIは臨床開発の基盤インフラとなり、「AI fluency」が組織の最大の差別化要因になると報告されています。分散型治験（DCT）、デジタルパスウェイ設計、ワークフォース変革が主要テーマです。", "point": "CROのDX化は、STOの治験支援事業にとって競合環境の変化と新たな商機の両面があります。特にAI人材育成支援やDCTプラットフォーム導入コンサルは、STOのサービス拡大領域です。", "action": "治験DX支援サービスのメニューにDCT導入コンサルティングとAI人材育成プログラムを追加する。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 11, "title": "Anthropic、Claude Opus 4.6 / Sonnet 4.6を発表", "source_type": "Releasebot", "source_region": "海外", "date": "2026-03", "url": "https://releasebot.io/updates/anthropic/claude", "score": "A1 B3 C0 D2", "score_total": 6, "summary": "Anthropicが最新モデルClaude Opus 4.6とSonnet 4.6を発表しました。1Mトークンコンテキスト、コーディング能力の向上、エージェント計画の改善など、製薬DXワークフローでの活用可能性が広がっています。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}, {"number": 12, "title": "Anthropicが中国3社のプラットフォーム不正利用を発覚", "source_type": "Mean", "source_region": "海外", "date": "2026-03", "url": "https://blog.mean.ceo/anthropic-claude-news-march-2026/", "score": "A1 B1 C2 D2", "score_total": 6, "summary": "DeepSeek、Moonshot AI、MiniMaxが2.4万以上の不正アカウントで1,600万回以上Claudeにアクセスし、モデルの不正蒸留を行っていた疑いが判明しました。AIのIP保護とセキュリティに関する製薬業界への教訓があります。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}, {"number": 13, "title": "BCG × Hippocratic AI：バイオファーマ向けエージェンティックAI協業", "source_type": "BCG", "source_region": "海外", "date": "2026-01-08", "url": "https://www.bcg.com/news/8january2026-strategic-collaboration-agentic-ai-across-biopharma-medtech", "score": "A3 B1 C0 D2", "score_total": 6, "summary": "BCGがHippocratic AIと戦略的協業を発表し、バイオファーマ・メドテック業界でのエージェンティックAI展開を加速しています。Hippocratic AIはGrove AIを買収し、治験オペレーションへのAI適用を拡大中です。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}, {"number": 14, "title": "Recursion Pharmaceuticals：AI創薬プラットフォームの10以上の臨床読出し予定", "source_type": "Seekingalpha", "source_region": "海外", "date": "2026-03", "url": "https://seekingalpha.com/article/4845056-recursion-pharmaceuticals-what-to-make-of-this-ai-based-drug-discovery-leader", "score": "A3 B0 C1 D1", "score_total": 5, "summary": "RecursionがRoche/Genentech（最大40プログラム）、Bayer（最大$15億）との大型提携を進行中。BioHive-2スーパーコンピュータ（504 H100 GPU）で世界最大級の製薬AIインフラを運用しています。2025-2026年に10以上の臨床読出しを予定。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}, {"number": 15, "title": "NTT × 愛知県がんセンター：臨床試験DXでドラッグロス解消へ", "source_type": "日経新聞", "source_region": "国内", "date": "2026-03", "url": "https://www.nikkei.com/article/DGXZQOUC162U30W5A211C2000000/", "score": "A3 B1 C1 D1", "score_total": 6, "summary": "NTTと愛知県がんセンターが、がん治療の臨床試験DXを共同推進しています。分散型臨床試験（DCT）の社会実装を通じ、ドラッグロス（新薬の国内到達遅延）の解消を目指しています。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}, {"number": 16, "title": "2026年の製薬AI：実証から本格実装への転換年", "source_type": "Medinew", "source_region": "国内", "date": "2026-03", "url": "https://www.medinew.jp/articles/marketing/trend/2026trend", "score": "A3 B1 C0 D1", "score_total": 5, "summary": "2025年の「議論と実装のギャップ」を埋める転換点として2026年が位置づけられています。AI活用の成熟度が将来の競争優位性を左右するとの分析が示されました。MR認定制度も2026年4月改定で生成AI活用力が問われます。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}, {"number": 17, "title": "FDA、CDER 2026年ガイダンスアジェンダにデジタルヘルス・AI製造を追加", "source_type": "RAPS", "source_region": "海外", "date": "2026-02", "url": "https://www.raps.org/news-and-articles/news-articles/2026/2/fda-s-cder-agenda-includes-new-guidance-on-digital", "score": "A2 B1 C3 D1", "score_total": 7, "summary": "CDERが2026年のガイダンスアジェンダを公開し、デジタルヘルス技術およびAI製造に関する新規・改定ガイダンスの発出を計画しています。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}, {"number": 18, "title": "Moderna × OpenAI：750以上のAIユースケースを展開中", "source_type": "Biopharminternational", "source_region": "海外", "date": "2026-03", "url": "https://www.biopharminternational.com/view/faq-what-you-need-to-know-about-agentic-ai-in-drug-discovery", "score": "A3 B1 C0 D2", "score_total": 6, "summary": "ModernaがGPT-4ベースのAIエージェントを社内に展開し、規制文書作成から患者コミュニケーションまで750以上のユースケースを運用中です。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}, {"number": 19, "title": "イーライリリー「AIファクトリー」、2026年初頭から稼働開始", "source_type": "PharmaI Lab", "source_region": "国内", "date": "2026-03", "url": "https://pharmailab.net/%E5%8C%BB%E8%96%AC%E5%93%81%E9%96%8B%E7%99%BA%E3%81%AE%E3%83%91%E3%83%A9%E3%83%80%E3%82%A4%E3%83%A0%E3%82%B7%E3%83%95%E3%83%88%EF%BD%9C%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%86%E3%82%A3/", "score": "A3 B1 C0 D1", "score_total": 5, "summary": "イーライリリーが構築した「AIファクトリー」が2026年初頭から本格稼働を開始しました。24時間体制で新薬候補を自動生成し、メガファーマの「テクノロジー企業化」を象徴しています。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}, {"number": 20, "title": "Labcorp、全米規模でデジタルパソロジー基盤を展開", "source_type": "Hcinnovationgroup", "source_region": "海外", "date": "2026-03", "url": "https://www.hcinnovationgroup.com/clinical-it/lab-information-systems/news/55359708/labcorp-to-scale-digital-pathology-platform-nationwide", "score": "A2 B1 C1 D1", "score_total": 5, "summary": "Labcorpが全米規模でデジタルパソロジー（デジタル病理）プラットフォームを展開しています。AIによる病理診断の効率化が、治験のバイオマーカー解析などにも影響します。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}];
+const briefItems = [{"number": 1, "title": "Anthropic、$100MのClaude Partner Networkを発表", "source_type": "海外メディア", "date": "2026-03-12", "url": "https://thenextweb.com/news/anthropic-commits-100m-to-claude-partner-network", "score": "A2 B3 C1 D3", "score_total": 9, "summary": "Anthropicは3月12日、Claude Partner Networkを正式発表しました。初期投資$100Mで、Accenture（3万人のClaude研修）、Cognizant（35万人へのアクセス展開）、Infosys（Claude Codeをアジェンティックプラットフォームへ統合）、Deloitteなどが参画しています。", "point": "STO社にとって、製薬クライアントのDX提案でClaude活用を前面に押し出すチャンスです。パートナーネットワーク参画やClaude Certified Architect資格取得が、競合との差別化に直結します。Accenture/Deloitteなど大手コンサルとの協業・棲み分け戦略の検討も重要です。", "action": "Claude Partner Network参画条件の調査と、Claude Certified Architect資格取得のロードマップを策定する。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 2, "title": "Microsoft Copilot Cowork（Wave 3）発表 — Anthropicとの協業", "source_type": "海外メディア", "date": "2026-03-09", "url": "https://www.microsoft.com/en-us/microsoft-365/blog/2026/03/09/copilot-cowork-a-new-way-of-getting-work-done/", "score": "A2 B3 C0 D3", "score_total": 8, "summary": "MicrosoftがM365 Copilotの第3波として「Copilot Cowork」を発表しました。Anthropicとの提携で構築されたクラウドAIエージェントが、Outlook/Teams/Excelなどを横断してタスクを自動実行します。Agent 365（$15/user/月）によるエージェント管理基盤も5月GA予定です。", "point": "STOのM365/Power Platform開発事業に直接的なインパクトがあります。製薬クライアントのM365環境にCopilot Coworkを組み込むDX提案は、即座に商機に繋がります。新料金体系（E7: $99/user/月）の費用対効果分析も提案材料になります。", "action": "Copilot Cowork Research Preview への早期参加申請を行い、製薬ユースケースのPoCを設計する。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 3, "title": "FDA長官がAI規制の「脱規制方向」転換を明言", "source_type": "海外メディア", "date": "2026-03-12", "url": "https://www.healthcare-brew.com/stories/2026/03/12/fda-commissioner-marty-makary-ai-fda", "score": "A3 B2 C3 D3", "score_total": 11, "summary": "FDA長官Marty Makary氏が、150の新AIシステムを構築済みであること、既存のデジタルヘルスガイダンスの半数以上を廃止する計画、リスクベースの新AIフレームワークを「脱規制方向」で策定中であることを表明しました。", "point": "FDAのAI規制緩和は、製薬クライアントのAI導入を加速させる追い風です。特にAI-SaMD（医療機器としてのAI）領域で、申請プロセスの簡素化が見込まれます。クライアント向けに「FDA AI規制動向アップデート」を提供する機会です。", "action": "FDA新AIフレームワークのドラフト公開に備え、製薬DXクライアント向けの規制アップデートセミナーを企画する。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 4, "title": "FDA・EMA共同：AIを用いた医薬品開発の基本原則10項目を発表", "source_type": "海外メディア", "date": "2026-01-14", "url": "https://www.ema.europa.eu/en/news/ema-fda-set-common-principles-ai-medicine-development-0", "score": "A3 B2 C3 D2", "score_total": 10, "summary": "FDAとEMAが1月14日、「医薬品開発におけるGood AI Practiceの基本原則」を共同発表しました。全10原則で、AIの安全かつ責任ある使用を研究・臨床試験・製造・安全性監視の全ライフサイクルにわたってカバーしています。", "point": "日米欧のAI規制が収斂する方向にあり、グローバル製薬クライアントへのDXコンサルにおいて「三極対応」の視点が重要です。GxP環境でのAIバリデーション、データガバナンスの強化提案に活用できます。", "action": "10原則をSTO社内で精読し、製薬クライアント向けのGxP-AI適合チェックリストを作成する。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 5, "title": "EU AI Act高リスク規定、2026年8月施行 — 製薬業界への影響", "source_type": "海外メディア", "date": "2026-03", "url": "https://www.iliomadhealthdata.com/post/eu-ai-act-for-healthcare-what-life-sciences-companies-need-to-know-before-august-2026", "score": "A3 B2 C3 D2", "score_total": 10, "summary": "EU AI Actの高リスクAI規定が2026年8月2日に施行されます。診断AI、臨床判断支援システム、患者トリアージツール、遠隔モニタリング、治験リクルートAIが高リスクに分類されます。違反時の罰則は最大3,500万ユーロまたは全世界売上の7%です。", "point": "EU展開する製薬クライアントにとって、AI適合性評価・リスク管理・市販後モニタリングの体制構築が急務です。STOのコンプライアンスコンサルとしての価値が高まる領域です。R&D目的のAI利用は免除される点も正確に伝える必要があります。", "action": "EU AI Act対応コンサルティングサービスのメニュー化を検討し、8月施行前の準備支援を営業提案に組み込む。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 6, "title": "エージェンティックAIがバイオファーマの標準インフラに", "source_type": "海外メディア", "date": "2026-03", "url": "https://www.mckinsey.com/industries/life-sciences/our-insights/the-synthesis/agentic-ai-unlocking-peak-performance-in-biopharma-development", "score": "A3 B3 C1 D3", "score_total": 10, "summary": "McKinsey、BCGがエージェンティックAIのバイオファーマ実装レポートを発表しました。82%のバイオファーマ幹部がAIによるR&D変革を確信し、41%のR&Dリーダーが発見ワークフロー全体のAI自動化を計画中です。治験サイト活性化率2倍、スタッフ需要30-50%削減の実績が報告されています。", "point": "エージェンティックAIの製薬実装は、STOの治験支援・DXコンサル事業の中核テーマになります。特にPower Platformを活用したAIエージェント構築は、STOのM365開発力を直接活かせる領域です。", "action": "製薬向けエージェンティックAIソリューションのプロトタイプを、Power Platform + Claude APIで開発する。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 7, "title": "Iktos × Servier：€10億超のAI創薬パートナーシップ", "source_type": "海外メディア", "date": "2026-01", "url": "https://pharmaphorum.com/news/servier-signs-eu1bn-plus-ai-pact-iktos", "score": "A3 B1 C1 D2", "score_total": 7, "summary": "Iktos社がServier社と、がん・神経領域での複数ターゲットAI創薬パートナーシップを締結しました。潜在的契約総額は10億ユーロ超です。Servierは同時期にInsilico Medicineとも$8.88億の契約を結んでおり、AI創薬の大型提携が加速しています。", "point": "AI創薬の大型ディールが続出していることは、製薬クライアントのAI投資意欲を裏付けます。クライアントへのDX提案において「業界全体がAIファーストに移行中」という文脈を補強する材料として活用できます。", "action": "AI創薬ディール動向を定期ウォッチし、クライアント提案資料のマーケット分析セクションに反映する。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 8, "title": "第一三共、AWSと「AIエージェント統合型創薬基盤」構築を開始", "source_type": "国内メディア", "date": "2026-03", "url": "https://aws.amazon.com/jp/blogs/news/daiichi-sankyo-ai-agent-integrated-drug-discovery/", "score": "A3 B2 C1 D3", "score_total": 9, "summary": "第一三共がAWSと協働で、AI・クラウド・実験自動化技術を融合した「AIエージェント統合型創薬基盤」の構築を開始しました。Amazon Bedrock/SageMakerを活用し、DMTA（Design-Make-Test-Analyze）サイクルの大幅短縮を目指しています。", "point": "国内メガファーマがAWSベースでAIエージェント基盤を構築する事例は、STOの国内製薬クライアントへのDX提案に直接活用できます。特にデータメッシュアーキテクチャやBedrock AgentCoreの知見は、提案の技術的裏付けになります。", "action": "第一三共の事例をベンチマークとして、国内製薬クライアント向けAIエージェント基盤提案テンプレートを作成する。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 9, "title": "Insilico Medicine、世界初のAI創薬 Rentosertib がPhase 2aで良好な結果", "source_type": "海外メディア", "date": "2026-03", "url": "https://insilico.com/blog/first_phase2", "score": "A3 B1 C2 D2", "score_total": 8, "summary": "Insilico MedicineのRentosertib（旧ISM001-055）は、ターゲットと化合物の両方をAIで発見した世界初の薬剤です。IPF（特発性肺線維症）を対象としたPhase 2a試験で、肺機能を98.4mL改善する結果がNature Medicineに掲載されました。現在、より大規模な臨床試験に向けて規制当局と協議中です。", "point": "AI創薬の臨床的有効性が実証されたことは、業界全体のAI投資加速につながります。「AIで作った薬が実際に効く」という事実は、製薬クライアントへのAI-DX提案における最も説得力のあるエビデンスです。", "action": "Rentosertibの臨床データをキラーコンテンツとして、クライアント向けAI創薬ブリーフィング資料に組み込む。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 10, "title": "CRO業界2026展望：臨床試験DXの次のステージ", "source_type": "海外メディア", "date": "2026-03", "url": "https://www.appliedclinicaltrialsonline.com/view/clinical-trials-2026-platformization-ai-fluency-value-chain", "score": "A3 B2 C1 D2", "score_total": 8, "summary": "CROがトランザクショナルなベンダーから戦略的共同開発パートナーへと進化しています。AIは臨床開発の基盤インフラとなり、「AI fluency」が組織の最大の差別化要因になると報告されています。分散型治験（DCT）、デジタルパスウェイ設計、ワークフォース変革が主要テーマです。", "point": "CROのDX化は、STOの治験支援事業にとって競合環境の変化と新たな商機の両面があります。特にAI人材育成支援やDCTプラットフォーム導入コンサルは、STOのサービス拡大領域です。", "action": "治験DX支援サービスのメニューにDCT導入コンサルティングとAI人材育成プログラムを追加する。", "category": "必読", "emoji": "🔴", "brief_date": "2026-03-15"}, {"number": 11, "title": "Anthropic、Claude Opus 4.6 / Sonnet 4.6を発表", "source_type": "海外メディア", "date": "2026-03", "url": "https://releasebot.io/updates/anthropic/claude", "score": "A1 B3 C0 D2", "score_total": 6, "summary": "Anthropicが最新モデルClaude Opus 4.6とSonnet 4.6を発表しました。1Mトークンコンテキスト、コーディング能力の向上、エージェント計画の改善など、製薬DXワークフローでの活用可能性が広がっています。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}, {"number": 12, "title": "Anthropicが中国3社のプラットフォーム不正利用を発覚", "source_type": "海外メディア", "date": "2026-03", "url": "https://blog.mean.ceo/anthropic-claude-news-march-2026/", "score": "A1 B1 C2 D2", "score_total": 6, "summary": "DeepSeek、Moonshot AI、MiniMaxが2.4万以上の不正アカウントで1,600万回以上Claudeにアクセスし、モデルの不正蒸留を行っていた疑いが判明しました。AIのIP保護とセキュリティに関する製薬業界への教訓があります。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}, {"number": 13, "title": "BCG × Hippocratic AI：バイオファーマ向けエージェンティックAI協業", "source_type": "海外メディア", "date": "2026-01-08", "url": "https://www.bcg.com/news/8january2026-strategic-collaboration-agentic-ai-across-biopharma-medtech", "score": "A3 B1 C0 D2", "score_total": 6, "summary": "BCGがHippocratic AIと戦略的協業を発表し、バイオファーマ・メドテック業界でのエージェンティックAI展開を加速しています。Hippocratic AIはGrove AIを買収し、治験オペレーションへのAI適用を拡大中です。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}, {"number": 14, "title": "Recursion Pharmaceuticals：AI創薬プラットフォームの10以上の臨床読出し予定", "source_type": "海外メディア", "date": "2026-03", "url": "https://seekingalpha.com/article/4845056-recursion-pharmaceuticals-what-to-make-of-this-ai-based-drug-discovery-leader", "score": "A3 B0 C1 D1", "score_total": 5, "summary": "RecursionがRoche/Genentech（最大40プログラム）、Bayer（最大$15億）との大型提携を進行中。BioHive-2スーパーコンピュータ（504 H100 GPU）で世界最大級の製薬AIインフラを運用しています。2025-2026年に10以上の臨床読出しを予定。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}, {"number": 15, "title": "NTT × 愛知県がんセンター：臨床試験DXでドラッグロス解消へ", "source_type": "国内メディア", "date": "2026-03", "url": "https://www.nikkei.com/article/DGXZQOUC162U30W5A211C2000000/", "score": "A3 B1 C1 D1", "score_total": 6, "summary": "NTTと愛知県がんセンターが、がん治療の臨床試験DXを共同推進しています。分散型臨床試験（DCT）の社会実装を通じ、ドラッグロス（新薬の国内到達遅延）の解消を目指しています。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}, {"number": 16, "title": "2026年の製薬AI：実証から本格実装への転換年", "source_type": "国内メディア", "date": "2026-03", "url": "https://www.medinew.jp/articles/marketing/trend/2026trend", "score": "A3 B1 C0 D1", "score_total": 5, "summary": "2025年の「議論と実装のギャップ」を埋める転換点として2026年が位置づけられています。AI活用の成熟度が将来の競争優位性を左右するとの分析が示されました。MR認定制度も2026年4月改定で生成AI活用力が問われます。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}, {"number": 17, "title": "FDA、CDER 2026年ガイダンスアジェンダにデジタルヘルス・AI製造を追加", "source_type": "海外メディア", "date": "2026-02", "url": "https://www.raps.org/news-and-articles/news-articles/2026/2/fda-s-cder-agenda-includes-new-guidance-on-digital", "score": "A2 B1 C3 D1", "score_total": 7, "summary": "CDERが2026年のガイダンスアジェンダを公開し、デジタルヘルス技術およびAI製造に関する新規・改定ガイダンスの発出を計画しています。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}, {"number": 18, "title": "Moderna × OpenAI：750以上のAIユースケースを展開中", "source_type": "海外メディア", "date": "2026-03", "url": "https://www.biopharminternational.com/view/faq-what-you-need-to-know-about-agentic-ai-in-drug-discovery", "score": "A3 B1 C0 D2", "score_total": 6, "summary": "ModernaがGPT-4ベースのAIエージェントを社内に展開し、規制文書作成から患者コミュニケーションまで750以上のユースケースを運用中です。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}, {"number": 19, "title": "イーライリリー「AIファクトリー」、2026年初頭から稼働開始", "source_type": "国内メディア", "date": "2026-03", "url": "https://pharmailab.net/%E5%8C%BB%E8%96%AC%E5%93%81%E9%96%8B%E7%99%BA%E3%81%AE%E3%83%91%E3%83%A9%E3%83%80%E3%82%A4%E3%83%A0%E3%82%B7%E3%83%95%E3%83%88%EF%BD%9C%E3%82%A8%E3%83%BC%E3%82%B8%E3%82%A7%E3%83%B3%E3%83%86%E3%82%A3/", "score": "A3 B1 C0 D1", "score_total": 5, "summary": "イーライリリーが構築した「AIファクトリー」が2026年初頭から本格稼働を開始しました。24時間体制で新薬候補を自動生成し、メガファーマの「テクノロジー企業化」を象徴しています。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}, {"number": 20, "title": "Labcorp、全米規模でデジタルパソロジー基盤を展開", "source_type": "海外メディア", "date": "2026-03", "url": "https://www.hcinnovationgroup.com/clinical-it/lab-information-systems/news/55359708/labcorp-to-scale-digital-pathology-platform-nationwide", "score": "A2 B1 C1 D1", "score_total": 5, "summary": "Labcorpが全米規模でデジタルパソロジー（デジタル病理）プラットフォームを展開しています。AIによる病理診断の効率化が、治験のバイオマーカー解析などにも影響します。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-03-15"}];
 
 let bookmarks = {};
 try {
