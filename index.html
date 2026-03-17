@@ -246,12 +246,13 @@ body {
   width: 200px;
 }
 .search-input:focus { outline: none; border-color: var(--accent); }
-.table-wrapper { overflow-x: auto; }
+.table-wrapper { overflow-x: auto; max-width: 100%; }
 .items-table {
   width: 100%;
   border-collapse: collapse;
   font-size: 13px;
   table-layout: fixed;
+  max-width: 100%;
 }
 .items-table th {
   text-align: left;
@@ -269,13 +270,14 @@ body {
   vertical-align: top;
 }
 .items-table tr:hover { background: rgba(108,123,247,0.05); }
-.items-table colgroup .col-bm { width: 36px; }
-.items-table colgroup .col-cat { width: 80px; }
-.items-table colgroup .col-score { width: 56px; }
+.items-table colgroup .col-bm { width: 32px; }
+.items-table colgroup .col-cat { width: 70px; }
+.items-table colgroup .col-score { width: 48px; }
 .items-table colgroup .col-title { width: auto; }
-.items-table colgroup .col-source { width: 90px; }
-.items-table colgroup .col-date { width: 90px; }
-.items-table colgroup .col-brief { width: 90px; }
+.items-table colgroup .col-source { width: 80px; }
+.items-table colgroup .col-date { width: 80px; }
+.items-table colgroup .col-brief { width: 80px; }
+.items-table colgroup .col-meta-mobile { width: 0; padding: 0; overflow: hidden; }
 .cat-badge {
   font-size: 11px;
   padding: 2px 8px;
@@ -658,14 +660,14 @@ body {
       <div class="table-wrapper">
         <table class="items-table" id="itemsTable">
           <colgroup>
-            <col style="width:36px">
-            <col style="width:80px">
-            <col style="width:56px">
-            <col>
-            <col style="width:90px">
-            <col style="width:90px">
-            <col style="width:90px">
-            <col style="width:0px">
+            <col class="col-bm">
+            <col class="col-cat">
+            <col class="col-score">
+            <col class="col-title">
+            <col class="col-source">
+            <col class="col-date">
+            <col class="col-brief">
+            <col class="col-meta-mobile">
           </colgroup>
           <thead>
             <tr>
