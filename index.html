@@ -315,6 +315,20 @@ body {
   white-space: nowrap;
 }
 .brief-link:hover { text-decoration: underline; }
+/* meta-mobile: hidden on desktop, shown on mobile */
+.meta-mobile { display: none; }
+.action-link {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.action-brief {
+  background: rgba(108,123,247,0.12);
+  color: var(--accent-light);
+}
+.action-brief:hover { background: rgba(108,123,247,0.25); }
 .brief-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
 .brief-card-link { text-decoration: none; color: inherit; }
 .brief-card {
@@ -445,41 +459,62 @@ body {
   .items-table colgroup { display: none; }
   .items-table thead { display: none; }
   .items-table tbody tr {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    grid-template-rows: auto auto;
-    gap: 4px 10px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 4px 0;
     padding: 12px 0;
     border-bottom: 1px solid var(--border);
   }
-  .items-table td { padding: 0; border: none; }
+  .items-table td { padding: 0; border: none; display: none; }
   .items-table td.bm-cell {
-    grid-row: 1 / 3;
-    grid-column: 1;
     display: flex;
     align-items: center;
+    margin-right: 8px;
+    flex-shrink: 0;
   }
   .items-table td.title-cell {
-    grid-column: 2;
-    grid-row: 1;
+    display: block;
+    flex: 1;
+    min-width: 0;
   }
-  .items-table td.title-cell a { white-space: normal; font-size: 14px; }
-  .items-table td:nth-child(2),
-  .items-table td:nth-child(3),
-  .items-table td:nth-child(5),
-  .items-table td:nth-child(6),
-  .items-table td:nth-child(7) {
-    grid-column: 2;
-    grid-row: 2;
+  .items-table td.title-cell a {
+    white-space: normal;
+    font-size: 14px;
+    line-height: 1.4;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
   }
-  /* Show category, score, source, date inline */
-  .items-table tbody tr td:nth-child(2),
-  .items-table tbody tr td:nth-child(3),
-  .items-table tbody tr td:nth-child(5),
-  .items-table tbody tr td:nth-child(6),
-  .items-table tbody tr td:nth-child(7) {
-    display: inline;
+  .items-table td.meta-mobile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    width: 100%;
+    padding-left: 36px;
+    margin-top: 4px;
     font-size: 11px;
+  }
+  .items-table td.meta-mobile .cat-badge,
+  .items-table td.meta-mobile .score-badge,
+  .items-table td.meta-mobile .source-badge {
+    font-size: 11px;
+    padding: 1px 6px;
+  }
+  .items-table td.meta-mobile .date-cell {
+    font-size: 11px;
+  }
+  /* Hide desktop-only columns: cat, score, source, date, brief */
+  .items-table td.td-cat,
+  .items-table td.td-score,
+  .items-table td.td-source,
+  .items-table td.td-date,
+  .items-table td.td-brief {
+    display: none !important;
   }
 
   /* Brief grid */
@@ -770,17 +805,25 @@ function renderItems(items) {
     const scoreClass = item.score_total >= 9 ? 'score-high' : item.score_total >= 7 ? 'score-mid' : 'score-low';
     const bmActive = isBookmarked(item) ? ' bm-active' : '';
     const bmIcon = isBookmarked(item) ? '★' : '☆';
+    const briefAnchor = 'brief-' + item.brief_date + '.html#article-' + item.brief_date + '_' + item.number;
     return `<tr>
       <td class="bm-cell"><button class="bm-btn${bmActive}" data-idx="${idx}" title="ブックマーク">${bmIcon}</button></td>
-      <td><span class="cat-badge ${catClass}">${catEmoji} ${item.category}</span></td>
-      <td><span class="score-badge ${scoreClass}">${item.score_total}点</span></td>
+      <td class="td-cat"><span class="cat-badge ${catClass}">${catEmoji} ${item.category}</span></td>
+      <td class="td-score"><span class="score-badge ${scoreClass}">${item.score_total}点</span></td>
       <td class="title-cell">
-        <a href="${item.url}" target="_blank" rel="noopener">${item.title}</a>
+        ${item.url ? '<a href="' + item.url + '" target="_blank" rel="noopener">' + item.title + '</a>' : '<span>' + item.title + '</span>'}
         ${item.summary ? '<div class="item-summary">' + item.summary.slice(0,120) + '...</div>' : ''}
       </td>
-      <td><span class="source-badge">${item.source_type || '—'}</span></td>
-      <td class="date-cell">${item.date}</td>
-      <td><a href="brief-${item.brief_date}.html" class="brief-link">${item.brief_date}</a></td>
+      <td class="td-source"><span class="source-badge">${item.source_type || '—'}</span></td>
+      <td class="td-date date-cell">${item.date}</td>
+      <td class="td-brief"><a href="${briefAnchor}" class="brief-link">${item.brief_date}</a></td>
+      <td class="meta-mobile">
+        <span class="cat-badge ${catClass}">${catEmoji} ${item.category}</span>
+        <span class="score-badge ${scoreClass}">${item.score_total}点</span>
+        <span class="source-badge">${item.source_type || '—'}</span>
+        <span class="date-cell">${item.date}</span>
+        <a href="${briefAnchor}" class="action-link action-brief">詳細</a>
+      </td>
     </tr>`;
   }).join('');
 
@@ -803,8 +846,8 @@ function applyFilters() {
     if (filters.category !== 'all' && item.category !== filters.category) return false;
     if (filters.score > 0 && item.score_total < filters.score) return false;
     if (filters.source !== 'all') {
-      if (filters.source === '海外' && !item.source_type.includes('海外')) return false;
-      if (filters.source === '国内' && !item.source_type.includes('国内')) return false;
+      if (filters.source === '海外' && item.source_region !== '海外') return false;
+      if (filters.source === '国内' && item.source_region !== '国内') return false;
     }
     if (filters.search) {
       const q = filters.search.toLowerCase();
