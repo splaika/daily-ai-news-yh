@@ -188,6 +188,9 @@ body {
   border-radius: 12px;
   padding: 18px 20px;
   margin-bottom: 16px;
+  overflow: hidden;
+  box-sizing: border-box;
+  max-width: 100%;
 }
 .card h2 { font-size: 18px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
 .highlight-card {
@@ -246,7 +249,7 @@ body {
   width: 200px;
 }
 .search-input:focus { outline: none; border-color: var(--accent); }
-.table-wrapper { overflow-x: auto; max-width: 100%; }
+.table-wrapper { overflow-x: auto; width: 100%; max-width: 100%; box-sizing: border-box; }
 .items-table {
   width: 100%;
   border-collapse: collapse;
@@ -254,6 +257,7 @@ body {
   table-layout: fixed;
   max-width: 100%;
 }
+.items-table .title-cell { overflow: hidden; text-overflow: ellipsis; }
 .items-table th {
   text-align: left;
   padding: 8px 8px;
@@ -660,14 +664,14 @@ body {
       <div class="table-wrapper">
         <table class="items-table" id="itemsTable">
           <colgroup>
-            <col class="col-bm">
-            <col class="col-cat">
-            <col class="col-score">
-            <col class="col-title">
-            <col class="col-source">
-            <col class="col-date">
-            <col class="col-brief">
-            <col class="col-meta-mobile">
+            <col style="width:32px">
+            <col style="width:70px">
+            <col style="width:48px">
+            <col>
+            <col style="width:80px">
+            <col style="width:80px">
+            <col style="width:80px">
+            <col style="width:0">
           </colgroup>
           <thead>
             <tr>
