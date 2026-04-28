@@ -1,0 +1,1078 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>AI Brief - 2026-04-29</title>
+<style>
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #0f1117;
+  --bg-card: #1a1d2e;
+  --bg-sidebar: #141625;
+  --border: #2a2d3e;
+  --text: #e4e6f0;
+  --text-dim: #8b8fa3;
+  --accent: #6c7bf7;
+  --accent-light: #8b97ff;
+  --red: #ff6b6b;
+  --red-bg: rgba(255,107,107,0.1);
+  --yellow: #ffd93d;
+  --yellow-bg: rgba(255,217,61,0.1);
+  --blue: #4ecdc4;
+  --green: #51cf66;
+}
+html, body {
+  overflow-x: hidden;
+}
+body {
+  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+}
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+.sidebar {
+  background: var(--bg-sidebar);
+  border-right: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.logo {
+  padding: 24px 20px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.logo-icon { font-size: 28px; }
+.logo-text { font-size: 18px; font-weight: 700; color: var(--accent-light); }
+.nav { flex: 1; padding: 12px 8px; }
+.nav-section-title {
+  padding: 16px 12px 6px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-dim);
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  color: var(--text-dim);
+  text-decoration: none;
+  font-size: 14px;
+  transition: all 0.15s;
+}
+.nav-item:hover { background: rgba(108,123,247,0.1); color: var(--text); }
+.nav-item.active { background: rgba(108,123,247,0.15); color: var(--accent-light); font-weight: 600; }
+.nav-icon { font-size: 16px; }
+.sidebar-footer {
+  padding: 16px 20px;
+  border-top: 1px solid var(--border);
+}
+.update-info { font-size: 12px; color: var(--text-dim); }
+.bookmark-list { padding: 0 8px; max-height: 40vh; overflow-y: auto; }
+.bookmark-empty { padding: 8px 12px; font-size: 12px; color: var(--text-dim); font-style: italic; }
+.bookmark-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+.bookmark-item:hover { background: rgba(108,123,247,0.1); }
+.bm-remove {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 10px;
+  padding: 2px 4px;
+  border-radius: 4px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.bm-remove:hover { background: var(--red-bg); color: var(--red); }
+.bm-link {
+  text-decoration: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.bm-score {
+  font-size: 11px;
+  color: var(--green);
+  font-weight: 600;
+}
+.bm-title {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.bm-link:hover .bm-title { color: var(--accent-light); }
+.bm-cell { width: 36px; text-align: center; }
+.bm-btn {
+  background: none;
+  border: none;
+  font-size: 18px;
+  cursor: pointer;
+  color: var(--text-dim);
+  padding: 2px;
+  transition: all 0.15s;
+  line-height: 1;
+}
+.bm-btn:hover { color: var(--yellow); transform: scale(1.2); }
+.bm-btn.bm-active { color: var(--yellow); }
+.th-bm { width: 36px; }
+.filter-btn.bm-filter.active { background: var(--yellow); border-color: var(--yellow); color: #000; }
+.bm-btn-detail {
+  background: none;
+  border: 1px solid var(--border);
+  font-size: 20px;
+  cursor: pointer;
+  color: var(--text-dim);
+  padding: 4px 8px;
+  border-radius: 6px;
+  transition: all 0.15s;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.bm-btn-detail:hover { color: var(--yellow); border-color: var(--yellow); }
+.bm-btn-detail.bm-active { color: var(--yellow); border-color: var(--yellow); background: var(--yellow-bg); }
+.main {
+  padding: 24px 32px;
+  overflow-x: hidden;
+  min-width: 0;
+  box-sizing: border-box;
+}
+.header {
+  margin-bottom: 28px;
+}
+.header h1 { font-size: 28px; font-weight: 700; }
+.subtitle { color: var(--text-dim); font-size: 15px; margin-top: 4px; }
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.stat-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+}
+.stat-value { font-size: 28px; font-weight: 700; color: var(--accent-light); }
+.stat-label { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
+.card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px 20px;
+  margin-bottom: 16px;
+  overflow: hidden;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+.card h2 { font-size: 18px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.highlight-card {
+  border-left: 4px solid var(--accent);
+}
+.highlight-card p { color: var(--text); font-size: 15px; }
+.date-badge {
+  font-size: 12px;
+  background: rgba(108,123,247,0.2);
+  color: var(--accent-light);
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+.count-badge {
+  font-size: 13px;
+  background: rgba(108,123,247,0.2);
+  color: var(--accent-light);
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-weight: 500;
+}
+.filter-card { padding: 12px 16px; }
+.filter-bar { display: flex; flex-direction: column; gap: 10px; }
+.filter-search-wrap { width: 100%; }
+.filter-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+.chip-group { display: flex; gap: 4px; align-items: center; }
+.chip-sep { color: var(--border); font-size: 14px; margin: 0 2px; }
+.filter-btn {
+  padding: 4px 10px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-dim);
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+  white-space: nowrap;
+}
+.filter-btn:hover { border-color: var(--accent); color: var(--text); }
+.filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+.filter-btn.red.active { background: var(--red); border-color: var(--red); }
+.filter-btn.yellow.active { background: #b8960a; border-color: #b8960a; }
+.search-input {
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 13px;
+  width: 200px;
+}
+.search-input:focus { outline: none; border-color: var(--accent); }
+.table-wrapper { overflow-x: auto; width: 100%; max-width: 100%; box-sizing: border-box; }
+.items-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  table-layout: fixed;
+  max-width: 100%;
+}
+.items-table .title-cell { overflow: hidden; text-overflow: ellipsis; }
+.items-table th {
+  text-align: left;
+  padding: 8px 8px;
+  border-bottom: 2px solid var(--border);
+  color: var(--text-dim);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+.items-table td {
+  padding: 8px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+.items-table tr:hover { background: rgba(108,123,247,0.05); }
+.items-table colgroup .col-bm { width: 32px; }
+.items-table colgroup .col-cat { width: 70px; }
+.items-table colgroup .col-score { width: 48px; }
+.items-table colgroup .col-title { width: auto; }
+.items-table colgroup .col-source { width: 80px; }
+.items-table colgroup .col-date { width: 80px; }
+.items-table colgroup .col-brief { width: 80px; }
+.items-table colgroup .col-meta-mobile { width: 0; padding: 0; overflow: hidden; }
+.cat-badge {
+  font-size: 11px;
+  padding: 2px 8px;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+.cat-red { background: var(--red-bg); color: var(--red); }
+.cat-yellow { background: var(--yellow-bg); color: var(--yellow); }
+.score-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+.score-high { background: rgba(81,207,102,0.15); color: var(--green); }
+.score-mid { background: rgba(255,217,61,0.15); color: var(--yellow); }
+.score-low { background: rgba(139,143,163,0.15); color: var(--text-dim); }
+.title-cell {
+  overflow: hidden;
+}
+.title-cell a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 13px;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.title-cell a:hover { color: var(--accent-light); text-decoration: underline; }
+.item-summary { font-size: 11px; color: var(--text-dim); margin-top: 2px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.source-badge {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(78,205,196,0.1);
+  color: var(--blue);
+  white-space: nowrap;
+}
+.date-cell { white-space: nowrap; color: var(--text-dim); font-size: 13px; }
+.brief-link {
+  color: var(--accent);
+  text-decoration: none;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.brief-link:hover { text-decoration: underline; }
+/* meta-mobile: hidden on desktop, shown on mobile */
+.meta-mobile { display: none; width: 0; padding: 0 !important; border: none !important; overflow: hidden; }
+.action-link {
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.action-brief {
+  background: rgba(108,123,247,0.12);
+  color: var(--accent-light);
+}
+.action-brief:hover { background: rgba(108,123,247,0.25); }
+.brief-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
+.brief-card-link { text-decoration: none; color: inherit; }
+.brief-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  transition: all 0.15s;
+}
+.brief-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.brief-date { font-size: 20px; font-weight: 700; color: var(--accent-light); }
+.brief-meta { font-size: 13px; color: var(--text-dim); margin: 6px 0; }
+.brief-highlight { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
+
+/* Detail page styles */
+.section-red { border-left: 4px solid var(--red); }
+.section-yellow { border-left: 4px solid var(--yellow); }
+.article-card {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px;
+  margin-bottom: 14px;
+}
+.article-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+.article-header h3 { font-size: 15px; font-weight: 600; }
+.article-header h3 a { color: var(--text); text-decoration: none; }
+.article-header h3 a:hover { color: var(--accent-light); }
+.article-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+}
+.score-detail { font-size: 12px; }
+.article-section {
+  font-size: 14px;
+  margin-bottom: 8px;
+  line-height: 1.6;
+  color: var(--text);
+}
+.article-section strong { color: var(--accent-light); }
+.article-section.action {
+  background: rgba(108,123,247,0.08);
+  padding: 10px 14px;
+  border-radius: 8px;
+  border-left: 3px solid var(--accent);
+}
+.ref-list { list-style: none; }
+.ref-list li {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--border);
+}
+.ref-list li:last-child { border-bottom: none; }
+.ref-list a { color: var(--blue); text-decoration: none; font-size: 14px; }
+.ref-list a:hover { text-decoration: underline; }
+.editorial-card { border-left: 4px solid var(--blue); }
+.editorial-card p { font-size: 15px; line-height: 1.8; }
+
+/* Mobile hamburger & overlay sidebar */
+.mobile-header {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 56px;
+  background: var(--bg-sidebar);
+  border-bottom: 1px solid var(--border);
+  z-index: 200;
+  align-items: center;
+  padding: 0 16px;
+  gap: 12px;
+}
+.mobile-header .logo-icon { font-size: 22px; }
+.mobile-header .logo-text { font-size: 16px; font-weight: 700; color: var(--accent-light); }
+.hamburger {
+  background: none; border: none; color: var(--text); font-size: 24px;
+  cursor: pointer; padding: 4px 8px; border-radius: 6px; line-height: 1;
+}
+.hamburger:hover { background: rgba(108,123,247,0.15); }
+.sidebar-overlay {
+  display: none;
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 299;
+}
+.sidebar-overlay.active { display: block; }
+
+@media (max-width: 900px) {
+  .layout {
+    display: block;
+    grid-template-columns: none;
+  }
+  .mobile-header { display: flex; }
+  .sidebar {
+    position: fixed;
+    top: 0; left: 0; bottom: 0;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 0.25s ease;
+    z-index: 300;
+    width: 280px;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .main {
+    width: 100%;
+    padding: 16px;
+    padding-top: 72px;
+    max-width: 100vw;
+    overflow-x: hidden;
+  }
+  .header { margin-bottom: 16px; }
+  .header h1 { font-size: 20px; }
+  .subtitle { font-size: 13px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .stat-card { padding: 14px 10px; }
+  .stat-value { font-size: 22px; }
+  .stat-label { font-size: 11px; }
+  .card { padding: 14px; margin-bottom: 12px; }
+  .card h2 { font-size: 16px; margin-bottom: 10px; }
+  .filter-chips { gap: 5px; }
+  .filter-btn { padding: 3px 8px; font-size: 11px; }
+  .chip-sep { font-size: 12px; margin: 0 1px; }
+  .search-input { width: 100%; }
+  .highlight-card p { font-size: 13px; }
+
+  /* Table: switch to card layout on mobile */
+  .items-table { table-layout: auto; }
+  .items-table colgroup { display: none; }
+  .items-table thead { display: none; }
+  .items-table tbody tr {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    gap: 4px 0;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .items-table td { padding: 0; border: none; display: none; }
+  .items-table td.bm-cell {
+    display: flex;
+    align-items: center;
+    margin-right: 8px;
+    flex-shrink: 0;
+  }
+  .items-table td.title-cell {
+    display: block;
+    flex: 1;
+    min-width: 0;
+  }
+  .items-table td.title-cell a {
+    white-space: normal;
+    font-size: 14px;
+    line-height: 1.4;
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  }
+  .items-table td.meta-mobile {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    align-items: center;
+    width: 100%;
+    padding-left: 36px;
+    margin-top: 4px;
+    font-size: 11px;
+  }
+  .items-table td.meta-mobile .cat-badge,
+  .items-table td.meta-mobile .score-badge,
+  .items-table td.meta-mobile .source-badge {
+    font-size: 11px;
+    padding: 1px 6px;
+  }
+  .items-table td.meta-mobile .date-cell {
+    font-size: 11px;
+  }
+  /* Hide desktop-only columns: cat, score, source, date, brief */
+  .items-table td.td-cat,
+  .items-table td.td-score,
+  .items-table td.td-source,
+  .items-table td.td-date,
+  .items-table td.td-brief {
+    display: none !important;
+  }
+
+  /* Brief grid */
+  .brief-grid { grid-template-columns: 1fr; gap: 10px; }
+  .brief-card { padding: 14px; }
+  .brief-date { font-size: 16px; }
+
+  /* Detail page article cards */
+  .article-card { padding: 14px; }
+  .article-header { flex-wrap: wrap; gap: 8px; }
+  .article-header h3 { font-size: 14px; }
+  .article-meta { font-size: 12px; gap: 8px; }
+  .article-section { font-size: 13px; }
+  .bm-btn-detail { font-size: 18px; padding: 3px 6px; }
+}
+
+@media (max-width: 480px) {
+  .stats-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-card { padding: 10px 8px; }
+  .stat-value { font-size: 18px; }
+  .main { padding: 12px; padding-top: 68px; }
+  .filter-btn { padding: 3px 7px; font-size: 10px; }
+  .chip-sep { display: none; }
+  .filter-chips { gap: 4px; }
+}
+
+</style>
+</head>
+<body>
+<div class="mobile-header">
+  <button class="hamburger" id="menuBtn" aria-label="メニュー">☰</button>
+  <div class="logo-icon">🧠</div>
+  <div class="logo-text">AI Intel Brief</div>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <div class="logo-icon">🧠</div>
+      <div class="logo-text">AI Intel Brief</div>
+    </div>
+    <nav class="nav">
+      <a href="index.html" class="nav-item">
+        <span class="nav-icon">📊</span>ダッシュボード
+      </a>
+      <div class="nav-section-title">ブックマーク</div>
+      <div id="bookmarkList" class="bookmark-list">
+        <div class="bookmark-empty">ブックマークはまだありません</div>
+      </div>
+      <div class="nav-section-title">過去のブリーフ</div>
+      <a href="brief-2026-04-29.html" class="nav-item active"><span class="nav-icon">📄</span>2026-04-29</a>
+      <a href="brief-2026-04-28.html" class="nav-item"><span class="nav-icon">📄</span>2026-04-28</a>
+      <a href="brief-2026-04-24.html" class="nav-item"><span class="nav-icon">📄</span>2026-04-24</a>
+      <a href="brief-2026-04-23.html" class="nav-item"><span class="nav-icon">📄</span>2026-04-23</a>
+      <a href="brief-2026-04-22.html" class="nav-item"><span class="nav-icon">📄</span>2026-04-22</a>
+      <a href="brief-2026-04-21.html" class="nav-item"><span class="nav-icon">📄</span>2026-04-21</a>
+      <a href="brief-2026-04-20.html" class="nav-item"><span class="nav-icon">📄</span>2026-04-20</a>
+      <a href="brief-2026-04-01.html" class="nav-item"><span class="nav-icon">📄</span>2026-04-01</a>
+      <a href="brief-2026-03-31.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-31</a>
+      <a href="brief-2026-03-30.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-30</a>
+      <a href="brief-2026-03-29.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-29</a>
+      <a href="brief-2026-03-28.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-28</a>
+      <a href="brief-2026-03-27.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-27</a>
+      <a href="brief-2026-03-26.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-26</a>
+      <a href="brief-2026-03-24.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-24</a>
+      <a href="brief-2026-03-23.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-23</a>
+      <a href="brief-2026-03-22.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-22</a>
+      <a href="brief-2026-03-21.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-21</a>
+      <a href="brief-2026-03-20.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-20</a>
+      <a href="brief-2026-03-19.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-19</a>
+      <a href="brief-2026-03-18.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-18</a>
+      <a href="brief-2026-03-17.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-17</a>
+      <a href="brief-2026-03-16.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-16</a>
+      <a href="brief-2026-03-15.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-15</a>
+      <a href="brief-2026-03-10.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-10</a>
+      <a href="brief-2026-03-05.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-05</a>
+      <a href="brief-2026-02-24.html" class="nav-item"><span class="nav-icon">📄</span>2026-02-24</a>
+
+    </nav>
+  </aside>
+  <main class="main">
+    <header class="header">
+      <h1>AI Intelligence Brief</h1>
+      <p class="subtitle">2026-04-29</p>
+    </header>
+
+    <div class="card highlight-card">
+      <h2>📌 ハイライト</h2>
+      <p>Anthropicが製薬AIスタートアップCoefficient Bioを$400Mで買収し、Claude for Life Sciencesの強化を本格化。Novo NordiskがOpenAIと包括提携を発表し、創薬からサプライチェーンまでAIを全面導入へ。国内ではPMDAが全職員への生成AI導入を正式開始し、規制当局のAI活用が新たなフェーズに入りました。</p>
+    </div>
+
+    <div class="card section-red">
+      <h2>🔴 必読（10件）</h2>
+
+      <div class="article-card" id="article-2026-04-29_1">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_1" title="ブックマーク">☆</button>
+          <span class="score-badge score-high">10点</span>
+          <h3><a href="https://techcrunch.com/2026/04/03/anthropic-buys-biotech-startup-coefficient-bio-in-400m-deal-reports/" target="_blank" rel="noopener">[1] Anthropic、製薬AIスタートアップCoefficient Bioを$400Mで買収</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026-04-03</span>
+          <span class="source-badge">海外メディア</span>
+          <span class="score-detail">📌 A3 B3 C1 D3</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> Anthropicが創薬AIスタートアップCoefficient Bioを約$400M（株式取引）で買収しました。Coefficient Bioはわずか8カ月の企業ながら、創薬R&D計画、臨床規制戦略、新薬機会特定のためのAIプラットフォームを開発していました。共同創業者のNathan Frey氏はAnthropicのライフサイエンスリードに就任します。</div>
+        <div class="article-section"><strong>ポイント:</strong> Claude for Life Sciencesは既にAstraZeneca、Sanofi、Novo Nordisk、Genmabをクライアントに持ちます。今後12〜18カ月でCoefficient Bioの技術がClaude上の新ツールとなり、ドラッグパイプライン自動提案、成功確率予測、試験設計支援が可能になると予測されます。STOとしても、Claude for Life Sciencesの機能拡張を活用した製薬クライアント向けDXソリューション提案に直結します。</div>
+        <div class="article-section action"><strong>アクション候補:</strong> Claude for Life Sciencesの最新機能をトラッキングし、製薬クライアント向けデモシナリオを作成すること。</div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_2">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_2" title="ブックマーク">☆</button>
+          <span class="score-badge score-high">9点</span>
+          <h3><a href="https://www.cnbc.com/2026/04/14/novo-nordisk-openai-ai-drug-discovery-healthcare-nvo.html" target="_blank" rel="noopener">[2] Novo NordiskとOpenAIが包括的パートナーシップを発表</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026-04-14</span>
+          <span class="source-badge">海外メディア</span>
+          <span class="score-detail">📌 A3 B2 C1 D3</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> Novo Nordiskが創薬、製造、サプライチェーン、商業運営にわたりOpenAIと包括提携を発表しました。パイロット実施後、2026年末までに全面統合を目指します。データセット分析、新薬候補特定、上市期間短縮にAIを活用します。</div>
+        <div class="article-section"><strong>ポイント:</strong> メガファーマが「AIファースト」戦略を公式に打ち出した象徴的な動きです。製薬企業がAIベンダーと「全社レベル」で提携する流れが加速しており、STOが提案する製薬DXプロジェクトにおいても、クライアントの社内AI基盤整備支援やCoE（Center of Excellence）設計の需要が高まります。</div>
+        <div class="article-section action"><strong>アクション候補:</strong> 製薬クライアント向けに「AI全社導入ロードマップ」のテンプレート提案書を準備すること。</div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_3">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_3" title="ブックマーク">☆</button>
+          <span class="score-badge score-high">10点</span>
+          <h3><a href="https://www.ema.europa.eu/en/news/ema-fda-set-common-principles-ai-medicine-development-0" target="_blank" rel="noopener">[3] FDA・EMA、AI医薬品開発の共同ガイドライン（10原則）を発表</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026-01-14</span>
+          <span class="source-badge">海外メディア</span>
+          <span class="score-detail">📌 A3 B2 C3 D2</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> FDAとEMAが共同で「医薬品開発におけるAIグッドプラクティス10原則」を発表しました。ヒューマンセントリック設計、リスクベースアプローチ、データガバナンス、ライフサイクル管理など、AIの安全かつ責任ある使用の方向性を示しています。</div>
+        <div class="article-section"><strong>ポイント:</strong> この10原則は今後のAI医薬品申請の基盤となります。製薬クライアントがAI活用を進める際、GxPコンプライアンスの観点からこれらの原則への対応が必須となります。STOの規制対応コンサルティングにおいて、この原則に基づくアセスメントフレームワークを提供することが差別化ポイントになります。</div>
+        <div class="article-section action"><strong>アクション候補:</strong> FDA/EMA 10原則をベースにした「AI活用GxPコンプライアンスチェックリスト」を作成すること。</div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_4">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_4" title="ブックマーク">☆</button>
+          <span class="score-badge score-high">10点</span>
+          <h3><a href="https://www.pmda.go.jp/about-pmda/news-release/0093.html" target="_blank" rel="noopener">[4] PMDA、全職員への生成AI（Microsoft Copilot）導入を正式開始</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026-04-15</span>
+          <span class="source-badge">国内メディア</span>
+          <span class="score-detail">📌 A3 B2 C3 D2</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> PMDAが2024年9月策定の「AI活用行動計画」に基づき、Microsoft Copilotを全職員に展開し、審査・安全対策業務での生成AI活用を正式に開始しました。日本の医薬品規制当局が生成AIを本格導入する初の事例となります。</div>
+        <div class="article-section"><strong>ポイント:</strong> 規制当局側のAI活用が進むことで、申請企業側にもAIを活用した申請資料作成・品質向上の期待が高まります。CTD（Common Technical Document）作成支援やPMDA照会事項への回答生成にAIを活用するソリューションの需要拡大が見込まれます。STOのM365/Copilot導入支援の実績は、この文脈で製薬クライアントへの提案力を高めます。</div>
+        <div class="article-section action"><strong>アクション候補:</strong> PMDA AI活用行動計画の詳細を入手し、製薬企業向け「規制当局AI対応レディネス評価」サービスを企画すること。</div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_5">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_5" title="ブックマーク">☆</button>
+          <span class="score-badge score-mid">7点</span>
+          <h3><a href="https://nvidianews.nvidia.com/news/nvidia-and-lilly-announce-co-innovation-lab-to-reinvent-drug-discovery-in-the-age-of-ai" target="_blank" rel="noopener">[5] Eli LillyとNVIDIA、$1B規模のAI共同イノベーションラボを設立</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026-01-12</span>
+          <span class="source-badge">海外メディア</span>
+          <span class="score-detail">📌 A3 B1 C0 D3</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> Eli LillyとNVIDIAが5年間で最大$1Bを投じるAI共同イノベーションラボを発表しました。LillyはNVIDIA Blackwell Ultra GPU 1,016基を搭載した「LillyPod」を4カ月で構築し、9,000ペタフロップス超のAI処理能力を実現。製薬企業が自社でAIスパコンを保有する時代に突入しました。</div>
+        <div class="article-section"><strong>ポイント:</strong> メガファーマが「テクノロジー企業」を自認し始めた転換点です。中堅製薬企業はこのレベルのインフラ投資は困難であり、クラウドベースのAIサービス活用やアウトソーシングニーズが高まります。STOにとっては、中堅〜準大手製薬企業向けのAI基盤設計・Power Platform連携ソリューションの提案機会が拡大します。</div>
+        <div class="article-section action"><strong>アクション候補:</strong> 中堅製薬企業向け「コスト効率型AI創薬基盤」の提案テンプレートを作成すること。</div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_6">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_6" title="ブックマーク">☆</button>
+          <span class="score-badge score-mid">7点</span>
+          <h3><a href="https://www.cnbc.com/2026/03/29/eli-lilly-reaches-deal-to-bring-ai-developed-drugs-to-global-market.html" target="_blank" rel="noopener">[6] Eli LillyがInsilico Medicineと最大$2.75Bの提携</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026-03-29</span>
+          <span class="source-badge">海外メディア</span>
+          <span class="score-detail">📌 A3 B1 C1 D2</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> Eli LillyがAI創薬企業Insilico Medicineと最大$2.75Bの提携契約を締結しました。Insilicoの生成AIプラットフォームで発見・設計されたIPF治療薬Rentosertibの Phase IIa試験が成功（FVC改善+98.4 mL vs プラセボ-20.3 mL）したことを受けた動きです。</div>
+        <div class="article-section"><strong>ポイント:</strong> AI創薬パイプラインがPhase IIで臨床的に意味のある結果を出し、メガファーマが大型ディールで応じたことは、AI創薬の実用性を裏付けるマイルストーンです。AI創薬の成功事例として製薬クライアントへの提案に活用できます。</div>
+        <div class="article-section action"><strong>アクション候補:</strong> Rentosertibの臨床データと開発プロセスを事例として整理し、提案資料に組み込むこと。</div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_7">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_7" title="ブックマーク">☆</button>
+          <span class="score-badge score-mid">8点</span>
+          <h3><a href="https://www.businesswire.com/news/home/20260414869501/en/" target="_blank" rel="noopener">[7] Lantern Pharma、マルチエージェントAI「withZeta.ai」を希少がん創薬向けに正式ローンチ</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026-04-14</span>
+          <span class="source-badge">海外メディア</span>
+          <span class="score-detail">📌 A3 B2 C0 D3</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> Lantern PharmaがAACR 2026にて、世界初のマルチエージェントAI共同科学者プラットフォーム「withZeta.ai」を正式ローンチしました。438のがん種をカバーする独自オントロジーを持ち、臨床試験DB・知識ベース・科学文献を同時検索し、従来数週間〜数カ月の調査を数分〜数時間で完了します。</div>
+        <div class="article-section"><strong>ポイント:</strong> 「マルチエージェントAI × 創薬」の具体的プロダクトが商用化された重要な事例です。エージェンティックAIが製薬R&Dで商用利用可能なレベルに達したことを示しており、STOが提案するAIエージェント導入の説得力を高めます。</div>
+        <div class="article-section action"><strong>アクション候補:</strong> withZeta.aiの機能と価格体系を調査し、類似アプローチのDX提案に活用すること。</div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_8">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_8" title="ブックマーク">☆</button>
+          <span class="score-badge score-high">10点</span>
+          <h3><a href="https://www.microsoft.com/en-us/microsoft-cloud/blog/healthcare/2026/01/11/bridging-the-gap-between-ai-and-medicine-claude-in-microsoft-foundry-advances-capabilities-for-healthcare-and-life-sciences-customers/" target="_blank" rel="noopener">[8] Claude in Microsoft Foundry、ヘルスケア・ライフサイエンス向け機能を拡充</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026-01-11</span>
+          <span class="source-badge">海外メディア</span>
+          <span class="score-detail">📌 A3 B3 C1 D3</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> AnthropicがMicrosoft Foundry上のClaudeにヘルスケア・ライフサイエンス専用ツール・コネクタ・スキルを追加しました。Medidata連携（治験フィージビリティ）、ClinicalTrials.gov連携、CMS Coverage DB、ICD-10検索など、規制ワークフロー対応のMCPコネクタを搭載しています。</div>
+        <div class="article-section"><strong>ポイント:</strong> STOのMicrosoft技術基盤との親和性が極めて高いです。Claude × Microsoft Foundry × 製薬業務という組み合わせは、STOの強みであるM365/Power Platform開発と直結します。Medidata連携やClinicalTrials.gov連携を活用した治験業務効率化のデモ・PoCの構築が可能です。</div>
+        <div class="article-section action"><strong>アクション候補:</strong> Claude in Microsoft Foundryのライフサイエンス機能を技術検証し、製薬クライアント向けPoCプランを策定すること。</div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_9">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_9" title="ブックマーク">☆</button>
+          <span class="score-badge score-high">9点</span>
+          <h3><a href="https://aws.amazon.com/jp/blogs/news/daiichi-sankyo-ai-agent-integrated-drug-discovery/" target="_blank" rel="noopener">[9] 第一三共、AWSと連携しAIエージェント統合型創薬基盤の構築を開始</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026年（日付不明）</span>
+          <span class="source-badge">国内メディア</span>
+          <span class="score-detail">📌 A3 B2 C1 D3</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> 第一三共がAWSと連携して「AIエージェント統合型創薬基盤」の構築を開始しました。研究者がAIエージェントに実験指示を出すと、過去データを参照して最適な実験を計画し、自動化された研究機器を24/365で連携稼働させます。創薬プロセスの時間・コストを25〜50%削減する目標です。</div>
+        <div class="article-section"><strong>ポイント:</strong> 国内製薬大手がAIエージェントを創薬R&Dの中核に据えた先進事例です。この動きは他の国内製薬企業にも波及し、AIエージェント基盤構築のコンサルティング需要が増加すると予想されます。STOのAWS/Azure知見を活かした支援サービスの提案に活用できます。</div>
+        <div class="article-section action"><strong>アクション候補:</strong> 第一三共の事例を参考に、中堅製薬企業向け「AIエージェント創薬基盤構想」の提案テンプレートを作成すること。</div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_10">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_10" title="ブックマーク">☆</button>
+          <span class="score-badge score-mid">8点</span>
+          <h3><a href="https://www.chugai-pharm.co.jp/news/detail/20260410170000_1576.html" target="_blank" rel="noopener">[10] 中外製薬、DX銘柄2026に7年連続選定・AIで31万時間削減達成</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026-04-10</span>
+          <span class="source-badge">国内メディア</span>
+          <span class="score-detail">📌 A3 B2 C0 D3</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> 中外製薬が経産省「DX銘柄2026」に7年連続で選定されました。独自生成AIプラットフォームを全社8,000人中約7,000人が活用し、31万時間の業務削減を実現。社員の90%以上がAIアシスタントを日常的に利用しています。</div>
+        <div class="article-section"><strong>ポイント:</strong> 「全社AI活用」の国内製薬企業における成功モデルとして極めて参考になります。特に「31万時間削減」という定量的成果は、STOが他の製薬クライアントにAI活用を提案する際のベンチマークとなります。Copilot/Power Platform導入による業務効率化の説得力が増します。</div>
+        <div class="article-section action"><strong>アクション候補:</strong> 中外製薬のDX成果を参考に、製薬企業向け「AI活用ROI試算モデル」を作成すること。</div>
+      </div>
+    </div>
+
+    <div class="card section-yellow">
+      <h2>🟡 注目（12件）</h2>
+
+      <div class="article-card" id="article-2026-04-29_11">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_11" title="ブックマーク">☆</button>
+          <span class="score-badge score-low">6点</span>
+          <h3><a href="https://www.aboutamazon.com/news/aws/aws-amazon-bio-discovery-ai-drug-research" target="_blank" rel="noopener">[11] Amazon、AI創薬プラットフォーム「Bio Discovery」をローンチ</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026-04-14</span>
+          <span class="source-badge">海外メディア</span>
+          <span class="score-detail">📌 A2 B2 C0 D2</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> 40以上の生物学的基盤モデル（bioFMs）、エージェントアシスタント、CROパートナーネットワークを統合したノーコード創薬AIプラットフォーム。MSKがんセンターが抗体設計を1年から数週間に短縮した事例あり。Bayer、Broad Instituteが早期採用。</div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_12">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_12" title="ブックマーク">☆</button>
+          <span class="score-badge score-mid">8点</span>
+          <h3><a href="https://www.medable.com/platform/agent-studio" target="_blank" rel="noopener">[12] Medable、治験向けエージェンティックAIプラットフォーム「Agent Studio」をローンチ</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026-01</span>
+          <span class="source-badge">海外メディア</span>
+          <span class="score-detail">📌 A3 B2 C1 D2</span>
+        </div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_13">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_13" title="ブックマーク">☆</button>
+          <span class="score-badge score-low">5点</span>
+          <h3><a href="https://www.owkin.com/newsfeed/owkin-announces-owkin-k1-0-turbigo" target="_blank" rel="noopener">[13] Owkin、AGI for Biologyを目指す「K1.0 Turbigo」OSを発表</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026-01</span>
+          <span class="source-badge">海外メディア</span>
+          <span class="score-detail">📌 A2 B1 C0 D2</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> 8年間の技術を統合した生物学AGI基盤OS。Sanofiと$270M、BMS と$180Mの提携。K ProツールはエージェンティックAIで製薬研究質問に包括回答を提供。</div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_14">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_14" title="ブックマーク">☆</button>
+          <span class="score-badge score-mid">8点</span>
+          <h3><a href="https://intuitionlabs.ai/articles/eu-ai-act-pharma-compliance" target="_blank" rel="noopener">[14] EU AI Act、高リスクAIシステム規制が2026年8月施行</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026年</span>
+          <span class="source-badge">海外メディア</span>
+          <span class="score-detail">📌 A2 B1 C3 D2</span>
+        </div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_15">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_15" title="ブックマーク">☆</button>
+          <span class="score-badge score-low">6点</span>
+          <h3><a href="https://www.nature.com/articles/s41591-025-03743-2" target="_blank" rel="noopener">[15] Insilico Medicine Rentosertib、AI創薬初のPhase IIa成功をNature Medicine掲載</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026年（論文掲載）</span>
+          <span class="source-badge">海外メディア</span>
+          <span class="score-detail">📌 A3 B1 C1 D1</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> 生成AIで発見・設計された初のTNIK阻害剤。IPF患者71名でFVC改善+98.4mL（プラセボ-20.3mL）。FDA承認取得のAI創薬はまだゼロだが、臨床的有意性のある結果を出した初事例。</div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_16">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_16" title="ブックマーク">☆</button>
+          <span class="score-badge score-low">6点</span>
+          <h3><a href="https://fortune.com/2026/03/12/microsoft-copilot-health-ai-medical-personal-health-data/" target="_blank" rel="noopener">[16] Microsoft、健康データ統合AI「Copilot Health」を発表</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026-03-12</span>
+          <span class="source-badge">海外メディア</span>
+          <span class="score-detail">📌 A1 B2 C1 D2</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> ウェアラブルデバイスや医療記録を統合した個人健康プロファイル。50,000以上の米国医療機関と連携。ハーバードヘルスの専門回答。1日5,000万件以上の健康質問に対応。</div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_17">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_17" title="ブックマーク">☆</button>
+          <span class="score-badge score-low">5点</span>
+          <h3><a href="https://releasebot.io/updates/anthropic" target="_blank" rel="noopener">[17] Anthropic、Claude Mythos Previewを発表</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026-04-07</span>
+          <span class="source-badge">海外メディア</span>
+          <span class="score-detail">📌 A1 B2 C0 D2</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> 新型汎用言語モデル。コンピュータセキュリティタスクで顕著な能力を発揮。Project Glasswingとしてセキュリティ応用を推進。Claude Opus 4.7も一般提供開始。</div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_18">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_18" title="ブックマーク">☆</button>
+          <span class="score-badge score-low">6点</span>
+          <h3><a href="https://weblab.t.u-tokyo.ac.jp/news/2026-03-05-02/" target="_blank" rel="noopener">[18] 東京大学松尾研、日本語医療特化型LLMを開発（正答率93.3%）</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026-03-05</span>
+          <span class="source-badge">国内メディア</span>
+          <span class="score-detail">📌 A2 B1 C1 D2</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> Qwen-2.5をベースに109Bパラメータの医療LLMを構築。2025年医師国家試験で93.3%正答率（GPT-4o、o1を上回る）。2026年8月31日まで対話サービスを公開。</div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_19">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_19" title="ブックマーク">☆</button>
+          <span class="score-badge score-mid">7点</span>
+          <h3><a href="https://www.microsoft.com/ja-jp/industry/blog/health/2026/04/15/columbus-day-for-pharmaceutical-industry-2026/" target="_blank" rel="noopener">[19] 日本マイクロソフト、製薬業界向けAIエージェント活用推進セミナー開催</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026-02-27</span>
+          <span class="source-badge">国内メディア</span>
+          <span class="score-detail">📌 A2 B3 C0 D2</span>
+        </div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_20">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_20" title="ブックマーク">☆</button>
+          <span class="score-badge score-low">6点</span>
+          <h3><a href="https://group.ntt/jp/newsrelease/2025/12/16/251216a.html" target="_blank" rel="noopener">[20] NTTと愛知県がんセンター、臨床試験DXの共同推進を開始</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2025-12-16</span>
+          <span class="source-badge">国内メディア</span>
+          <span class="score-detail">📌 A3 B1 C1 D1</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> DCT（分散型臨床試験）モデルの実装。SmartPROとPhambieLINQを導入し、電子同意取得、症状報告デジタル化、電カルーEDC連携を実現。2026年上期に5医療機関に展開予定。</div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_21">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_21" title="ブックマーク">☆</button>
+          <span class="score-badge score-low">5点</span>
+          <h3><a href="https://www.bioworld.com/articles/730582-aacr-2026-the-age-of-agentic-ai-in-oncology" target="_blank" rel="noopener">[21] AACR 2026でエージェンティックAIの腫瘍学への応用が注目</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026-04</span>
+          <span class="source-badge">海外メディア</span>
+          <span class="score-detail">📌 A2 B1 C0 D2</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> AACR 2026年次総会でエージェンティックAIの腫瘍学応用が主要テーマに。患者適格基準最適化、適応的試験デザイン、脱落リスク予測などのユースケースが発表。</div>
+      </div>
+
+      <div class="article-card" id="article-2026-04-29_22">
+        <div class="article-header">
+          <button class="bm-btn-detail" data-key="2026-04-29_22" title="ブックマーク">☆</button>
+          <span class="score-badge score-low">5点</span>
+          <h3><a href="https://www.pharmtech.com/view/from-ai-to-smart-factories-how-pharma-is-preparing-for-2026" target="_blank" rel="noopener">[22] 製薬業界のスマートファクトリー化が加速</a></h3>
+        </div>
+        <div class="article-meta">
+          <span>📅 2026年</span>
+          <span class="source-badge">海外メディア</span>
+          <span class="score-detail">📌 A2 B1 C1 D1</span>
+        </div>
+        <div class="article-section"><strong>要点:</strong> IoTセンサー、ロボティクス、高度自動化によるIndustry 4.0対応。AIによる品質管理強化と規制対応。データ品質・AIの説明可能性・人材不足が課題。</div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🔵 参考</h2>
+      <ul class="ref-list">
+        <li><a href="https://www.drugtargetreview.com/article/192962/ai-in-drug-discovery-predictions-for-2026/" target="_blank" rel="noopener">AI in drug discovery: predictions for 2026</a></li>
+        <li><a href="https://themedicinemaker.com/issues/2026/articles/april/how-ai-is-reshaping-biologic-drug-discovery/" target="_blank" rel="noopener">How AI is Reshaping Biologic Drug Discovery</a></li>
+        <li><a href="https://themedicinemaker.com/issues/2026/articles/january/inside-2026-the-industry-s-ai-turning-point/" target="_blank" rel="noopener">Inside 2026: The Industry's AI Turning Point</a></li>
+        <li><a href="https://www.drugtargetreview.com/article/192243/" target="_blank" rel="noopener">2026: the year AI stops being optional in drug discovery</a></li>
+        <li><a href="https://axis-intelligence.com/ai-drug-discovery-2026-complete-analysis/" target="_blank" rel="noopener">AI Drug Discovery 2026: 173 Programs, FDA Framework & Market</a></li>
+        <li><a href="https://ardigen.com/a-practical-2026-roadmap-for-adopting-ai-in-biopharma-rd/" target="_blank" rel="noopener">A Practical 2026 Roadmap for Adopting AI in Biopharma R&D</a></li>
+        <li><a href="https://www.pharmanow.live/ai-in-pharma/top-ai-drug-discovery-companies-2026" target="_blank" rel="noopener">Top AI Drug Discovery Companies 2026</a></li>
+        <li><a href="https://ai-market.jp/industry/ai-medical-medicine/" target="_blank" rel="noopener">製薬業界のAI活用事例17選</a></li>
+        <li><a href="https://pharmailab.net/" target="_blank" rel="noopener">医薬品開発のパラダイムシフト｜エージェンティックAIが変える2026年の創薬市場</a></li>
+        <li><a href="https://note.com/pharma_insight/n/n12cfb4cf549f" target="_blank" rel="noopener">生成AIは医薬品開発バリューチェーンのどこまで浸透したか</a></li>
+        <li><a href="https://note.com/pharma_insight/n/n6a4423946954" target="_blank" rel="noopener">規制当局の生成AIスタンス2026：FDA・EMA・PMDAの比較</a></li>
+        <li><a href="https://www.aimagicx.com/blog/ai-drug-discovery-pharma-cost-disruption-2026" target="_blank" rel="noopener">AI in Precision Drug Discovery: $6M Model vs $100M Drug</a></li>
+        <li><a href="https://masterofcode.com/blog/generative-ai-chatbots-in-healthcare-and-pharma" target="_blank" rel="noopener">Generative AI in Pharma: The Most Promising Use Cases</a></li>
+        <li><a href="https://www.coherentsolutions.com/insights/artificial-intelligence-in-pharmaceuticals-and-biotechnology-current-trends-and-innovations" target="_blank" rel="noopener">AI in Pharma and Biotech: Market Trends 2025 and Beyond</a></li>
+        <li><a href="https://www.biopharminternational.com/view/faq-what-you-need-to-know-about-agentic-ai-in-drug-discovery" target="_blank" rel="noopener">FAQ: What You Need to Know About Agentic AI in Drug Discovery</a></li>
+        <li><a href="https://intuitionlabs.ai/articles/pharma-ai-infrastructure-investments" target="_blank" rel="noopener">Pharma AI Infrastructure: 2026 Deals and Investments</a></li>
+        <li><a href="https://www.jpma.or.jp/information/evaluation/results/allotment/CL_202405_TF1_DX.html" target="_blank" rel="noopener">臨床開発におけるDXの現状と可能性（製薬協）</a></li>
+        <li><a href="https://www.ncc.go.jp/jp/information/pr_release/2025/0303/20250303.pdf" target="_blank" rel="noopener">国立がん研究センター リモート適格性確認 実証研究</a></li>
+      </ul>
+    </div>
+
+    <div class="card editorial-card">
+      <h2>✍️ 編集後記</h2>
+      <p>2026年4月は、製薬AI領域で構造的な転換が同時多発的に起きた月でした。Anthropicの Coefficient Bio買収とNovo Nordisk-OpenAI提携は、AIベンダーと製薬企業の関係が「ツール提供」から「戦略的パートナーシップ」へ深化していることを示しています。国内ではPMDAの生成AI全面導入が、規制当局のデジタル変革という新たなフロンティアを開きました。第一三共のAIエージェント創薬基盤や中外製薬の31万時間削減といった国内大手の実績は、他の製薬企業にとって明確なベンチマークとなります。STOとしては、Claude for Life Sciences × Microsoft Foundryの組み合わせを軸に、製薬DXコンサルティングの提案力を一段高める好機です。</p>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const briefItems = [{"number": 1, "title": "Anthropic、製薬AIスタートアップCoefficient Bioを$400Mで買収", "source_type": "海外メディア", "date": "2026-04-03", "url": "https://techcrunch.com/2026/04/03/anthropic-buys-biotech-startup-coefficient-bio-in-400m-deal-reports/", "score": "A3 B3 C1 D3", "score_total": 10, "summary": "Anthropicが創薬AIスタートアップCoefficient Bioを約$400M（株式取引）で買収しました。Coefficient Bioはわずか8カ月の企業ながら、創薬R&D計画、臨床規制戦略、新薬機会特定のためのAIプラットフォームを開発していました。共同創業者のNathan Frey氏はAnthropicのライフサイエンスリードに就任します。", "point": "Claude for Life Sciencesは既にAstraZeneca、Sanofi、Novo Nordisk、Genmabをクライアントに持ちます。今後12〜18カ月でCoefficient Bioの技術がClaude上の新ツールとなり、ドラッグパイプライン自動提案、成功確率予測、試験設計支援が可能になると予測されます。STOとしても、Claude for Life Sciencesの機能拡張を活用した製薬クライアント向けDXソリューション提案に直結します。", "action": "Claude for Life Sciencesの最新機能をトラッキングし、製薬クライアント向けデモシナリオを作成すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-04-29"}, {"number": 2, "title": "Novo NordiskとOpenAIが包括的パートナーシップを発表", "source_type": "海外メディア", "date": "2026-04-14", "url": "https://www.cnbc.com/2026/04/14/novo-nordisk-openai-ai-drug-discovery-healthcare-nvo.html", "score": "A3 B2 C1 D3", "score_total": 9, "summary": "Novo Nordiskが創薬、製造、サプライチェーン、商業運営にわたりOpenAIと包括提携を発表しました。パイロット実施後、2026年末までに全面統合を目指します。データセット分析、新薬候補特定、上市期間短縮にAIを活用します。", "point": "メガファーマが「AIファースト」戦略を公式に打ち出した象徴的な動きです。製薬企業がAIベンダーと「全社レベル」で提携する流れが加速しており、STOが提案する製薬DXプロジェクトにおいても、クライアントの社内AI基盤整備支援やCoE（Center of Excellence）設計の需要が高まります。", "action": "製薬クライアント向けに「AI全社導入ロードマップ」のテンプレート提案書を準備すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-04-29"}, {"number": 3, "title": "FDA・EMA、AI医薬品開発の共同ガイドライン（10原則）を発表", "source_type": "海外メディア", "date": "2026-01-14", "url": "https://www.ema.europa.eu/en/news/ema-fda-set-common-principles-ai-medicine-development-0", "score": "A3 B2 C3 D2", "score_total": 10, "summary": "FDAとEMAが共同で「医薬品開発におけるAIグッドプラクティス10原則」を発表しました。ヒューマンセントリック設計、リスクベースアプローチ、データガバナンス、ライフサイクル管理など、AIの安全かつ責任ある使用の方向性を示しています。", "point": "この10原則は今後のAI医薬品申請の基盤となります。製薬クライアントがAI活用を進める際、GxPコンプライアンスの観点からこれらの原則への対応が必須となります。STOの規制対応コンサルティングにおいて、この原則に基づくアセスメントフレームワークを提供することが差別化ポイントになります。", "action": "FDA/EMA 10原則をベースにした「AI活用GxPコンプライアンスチェックリスト」を作成すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-04-29"}, {"number": 4, "title": "PMDA、全職員への生成AI（Microsoft Copilot）導入を正式開始", "source_type": "国内メディア", "date": "2026-04-15", "url": "https://www.pmda.go.jp/about-pmda/news-release/0093.html", "score": "A3 B2 C3 D2", "score_total": 10, "summary": "PMDAが2024年9月策定の「AI活用行動計画」に基づき、Microsoft Copilotを全職員に展開し、審査・安全対策業務での生成AI活用を正式に開始しました。日本の医薬品規制当局が生成AIを本格導入する初の事例となります。", "point": "規制当局側のAI活用が進むことで、申請企業側にもAIを活用した申請資料作成・品質向上の期待が高まります。CTD（Common Technical Document）作成支援やPMDA照会事項への回答生成にAIを活用するソリューションの需要拡大が見込まれます。STOのM365/Copilot導入支援の実績は、この文脈で製薬クライアントへの提案力を高めます。", "action": "PMDA AI活用行動計画の詳細を入手し、製薬企業向け「規制当局AI対応レディネス評価」サービスを企画すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-04-29"}, {"number": 5, "title": "Eli LillyとNVIDIA、$1B規模のAI共同イノベーションラボを設立", "source_type": "海外メディア", "date": "2026-01-12", "url": "https://nvidianews.nvidia.com/news/nvidia-and-lilly-announce-co-innovation-lab-to-reinvent-drug-discovery-in-the-age-of-ai", "score": "A3 B1 C0 D3", "score_total": 7, "summary": "Eli LillyとNVIDIAが5年間で最大$1Bを投じるAI共同イノベーションラボを発表しました。LillyはNVIDIA Blackwell Ultra GPU 1,016基を搭載した「LillyPod」を4カ月で構築し、9,000ペタフロップス超のAI処理能力を実現。製薬企業が自社でAIスパコンを保有する時代に突入しました。", "point": "メガファーマが「テクノロジー企業」を自認し始めた転換点です。中堅製薬企業はこのレベルのインフラ投資は困難であり、クラウドベースのAIサービス活用やアウトソーシングニーズが高まります。STOにとっては、中堅〜準大手製薬企業向けのAI基盤設計・Power Platform連携ソリューションの提案機会が拡大します。", "action": "中堅製薬企業向け「コスト効率型AI創薬基盤」の提案テンプレートを作成すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-04-29"}, {"number": 6, "title": "Eli LillyがInsilico Medicineと最大$2.75Bの提携", "source_type": "海外メディア", "date": "2026-03-29", "url": "https://www.cnbc.com/2026/03/29/eli-lilly-reaches-deal-to-bring-ai-developed-drugs-to-global-market.html", "score": "A3 B1 C1 D2", "score_total": 7, "summary": "Eli LillyがAI創薬企業Insilico Medicineと最大$2.75Bの提携契約を締結しました。Insilicoの生成AIプラットフォームで発見・設計されたIPF治療薬Rentosertibの Phase IIa試験が成功（FVC改善+98.4 mL vs プラセボ-20.3 mL）したことを受けた動きです。", "point": "AI創薬パイプラインがPhase IIで臨床的に意味のある結果を出し、メガファーマが大型ディールで応じたことは、AI創薬の実用性を裏付けるマイルストーンです。AI創薬の成功事例として製薬クライアントへの提案に活用できます。", "action": "Rentosertibの臨床データと開発プロセスを事例として整理し、提案資料に組み込むこと。", "category": "必読", "emoji": "🔴", "brief_date": "2026-04-29"}, {"number": 7, "title": "Lantern Pharma、マルチエージェントAI「withZeta.ai」を希少がん創薬向けに正式ローンチ", "source_type": "海外メディア", "date": "2026-04-14", "url": "https://www.businesswire.com/news/home/20260414869501/en/", "score": "A3 B2 C0 D3", "score_total": 8, "summary": "Lantern PharmaがAACR 2026にて、世界初のマルチエージェントAI共同科学者プラットフォーム「withZeta.ai」を正式ローンチしました。438のがん種をカバーする独自オントロジーを持ち、臨床試験DB・知識ベース・科学文献を同時検索し、従来数週間〜数カ月の調査を数分〜数時間で完了します。", "point": "「マルチエージェントAI × 創薬」の具体的プロダクトが商用化された重要な事例です。エージェンティックAIが製薬R&Dで商用利用可能なレベルに達したことを示しており、STOが提案するAIエージェント導入の説得力を高めます。", "action": "withZeta.aiの機能と価格体系を調査し、類似アプローチのDX提案に活用すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-04-29"}, {"number": 8, "title": "Claude in Microsoft Foundry、ヘルスケア・ライフサイエンス向け機能を拡充", "source_type": "海外メディア", "date": "2026-01-11", "url": "https://www.microsoft.com/en-us/microsoft-cloud/blog/healthcare/2026/01/11/bridging-the-gap-between-ai-and-medicine-claude-in-microsoft-foundry-advances-capabilities-for-healthcare-and-life-sciences-customers/", "score": "A3 B3 C1 D3", "score_total": 10, "summary": "AnthropicがMicrosoft Foundry上のClaudeにヘルスケア・ライフサイエンス専用ツール・コネクタ・スキルを追加しました。Medidata連携（治験フィージビリティ）、ClinicalTrials.gov連携、CMS Coverage DB、ICD-10検索など、規制ワークフロー対応のMCPコネクタを搭載しています。", "point": "STOのMicrosoft技術基盤との親和性が極めて高いです。Claude × Microsoft Foundry × 製薬業務という組み合わせは、STOの強みであるM365/Power Platform開発と直結します。Medidata連携やClinicalTrials.gov連携を活用した治験業務効率化のデモ・PoCの構築が可能です。", "action": "Claude in Microsoft Foundryのライフサイエンス機能を技術検証し、製薬クライアント向けPoCプランを策定すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-04-29"}, {"number": 9, "title": "第一三共、AWSと連携しAIエージェント統合型創薬基盤の構築を開始", "source_type": "国内メディア", "date": "2026年（日付不明）", "url": "https://aws.amazon.com/jp/blogs/news/daiichi-sankyo-ai-agent-integrated-drug-discovery/", "score": "A3 B2 C1 D3", "score_total": 9, "summary": "第一三共がAWSと連携して「AIエージェント統合型創薬基盤」の構築を開始しました。研究者がAIエージェントに実験指示を出すと、過去データを参照して最適な実験を計画し、自動化された研究機器を24/365で連携稼働させます。創薬プロセスの時間・コストを25〜50%削減する目標です。", "point": "国内製薬大手がAIエージェントを創薬R&Dの中核に据えた先進事例です。この動きは他の国内製薬企業にも波及し、AIエージェント基盤構築のコンサルティング需要が増加すると予想されます。STOのAWS/Azure知見を活かした支援サービスの提案に活用できます。", "action": "第一三共の事例を参考に、中堅製薬企業向け「AIエージェント創薬基盤構想」の提案テンプレートを作成すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-04-29"}, {"number": 10, "title": "中外製薬、DX銘柄2026に7年連続選定・AIで31万時間削減達成", "source_type": "国内メディア", "date": "2026-04-10", "url": "https://www.chugai-pharm.co.jp/news/detail/20260410170000_1576.html", "score": "A3 B2 C0 D3", "score_total": 8, "summary": "中外製薬が経産省「DX銘柄2026」に7年連続で選定されました。独自生成AIプラットフォームを全社8,000人中約7,000人が活用し、31万時間の業務削減を実現。社員の90%以上がAIアシスタントを日常的に利用しています。", "point": "「全社AI活用」の国内製薬企業における成功モデルとして極めて参考になります。特に「31万時間削減」という定量的成果は、STOが他の製薬クライアントにAI活用を提案する際のベンチマークとなります。Copilot/Power Platform導入による業務効率化の説得力が増します。", "action": "中外製薬のDX成果を参考に、製薬企業向け「AI活用ROI試算モデル」を作成すること。", "category": "必読", "emoji": "🔴", "brief_date": "2026-04-29"}, {"number": 11, "title": "Amazon、AI創薬プラットフォーム「Bio Discovery」をローンチ", "source_type": "海外メディア", "date": "2026-04-14", "url": "https://www.aboutamazon.com/news/aws/aws-amazon-bio-discovery-ai-drug-research", "score": "A2 B2 C0 D2", "score_total": 6, "summary": "40以上の生物学的基盤モデル（bioFMs）、エージェントアシスタント、CROパートナーネットワークを統合したノーコード創薬AIプラットフォーム。MSKがんセンターが抗体設計を1年から数週間に短縮した事例あり。Bayer、Broad Instituteが早期採用。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-04-29"}, {"number": 12, "title": "Medable、治験向けエージェンティックAIプラットフォーム「Agent Studio」をローンチ", "source_type": "海外メディア", "date": "2026-01", "url": "https://www.medable.com/platform/agent-studio", "score": "A3 B2 C1 D2", "score_total": 8, "summary": "", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-04-29"}, {"number": 13, "title": "Owkin、AGI for Biologyを目指す「K1.0 Turbigo」OSを発表", "source_type": "海外メディア", "date": "2026-01", "url": "https://www.owkin.com/newsfeed/owkin-announces-owkin-k1-0-turbigo", "score": "A2 B1 C0 D2", "score_total": 5, "summary": "8年間の技術を統合した生物学AGI基盤OS。Sanofiと$270M、BMS と$180Mの提携。K ProツールはエージェンティックAIで製薬研究質問に包括回答を提供。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-04-29"}, {"number": 14, "title": "EU AI Act、高リスクAIシステム規制が2026年8月施行", "source_type": "海外メディア", "date": "2026年", "url": "https://intuitionlabs.ai/articles/eu-ai-act-pharma-compliance", "score": "A2 B1 C3 D2", "score_total": 8, "summary": "", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-04-29"}, {"number": 15, "title": "Insilico Medicine Rentosertib、AI創薬初のPhase IIa成功をNature Medicine掲載", "source_type": "海外メディア", "date": "2026年（論文掲載）", "url": "https://www.nature.com/articles/s41591-025-03743-2", "score": "A3 B1 C1 D1", "score_total": 6, "summary": "生成AIで発見・設計された初のTNIK阻害剤。IPF患者71名でFVC改善+98.4mL（プラセボ-20.3mL）。FDA承認取得のAI創薬はまだゼロだが、臨床的有意性のある結果を出した初事例。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-04-29"}, {"number": 16, "title": "Microsoft、健康データ統合AI「Copilot Health」を発表", "source_type": "海外メディア", "date": "2026-03-12", "url": "https://fortune.com/2026/03/12/microsoft-copilot-health-ai-medical-personal-health-data/", "score": "A1 B2 C1 D2", "score_total": 6, "summary": "ウェアラブルデバイスや医療記録を統合した個人健康プロファイル。50,000以上の米国医療機関と連携。ハーバードヘルスの専門回答。1日5,000万件以上の健康質問に対応。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-04-29"}, {"number": 17, "title": "Anthropic、Claude Mythos Previewを発表", "source_type": "海外メディア", "date": "2026-04-07", "url": "https://releasebot.io/updates/anthropic", "score": "A1 B2 C0 D2", "score_total": 5, "summary": "新型汎用言語モデル。コンピュータセキュリティタスクで顕著な能力を発揮。Project Glasswingとしてセキュリティ応用を推進。Claude Opus 4.7も一般提供開始。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-04-29"}, {"number": 18, "title": "東京大学松尾研、日本語医療特化型LLMを開発（正答率93.3%）", "source_type": "国内メディア", "date": "2026-03-05", "url": "https://weblab.t.u-tokyo.ac.jp/news/2026-03-05-02/", "score": "A2 B1 C1 D2", "score_total": 6, "summary": "Qwen-2.5をベースに109Bパラメータの医療LLMを構築。2025年医師国家試験で93.3%正答率（GPT-4o、o1を上回る）。2026年8月31日まで対話サービスを公開。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-04-29"}, {"number": 19, "title": "日本マイクロソフト、製薬業界向けAIエージェント活用推進セミナー開催", "source_type": "国内メディア", "date": "2026-02-27", "url": "https://www.microsoft.com/ja-jp/industry/blog/health/2026/04/15/columbus-day-for-pharmaceutical-industry-2026/", "score": "A2 B3 C0 D2", "score_total": 7, "summary": "", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-04-29"}, {"number": 20, "title": "NTTと愛知県がんセンター、臨床試験DXの共同推進を開始", "source_type": "国内メディア", "date": "2025-12-16", "url": "https://group.ntt/jp/newsrelease/2025/12/16/251216a.html", "score": "A3 B1 C1 D1", "score_total": 6, "summary": "DCT（分散型臨床試験）モデルの実装。SmartPROとPhambieLINQを導入し、電子同意取得、症状報告デジタル化、電カルーEDC連携を実現。2026年上期に5医療機関に展開予定。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-04-29"}, {"number": 21, "title": "AACR 2026でエージェンティックAIの腫瘍学への応用が注目", "source_type": "海外メディア", "date": "2026-04", "url": "https://www.bioworld.com/articles/730582-aacr-2026-the-age-of-agentic-ai-in-oncology", "score": "A2 B1 C0 D2", "score_total": 5, "summary": "AACR 2026年次総会でエージェンティックAIの腫瘍学応用が主要テーマに。患者適格基準最適化、適応的試験デザイン、脱落リスク予測などのユースケースが発表。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-04-29"}, {"number": 22, "title": "製薬業界のスマートファクトリー化が加速", "source_type": "海外メディア", "date": "2026年", "url": "https://www.pharmtech.com/view/from-ai-to-smart-factories-how-pharma-is-preparing-for-2026", "score": "A2 B1 C1 D1", "score_total": 5, "summary": "IoTセンサー、ロボティクス、高度自動化によるIndustry 4.0対応。AIによる品質管理強化と規制対応。データ品質・AIの説明可能性・人材不足が課題。", "point": "", "action": "", "category": "注目", "emoji": "🟡", "brief_date": "2026-04-29"}];
+
+let bookmarks = {};
+try {
+  const saved = decodeURIComponent(window.location.hash.slice(1));
+  if (saved) bookmarks = JSON.parse(saved);
+} catch(e) {}
+
+function renderBookmarkSidebar() {
+  const list = document.getElementById('bookmarkList');
+  const keys = Object.keys(bookmarks);
+  if (keys.length === 0) {
+    list.innerHTML = '<div class="bookmark-empty">ブックマークはまだありません</div>';
+    return;
+  }
+  list.innerHTML = keys.map(key => {
+    const bm = bookmarks[key];
+    return `<div class="bookmark-item">
+      <button class="bm-remove" onclick="removeBookmark('${key}')" title="削除">✕</button>
+      <a href="${bm.url}" target="_blank" rel="noopener" class="bm-link">
+        <span class="bm-score">${bm.score}点</span>
+        <span class="bm-title">${bm.title.length > 40 ? bm.title.slice(0,40)+'…' : bm.title}</span>
+      </a>
+    </div>`;
+  }).join('');
+}
+
+function removeBookmark(key) {
+  delete bookmarks[key];
+  window.location.hash = encodeURIComponent(JSON.stringify(bookmarks));
+  renderBookmarkSidebar();
+  updateDetailButtons();
+}
+
+function updateDetailButtons() {
+  document.querySelectorAll('.bm-btn-detail').forEach(btn => {
+    const key = btn.dataset.key;
+    if (bookmarks[key]) {
+      btn.textContent = '★';
+      btn.classList.add('bm-active');
+    } else {
+      btn.textContent = '☆';
+      btn.classList.remove('bm-active');
+    }
+  });
+}
+
+document.querySelectorAll('.bm-btn-detail').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const key = btn.dataset.key;
+    const item = briefItems.find(i => i.brief_date + '_' + i.number === key);
+    if (!item) return;
+    if (bookmarks[key]) {
+      delete bookmarks[key];
+    } else {
+      bookmarks[key] = { title: item.title, url: item.url, score: item.score_total, category: item.category, date: item.date, brief_date: item.brief_date };
+    }
+    window.location.hash = encodeURIComponent(JSON.stringify(bookmarks));
+    renderBookmarkSidebar();
+    updateDetailButtons();
+  });
+});
+
+renderBookmarkSidebar();
+updateDetailButtons();
+
+// Mobile menu
+const menuBtn = document.getElementById('menuBtn');
+const sidebarEl = document.getElementById('sidebar');
+const overlayEl = document.getElementById('sidebarOverlay');
+menuBtn.addEventListener('click', () => {
+  sidebarEl.classList.toggle('open');
+  overlayEl.classList.toggle('active');
+});
+overlayEl.addEventListener('click', () => {
+  sidebarEl.classList.remove('open');
+  overlayEl.classList.remove('active');
+});
+</script>
+</body>
+</html>
