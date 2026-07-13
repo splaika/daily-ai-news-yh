@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>AI Brief - 2026-07-05</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --bg: #0f1117; --bg-card: #1a1d2e; --bg-sidebar: #141625; --border: #2a2d3e;
+  --text: #e4e6f0; --text-dim: #8b8fa3; --accent: #6c7bf7; --accent-light: #8b97ff;
+  --yellow: #ffd93d; --yellow-bg: rgba(255,217,61,0.1); --blue: #4ecdc4;
+}
+html, body { overflow-x: hidden; }
+body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+a { color: var(--accent-light); }
+.layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+.sidebar { background: var(--bg-sidebar); border-right: 1px solid var(--border); position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+.logo { padding: 22px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.logo-icon { font-size: 26px; }
+.logo-text { font-size: 16px; font-weight: 700; color: var(--accent-light); }
+.nav { padding: 12px 8px; }
+.nav-section-title { padding: 14px 12px 6px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); }
+.nav-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; color: var(--text-dim); text-decoration: none; font-size: 14px; }
+.nav-item:hover { background: rgba(108,123,247,0.1); color: var(--text); }
+.nav-item.active { background: rgba(108,123,247,0.15); color: var(--accent-light); font-weight: 600; }
+.main { padding: 24px 32px; min-width: 0; }
+.header { margin-bottom: 24px; }
+.header h1 { font-size: 26px; font-weight: 700; line-height: 1.3; }
+.subtitle { color: var(--text-dim); font-size: 14px; margin-top: 4px; }
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 16px; max-width: 100%; overflow: hidden; }
+.card h2 { font-size: 18px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.highlight-card { border-left: 4px solid var(--accent); }
+.highlight-card p { font-size: 15px; }
+.sub-h { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin: 18px 0 4px; }
+.article-card { border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin: 10px 0; }
+.article-card h3 { font-size: 15px; font-weight: 600; line-height: 1.5; }
+.article-card h3 a { color: var(--text); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent-light); }
+.article-meta { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; font-size: 12px; color: var(--text-dim); margin: 6px 0 8px; }
+.source-badge { background: rgba(108,123,247,0.12); color: var(--accent-light); border-radius: 10px; padding: 1px 8px; }
+.article-body { font-size: 14px; }
+.takeaway-item { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.takeaway-item:last-child { border-bottom: none; }
+.tw-chip { flex-shrink: 0; font-size: 11px; padding: 2px 8px; border-radius: 10px; background: rgba(108,123,247,0.15); color: var(--accent-light); font-weight: 600; white-space: nowrap; margin-top: 3px; }
+.tw-body { flex: 1 1 240px; min-width: 0; }
+.tw-text { font-size: 14px; }
+.tw-src { font-size: 12px; margin-top: 2px; }
+.tw-src a { color: var(--blue); text-decoration: none; }
+.tw-src a:hover { text-decoration: underline; }
+.quote-card { border-left: 3px solid var(--yellow); padding: 10px 14px; margin: 10px 0; background: rgba(255,217,61,0.05); border-radius: 0 8px 8px 0; }
+.quote-card .q-name { font-weight: 600; color: var(--yellow); font-size: 14px; }
+.quote-card .q-name a { color: var(--yellow); }
+.quote-card .q-text { font-size: 14px; margin: 4px 0; }
+.notice { font-size: 13px; color: var(--text-dim); background: var(--yellow-bg); border: 1px solid rgba(255,217,61,0.25); border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+.x-plain { font-size: 13px; color: var(--text-dim); margin: 8px 0; }
+.impact-h { font-size: 15px; font-weight: 600; color: var(--accent-light); margin: 14px 0 6px; }
+.impact-p { font-size: 14px; }
+.page-footer { color: var(--text-dim); font-size: 12px; margin-top: 28px; border-top: 1px solid var(--border); padding-top: 14px; }
+.brief-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.brief-card-link { text-decoration: none; }
+.brief-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; height: 100%; transition: border-color 0.15s; }
+.brief-card:hover { border-color: var(--accent); }
+.brief-date { font-size: 16px; font-weight: 700; color: var(--accent-light); }
+.brief-meta { font-size: 12px; color: var(--text-dim); margin: 2px 0 8px; }
+.brief-highlight { font-size: 13px; color: var(--text); }
+.mobile-header { display: none; }
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .mobile-header { display: flex; align-items: center; gap: 10px; position: fixed; top: 0; left: 0; right: 0; z-index: 20; background: var(--bg-sidebar); border-bottom: 1px solid var(--border); padding: 10px 14px; }
+  .hamburger { background: none; border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 18px; padding: 4px 10px; }
+  .sidebar { position: fixed; left: -260px; width: 250px; z-index: 30; transition: left 0.2s; }
+  .sidebar.open { left: 0; }
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 25; }
+  .sidebar-overlay.active { display: block; }
+  .main { padding: 14px; padding-top: 66px; }
+}
+</style>
+</head>
+<body>
+<div class="mobile-header">
+  <button class="hamburger" id="menuBtn" aria-label="メニュー">☰</button>
+  <div class="logo-icon">🧠</div>
+  <div class="logo-text">AI Intel Brief</div>
+</div>
+<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">
+      <div class="logo-icon">🧠</div>
+      <div class="logo-text">AI Intel Brief</div>
+    </div>
+    <nav class="nav">
+      <a href="index.html" class="nav-item"><span>🗂</span>ブリーフ一覧</a>
+      <div class="nav-section-title">デイリーブリーフ</div>
+      <a href="brief-2026-07-13.html" class="nav-item"><span>📄</span>2026-07-13</a>
+      <a href="brief-2026-07-12.html" class="nav-item"><span>📄</span>2026-07-12</a>
+      <a href="brief-2026-07-11.html" class="nav-item"><span>📄</span>2026-07-11</a>
+      <a href="brief-2026-07-10.html" class="nav-item"><span>📄</span>2026-07-10</a>
+      <a href="brief-2026-07-09.html" class="nav-item"><span>📄</span>2026-07-09</a>
+      <a href="brief-2026-07-08.html" class="nav-item"><span>📄</span>2026-07-08</a>
+      <a href="brief-2026-07-07.html" class="nav-item"><span>📄</span>2026-07-07</a>
+      <a href="brief-2026-07-06.html" class="nav-item"><span>📄</span>2026-07-06</a>
+      <a href="brief-2026-07-05.html" class="nav-item active"><span>📄</span>2026-07-05</a>
+      <a href="brief-2026-07-04.html" class="nav-item"><span>📄</span>2026-07-04</a>
+      <a href="brief-2026-07-03.html" class="nav-item"><span>📄</span>2026-07-03</a>
+      <a href="brief-2026-07-01.html" class="nav-item"><span>📄</span>2026-07-01</a>
+    </nav>
+  </aside>
+  <main class="main">
+    <header class="header">
+      <h1>Daily AI News Brief — 医薬品開発 × CRO</h1>
+      <p class="subtitle">2026年7月5日（日曜日） · 自動収集・AI生成</p>
+    </header>
+    <div class="card">
+      <h2>🎯 本日の重要テイクアウェイ</h2>
+      <div class="takeaway-item">
+        <span class="tw-chip"><strong>Anthropic</strong></span>
+        <div class="tw-body">
+          <div class="tw-text">Claude Science を正式ローンチ（6/30）、60+ 科学 DB 統合の「研究者向けワークベンチ」。自社創薬（放置疾患）にも参入</div>
+          <div class="tw-src"><a href="https://www.technologyreview.com/2026/06/30/1139987/claude-science-is-anthropics-newest-flagship-product/" target="_blank" rel="noopener">MIT Tech Review</a></div>
+        </div>
+      </div>
+      <div class="takeaway-item">
+        <span class="tw-chip"><strong>競争構図</strong></span>
+        <div class="tw-body">
+          <div class="tw-text">Google(Isomorphic)・OpenAI(Lilly/Novo/Sanofi)・Anthropic の三つ巴に。既存 AI 創薬株（Schrödinger 等）は一時下落</div>
+          <div class="tw-src"><a href="https://finance.biggo.com/news/c55da14f-ac2e-4f6d-bf5d-fb0ab07173ef" target="_blank" rel="noopener">BigGo</a></div>
+        </div>
+      </div>
+      <div class="takeaway-item">
+        <span class="tw-chip"><strong>AI創薬・臨床</strong></span>
+        <div class="tw-body">
+          <div class="tw-text">2026年は「臨床現実」の年。173+ の AI 創薬プログラムが臨床、15〜20 が Phase III 入り見込み</div>
+          <div class="tw-src"><a href="https://aimmediahouse.com/ai-lifesciences/2026-is-the-year-ai-drug-discovery-meets-clinical-reality" target="_blank" rel="noopener">AIM Media</a></div>
+        </div>
+      </div>
+      <div class="takeaway-item">
+        <span class="tw-chip"><strong>CRO</strong></span>
+        <div class="tw-body">
+          <div class="tw-text">IQVIA.ai（NVIDIA 基盤の agentic AI）が上位20社中19社に浸透。Thermo Fisher/PPD が ISG で AI クリニカルの Leader 認定</div>
+          <div class="tw-src"><a href="https://www.iqvia.com/newsroom/2026/03/iqvia-unveils-iqvia-ai-a-unified-agentic-ai-platform" target="_blank" rel="noopener">IQVIA</a></div>
+        </div>
+      </div>
+      <div class="takeaway-item">
+        <span class="tw-chip"><strong>規制</strong></span>
+        <div class="tw-body">
+          <div class="tw-text">FDA/EMA が「AI 適正実践 10 原則」を共同公表（1/14）。FDA は 2026 年内に製造・デジタルヘルス向け個別ガイダンス予定</div>
+          <div class="tw-src"><a href="https://www.ema.europa.eu/en/news/ema-fda-set-common-principles-ai-medicine-development-0" target="_blank" rel="noopener">EMA</a></div>
+        </div>
+      </div>
+      <div class="takeaway-item">
+        <span class="tw-chip"><strong>国内</strong></span>
+        <div class="tw-body">
+          <div class="tw-text">ICH M15（AI 関連含む）が 2026/7/23 発効へ。PMDA は eCTD v4.0 を 4 月から世界初義務化。アステラス×FRONTEO の標的探索契約</div>
+          <div class="tw-src"><a href="https://iyakutsushinsha.com/2026/04/17/" target="_blank" rel="noopener">医薬通信社</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🌍 海外ニュース</h2>
+      <div class="sub-h">ANTHROPIC</div>
+      <div class="article-card">
+        <h3><a href="https://www.technologyreview.com/2026/06/30/1139987/claude-science-is-anthropics-newest-flagship-product/" target="_blank" rel="noopener">Anthropic、旗艦プロダクト「Claude Science」を発表</a></h3>
+        <div class="article-meta"><span>📅 2026-06-30</span><span class="source-badge">MIT Technology Review</span></div>
+        <div class="article-body">研究者が日常的に使うツール・パッケージを統合し、監査可能なアーティファクトを生成、柔軟な計算資源アクセスを提供する「科学者向けワークベンチ」。ゲノミクス・プロテオミクス・ケモインフォマティクスにまたがる 60 以上の科学データベースを単一プラットフォームに統合した。ベータ期には単一細胞 RNA-seq 解析、CRISPR スクリーン設計、タンパク質構造予測、ケモインフォマティクスなどで利用実績。2025 年 10 月の「Claude for Life Sciences」から一段踏み込んだ製品化。</div>
+      </div>
+      <div class="article-card">
+        <h3><a href="https://www.statnews.com/2026/06/30/anthropic-ai-drug-development/" target="_blank" rel="noopener">Anthropic、自社の創薬プログラムを開始 — 「放置された（neglected）疾患」に焦点</a></h3>
+        <div class="article-meta"><span>📅 2026-06-30</span><span class="source-badge">STAT News</span></div>
+        <div class="article-body">従来の製薬企業が収益性の観点で手を出さない希少疾患・熱帯病などを標的に、Anthropic 自身が創薬に踏み込む。生命科学責任者 Eric Kauderer-Abrams / Jonah Cool は「ハンズオンの創薬経験が優れた AI 製品に還流し、それが製薬顧客を引き寄せる」フィードバックループを狙うと説明。Dario Amodei は「生物学は科学の進歩が人間の生活を最も直接的に改善しうる領域」と位置づける。</div>
+      </div>
+      <div class="article-card">
+        <h3><a href="https://finance.biggo.com/news/c55da14f-ac2e-4f6d-bf5d-fb0ab07173ef" target="_blank" rel="noopener">3 社による AI 創薬レースが本格化 — Schrödinger 株は一時 8.3% 下落</a></h3>
+        <div class="article-meta"><span>📅 2026-06-30</span><span class="source-badge">BigGo Finance</span></div>
+        <div class="article-body">Google(Isomorphic Labs)・OpenAI・Anthropic による三つ巴の構図が鮮明に。発表を受け Schrödinger は日中一時 8.3% 安、Recursion も乱高下後に一部戻す。Anthropic は「AI for Science」枠で最大 50 プロジェクトに各 $30,000 のクレジットを提供（応募締切 7/15）。</div>
+      </div>
+      <div class="sub-h">AI創薬</div>
+      <div class="article-card">
+        <h3><a href="https://aimmediahouse.com/ai-lifesciences/2026-is-the-year-ai-drug-discovery-meets-clinical-reality" target="_blank" rel="noopener">2026 年は AI 創薬が「臨床現実」と出会う年</a></h3>
+        <div class="article-meta"><span>📅 2026</span><span class="source-badge">AIM Media House</span></div>
+        <div class="article-body">2026 年初時点で 173 以上の AI 創薬プログラムが臨床開発中、うち 15〜20 が年内に pivotal Phase III 入りの見込み。年末までに出る Phase 3 コホートの結果が「AI 創薬が承認薬に本当につながるか」の最初の実証データになる。アナリストは 2027 年までに初の AI 設計薬承認の確率を約 60% と見る。</div>
+      </div>
+      <div class="article-card">
+        <h3><a href="https://www.humai.blog/ai-discovered-drugs-reach-phase-iii-and-2026-will-determine-whether-all-the-promises-were-real/" target="_blank" rel="noopener">Insilico の rentosertib、AI 設計資産で唯一の Phase 2 ヒト読み出し</a></h3>
+        <div class="article-meta"><span>📅 2026</span><span class="source-badge">Hum(AI) Blog</span></div>
+        <div class="article-body">特発性肺線維症（IPF）向け rentosertib は、完全 AI 探索・AI 設計資産としては唯一 Phase 2 のヒト読み出しを持つ。3 月には Eli Lilly が Insilico との提携を $2.75B 規模に拡大。Isomorphic Labs は Series B で $2.1B を調達し、Demis Hassabis は「年末までに初の AI 設計候補で Phase 1 入り」を公言。Recursion は REC-394/REC-1245 の近接読み出しを予定。</div>
+      </div>
+      <div class="sub-h">CRO・臨床試験</div>
+      <div class="article-card">
+        <h3><a href="https://www.iqvia.com/newsroom/2026/03/iqvia-unveils-iqvia-ai-a-unified-agentic-ai-platform" target="_blank" rel="noopener">IQVIA.ai — NVIDIA 基盤の統合 agentic AI プラットフォームを発表</a></h3>
+        <div class="article-meta"><span>📅 2026-03-16</span><span class="source-badge">IQVIA Newsroom</span></div>
+        <div class="article-body">NVIDIA GTC で発表。臨床・商用・リアルワールドの各ドメインを横断する agentic AI 基盤で、上位 20 製薬のうち 19 社が既に IQVIA のエージェントを利用。Q4 2026 にエージェントを追加予定。臨床試験の start-up オーケストレーター等を含む。</div>
+      </div>
+      <div class="article-card">
+        <h3><a href="https://www.ppd.com/news-item/thermo-fisher-leader-cro-2026-isg-provider-lens-ai-clinical-trials/" target="_blank" rel="noopener">Thermo Fisher / PPD、2026 ISG レポートで AI クリニカルの「Leader」認定</a></h3>
+        <div class="article-meta"><span>📅 2026</span><span class="source-badge">PPD</span></div>
+        <div class="article-body">ISG Provider Lens の「AI in Clinical Trials」で Thermo Fisher の PPD 事業が Leader に。CRO 業界では AI がパイロットから「基盤インフラ」へ移行し、IQVIA・ICON・Thermo Fisher(PPD)・Medpace が 2025 年に堅調な業績。CRO は単なる受託から「戦略的共同開発者」へ再定義が進む。</div>
+      </div>
+      <div class="article-card">
+        <h3><a href="https://www.fiercebiotech.com/cro/iqvia-unveils-ai-suite-managing-clinical-trial-finances" target="_blank" rel="noopener">IQVIA、臨床試験ファイナンス管理の AI スイートを投入</a></h3>
+        <div class="article-meta"><span>📅 2026</span><span class="source-badge">Fierce Biotech</span></div>
+        <div class="article-body">予算策定・契約・予測・支払いワークフローを統合する CTFS（Clinical Trial Financial Suite）。第 1 モジュールは Q1 2026 に一般提供開始。AI により予算設定・請求処理・不正検知・サイト支払いの自動化を図る。</div>
+      </div>
+      <div class="sub-h">規制・ガイダンス</div>
+      <div class="article-card">
+        <h3><a href="https://www.ema.europa.eu/en/news/ema-fda-set-common-principles-ai-medicine-development-0" target="_blank" rel="noopener">FDA と EMA、AI の「適正実践 10 原則」を共同公表</a></h3>
+        <div class="article-meta"><span>📅 2026-01-14</span><span class="source-badge">EMA</span></div>
+        <div class="article-body">「Guiding Principles of Good AI Practice in Drug Development」を FDA・EMA が共同で発表。早期研究〜臨床試験〜製造〜安全性監視まで、医薬品ライフサイクル全体での AI 利用に対する高レベル 10 原則。正式ガイダンスではないが両当局の思考を示し、今後の規制の方向を示唆。FDA CDER は 2026 年内に製造・デジタルヘルス領域の個別ガイダンスを計画。 ---</div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>🇯🇵 国内ニュース</h2>
+      <div class="article-card">
+        <h3><a href="https://note.com/pharma_insight/n/n6b2f4b0fdc5c" target="_blank" rel="noopener">ICH M15、2026 年 7 月 23 日に法的発効へ</a></h3>
+        <div class="article-meta"><span>📅 2026</span><span class="source-badge">Pharma Insight Lab (note)</span></div>
+        <div class="article-body">AI 創薬を含む規制環境の重要マイルストーン。あわせて PMDA は eCTD v4.0 電子申請を 2026 年 4 月から主要規制当局として世界初義務化。日本の AI 事業者ガイドライン（v1.2, 3/31 更新）は AI エージェントのリスク分析を新たに追加し、規制枠組みの整備が加速している。</div>
+      </div>
+      <div class="article-card">
+        <h3><a href="https://iyakutsushinsha.com/2026/04/17/" target="_blank" rel="noopener">アステラス製薬、FRONTEO と AI 標的分子探索で契約締結</a></h3>
+        <div class="article-meta"><span>📅 2026-04-17</span><span class="source-badge">医薬通信社</span></div>
+        <div class="article-body">FRONTEO の AI 創薬支援サービス「Drug Discovery AI Factory（DDAIF）」を用いた標的分子探索契約。アステラスはスーパーコンピュータ Tokyo-1 を用いた分子動力学シミュレーションで創薬研究スピードの大幅向上も公表しており、国内大手の AI 創薬「本格実装フェーズ」を象徴。</div>
+      </div>
+      <div class="article-card">
+        <h3><a href="https://www.nikkei.com/article/DGXZQOUC109BT0Q5A610C2000000/" target="_blank" rel="noopener">創薬に AI 活用、治験期間 3 割短縮も — 国内 225 社の市場マップ</a></h3>
+        <div class="article-meta"><span>📅 2026</span><span class="source-badge">日本経済新聞</span></div>
+        <div class="article-body">国内 AI 創薬プレイヤー 225 社を俯瞰。2026 年の技術的ハイライトは「エージェンティック AI」— データから答えを出すだけでなく、自ら目標設定・実験計画・実行まで自律的に行う AI の登場が国内でも焦点に。 ---</div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>📱 X（旧Twitter）注目投稿</h2>
+      <div class="notice">⚠️ 本日は個別投稿の原文引用を一次確認できたものが限られたため、検証できたアカウント／投稿のみ掲載。原文断定を避け、実在確認できた URL のみ提示する。</div>
+      <div class="quote-card">
+        <div class="q-name"><a href="https://x.com/AnthropicAI" target="_blank" rel="noopener">@AnthropicAI</a> — Anthropic 公式</div>
+        <div class="q-text">Claude Science ローンチと自社創薬プログラムに関する CEO Dario Amodei 名義の声明を投稿（<a href="https://x.com/AnthropicAI/status/2029719864533721481" target="_blank" rel="noopener">該当ポスト</a>）。放置疾患を標的に据える方針を公式に表明。</div>
+      </div>
+      <div class="quote-card">
+        <div class="q-name"><a href="https://x.com/darioamodei" target="_blank" rel="noopener">@DarioAmodei</a> — Anthropic CEO</div>
+        <div class="q-text">かねてより「生物学は科学の進歩が人間の生活を最も直接的・明白に改善しうる領域」との立場を発信。今回の創薬参入はこの持論の実装。（原文の当日投稿は未確認、アカウントは実在）</div>
+      </div>
+    </div>
+    <div class="card highlight-card">
+      <h2>📊 ビジネスインパクト分析</h2>
+      <div class="impact-h">CROへの影響</div>
+      <p class="impact-p">Anthropic の Claude Science 参入は、CRO の「データ統合・解析」レイヤーに直接の競争圧力を生む。IQVIA.ai（NVIDIA 基盤）や Thermo Fisher/PPD の AI クリニカル Leader 認定が示す通り、大手 CRO は自前の agentic AI 基盤でこれに対抗しつつある。ただし Claude Science は「研究環境／ワークベンチ」であり、CRO の臨床オペレーション実行力（サイト・規制・患者アクセス）とは相補的で、当面は競合というより CRO のツールスタックに組み込まれる可能性が高い。CRO の差別化は「独自データ資産 × 規制知」に集約されていく。</p>
+      <div class="impact-h">製薬企業への影響</div>
+      <p class="impact-p">三つ巴（Google/OpenAI/Anthropic）の激化は製薬側の交渉力を高める一方、ツール選定・ガバナンス負荷を増やす。既に OpenAI は Lilly/Novo/Sanofi/Moderna、Anthropic は BMS（3 万人規模）と提携済み。製薬企業は「基盤モデルの複数採用 × 社内ハーネス（ガードレール／監査）」を前提に、放置疾患・希少疾患で AI ネイティブ企業と共創する選択肢が現実味を帯びる。既存 AI 創薬株の変動（Schrödinger 一時 -8.3%）は、プラットフォーム型ベンダーの参入がバイオテック単独プレイヤーのバリュエーションを揺らすことを示す。</p>
+      <div class="impact-h">規制環境の変化</div>
+      <p class="impact-p">FDA/EMA の「AI 適正実践 10 原則」（1/14）と、国内 ICH M15 発効（7/23）・eCTD v4.0 世界初義務化（4 月）・AI 事業者ガイドライン v1.2（AI エージェントのリスク分析追加）が同時進行し、「AI 生成エビデンスの監査可能性」が規制の共通軸になりつつある。Claude Science が「監査可能なアーティファクト生成」を売りにしている点は、この規制潮流を先取りした設計と読める。製薬・CRO は AI 導入の是非ではなく「監査証跡をどう自動生成するか」に論点が移っており、ハーネス層（HITL ゲート・provenance 記録）の設計競争が始まっている。</p>
+    </div>
+    <div class="page-footer">本ブリーフは自動収集・AI生成により作成。配信日時：2026年7月5日 ／ 正本は Obsidian vault (02_NOTES/news-briefs/)。</div>
+  </main>
+</div>
+<script>
+const menuBtn = document.getElementById('menuBtn');
+const sidebarEl = document.getElementById('sidebar');
+const overlayEl = document.getElementById('sidebarOverlay');
+menuBtn.addEventListener('click', () => { sidebarEl.classList.toggle('open'); overlayEl.classList.toggle('active'); });
+overlayEl.addEventListener('click', () => { sidebarEl.classList.remove('open'); overlayEl.classList.remove('active'); });
+</script>
+</body>
+</html>

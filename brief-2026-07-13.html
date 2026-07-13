@@ -6,565 +6,41 @@
 <meta name="robots" content="noindex, nofollow">
 <title>AI Brief - 2026-07-13</title>
 <style>
-
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
-  --bg: #0f1117;
-  --bg-card: #1a1d2e;
-  --bg-sidebar: #141625;
-  --border: #2a2d3e;
-  --text: #e4e6f0;
-  --text-dim: #8b8fa3;
-  --accent: #6c7bf7;
-  --accent-light: #8b97ff;
-  --red: #ff6b6b;
-  --red-bg: rgba(255,107,107,0.1);
-  --yellow: #ffd93d;
-  --yellow-bg: rgba(255,217,61,0.1);
-  --blue: #4ecdc4;
-  --green: #51cf66;
+  --bg: #0f1117; --bg-card: #1a1d2e; --bg-sidebar: #141625; --border: #2a2d3e;
+  --text: #e4e6f0; --text-dim: #8b8fa3; --accent: #6c7bf7; --accent-light: #8b97ff;
+  --yellow: #ffd93d; --yellow-bg: rgba(255,217,61,0.1); --blue: #4ecdc4;
 }
-html, body {
-  overflow-x: hidden;
-}
-body {
-  font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
-  background: var(--bg);
-  color: var(--text);
-  line-height: 1.6;
-}
-.layout {
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  min-height: 100vh;
-}
-.sidebar {
-  background: var(--bg-sidebar);
-  border-right: 1px solid var(--border);
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow-y: auto;
-  display: flex;
-  flex-direction: column;
-}
-.logo {
-  padding: 24px 20px;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.logo-icon { font-size: 28px; }
-.logo-text { font-size: 18px; font-weight: 700; color: var(--accent-light); }
-.nav { flex: 1; padding: 12px 8px; }
-.nav-section-title {
-  padding: 16px 12px 6px;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  color: var(--text-dim);
-}
-.nav-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 10px 12px;
-  border-radius: 8px;
-  color: var(--text-dim);
-  text-decoration: none;
-  font-size: 14px;
-  transition: all 0.15s;
-}
+html, body { overflow-x: hidden; }
+body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
+a { color: var(--accent-light); }
+.layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
+.sidebar { background: var(--bg-sidebar); border-right: 1px solid var(--border); position: sticky; top: 0; height: 100vh; overflow-y: auto; }
+.logo { padding: 22px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+.logo-icon { font-size: 26px; }
+.logo-text { font-size: 16px; font-weight: 700; color: var(--accent-light); }
+.nav { padding: 12px 8px; }
+.nav-section-title { padding: 14px 12px 6px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); }
+.nav-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; color: var(--text-dim); text-decoration: none; font-size: 14px; }
 .nav-item:hover { background: rgba(108,123,247,0.1); color: var(--text); }
 .nav-item.active { background: rgba(108,123,247,0.15); color: var(--accent-light); font-weight: 600; }
-.nav-icon { font-size: 16px; }
-.sidebar-footer {
-  padding: 16px 20px;
-  border-top: 1px solid var(--border);
-}
-.update-info { font-size: 12px; color: var(--text-dim); }
-.bookmark-list { padding: 0 8px; max-height: 40vh; overflow-y: auto; }
-.bookmark-empty { padding: 8px 12px; font-size: 12px; color: var(--text-dim); font-style: italic; }
-.bookmark-item {
-  display: flex;
-  align-items: flex-start;
-  gap: 6px;
-  padding: 6px 8px;
-  border-radius: 6px;
-  transition: background 0.15s;
-}
-.bookmark-item:hover { background: rgba(108,123,247,0.1); }
-.bm-remove {
-  background: none;
-  border: none;
-  color: var(--text-dim);
-  cursor: pointer;
-  font-size: 10px;
-  padding: 2px 4px;
-  border-radius: 4px;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-.bm-remove:hover { background: var(--red-bg); color: var(--red); }
-.bm-link {
-  text-decoration: none;
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-  min-width: 0;
-}
-.bm-score {
-  font-size: 11px;
-  color: var(--green);
-  font-weight: 600;
-}
-.bm-title {
-  font-size: 12px;
-  color: var(--text-dim);
-  line-height: 1.4;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.bm-link:hover .bm-title { color: var(--accent-light); }
-.bm-cell { width: 36px; text-align: center; }
-.bm-btn {
-  background: none;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-  color: var(--text-dim);
-  padding: 2px;
-  transition: all 0.15s;
-  line-height: 1;
-}
-.bm-btn:hover { color: var(--yellow); transform: scale(1.2); }
-.bm-btn.bm-active { color: var(--yellow); }
-.th-bm { width: 36px; }
-.filter-btn.bm-filter.active { background: var(--yellow); border-color: var(--yellow); color: #000; }
-.bm-btn-detail {
-  background: none;
-  border: 1px solid var(--border);
-  font-size: 20px;
-  cursor: pointer;
-  color: var(--text-dim);
-  padding: 4px 8px;
-  border-radius: 6px;
-  transition: all 0.15s;
-  line-height: 1;
-  flex-shrink: 0;
-}
-.bm-btn-detail:hover { color: var(--yellow); border-color: var(--yellow); }
-.bm-btn-detail.bm-active { color: var(--yellow); border-color: var(--yellow); background: var(--yellow-bg); }
-.main {
-  padding: 24px 32px;
-  overflow-x: hidden;
-  min-width: 0;
-  box-sizing: border-box;
-}
-.header {
-  margin-bottom: 28px;
-}
-.header h1 { font-size: 28px; font-weight: 700; }
-.subtitle { color: var(--text-dim); font-size: 15px; margin-top: 4px; }
-.stats-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 16px;
-  margin-bottom: 24px;
-}
-.stat-card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 20px;
-  text-align: center;
-}
-.stat-value { font-size: 28px; font-weight: 700; color: var(--accent-light); }
-.stat-label { font-size: 13px; color: var(--text-dim); margin-top: 4px; }
-.card {
-  background: var(--bg-card);
-  border: 1px solid var(--border);
-  border-radius: 12px;
-  padding: 18px 20px;
-  margin-bottom: 16px;
-  overflow: hidden;
-  box-sizing: border-box;
-  max-width: 100%;
-}
-.card h2 { font-size: 18px; margin-bottom: 16px; display: flex; align-items: center; gap: 8px; }
-.highlight-card {
-  border-left: 4px solid var(--accent);
-}
-.highlight-card p { color: var(--text); font-size: 15px; }
-.date-badge {
-  font-size: 12px;
-  background: rgba(108,123,247,0.2);
-  color: var(--accent-light);
-  padding: 2px 10px;
-  border-radius: 12px;
-  font-weight: 500;
-}
-.count-badge {
-  font-size: 13px;
-  background: rgba(108,123,247,0.2);
-  color: var(--accent-light);
-  padding: 2px 10px;
-  border-radius: 12px;
-  font-weight: 500;
-}
-.filter-card { padding: 12px 16px; }
-.filter-bar { display: flex; flex-direction: column; gap: 10px; }
-.filter-search-wrap { width: 100%; }
-.filter-chips {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  align-items: center;
-}
-.chip-group { display: flex; gap: 4px; align-items: center; }
-.chip-sep { color: var(--border); font-size: 14px; margin: 0 2px; }
-.filter-btn {
-  padding: 4px 10px;
-  border-radius: 14px;
-  border: 1px solid var(--border);
-  background: transparent;
-  color: var(--text-dim);
-  font-size: 12px;
-  cursor: pointer;
-  transition: all 0.15s;
-  white-space: nowrap;
-}
-.filter-btn:hover { border-color: var(--accent); color: var(--text); }
-.filter-btn.active { background: var(--accent); color: #fff; border-color: var(--accent); }
-.filter-btn.red.active { background: var(--red); border-color: var(--red); }
-.filter-btn.yellow.active { background: #b8960a; border-color: #b8960a; }
-.search-input {
-  padding: 6px 14px;
-  border-radius: 8px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text);
-  font-size: 13px;
-  width: 200px;
-}
-.search-input:focus { outline: none; border-color: var(--accent); }
-.table-wrapper { overflow-x: auto; width: 100%; max-width: 100%; box-sizing: border-box; }
-.items-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 13px;
-  table-layout: fixed;
-  max-width: 100%;
-}
-.items-table .title-cell { overflow: hidden; text-overflow: ellipsis; }
-.items-table th {
-  text-align: left;
-  padding: 8px 8px;
-  border-bottom: 2px solid var(--border);
-  color: var(--text-dim);
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  white-space: nowrap;
-}
-.items-table td {
-  padding: 8px;
-  border-bottom: 1px solid var(--border);
-  vertical-align: top;
-}
-.items-table tr:hover { background: rgba(108,123,247,0.05); }
-.items-table colgroup .col-bm { width: 32px; }
-.items-table colgroup .col-cat { width: 70px; }
-.items-table colgroup .col-score { width: 48px; }
-.items-table colgroup .col-title { width: auto; }
-.items-table colgroup .col-source { width: 80px; }
-.items-table colgroup .col-date { width: 80px; }
-.items-table colgroup .col-brief { width: 80px; }
-.items-table colgroup .col-meta-mobile { width: 0; padding: 0; overflow: hidden; }
-.cat-badge {
-  font-size: 11px;
-  padding: 2px 8px;
-  border-radius: 6px;
-  white-space: nowrap;
-}
-.cat-red { background: var(--red-bg); color: var(--red); }
-.cat-yellow { background: var(--yellow-bg); color: var(--yellow); }
-.score-badge {
-  display: inline-block;
-  padding: 2px 8px;
-  border-radius: 6px;
-  font-size: 12px;
-  font-weight: 600;
-  white-space: nowrap;
-}
-.score-high { background: rgba(81,207,102,0.15); color: var(--green); }
-.score-mid { background: rgba(255,217,61,0.15); color: var(--yellow); }
-.score-low { background: rgba(139,143,163,0.15); color: var(--text-dim); }
-.title-cell {
-  overflow: hidden;
-}
-.title-cell a {
-  color: var(--text);
-  text-decoration: none;
-  font-weight: 500;
-  font-size: 13px;
-  display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-.title-cell a:hover { color: var(--accent-light); text-decoration: underline; }
-.item-summary { font-size: 11px; color: var(--text-dim); margin-top: 2px; line-height: 1.4; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
-.source-badge {
-  font-size: 12px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  background: rgba(78,205,196,0.1);
-  color: var(--blue);
-  white-space: nowrap;
-}
-.date-cell { white-space: nowrap; color: var(--text-dim); font-size: 13px; }
-.brief-link {
-  color: var(--accent);
-  text-decoration: none;
-  font-size: 13px;
-  white-space: nowrap;
-}
-.brief-link:hover { text-decoration: underline; }
-/* meta-mobile: hidden on desktop, shown on mobile */
-.meta-mobile { display: none; width: 0; padding: 0 !important; border: none !important; overflow: hidden; }
-.action-link {
-  font-size: 12px;
-  padding: 2px 8px;
-  border-radius: 4px;
-  text-decoration: none;
-  white-space: nowrap;
-}
-.action-brief {
-  background: rgba(108,123,247,0.12);
-  color: var(--accent-light);
-}
-.action-brief:hover { background: rgba(108,123,247,0.25); }
-.brief-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px; }
-.brief-card-link { text-decoration: none; color: inherit; }
-.brief-card {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 20px;
-  transition: all 0.15s;
-}
-.brief-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-.brief-date { font-size: 20px; font-weight: 700; color: var(--accent-light); }
-.brief-meta { font-size: 13px; color: var(--text-dim); margin: 6px 0; }
-.brief-highlight { font-size: 13px; color: var(--text-dim); line-height: 1.5; }
-
-/* Detail page styles */
-.section-red { border-left: 4px solid var(--red); }
-.section-yellow { border-left: 4px solid var(--yellow); }
-.article-card {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 18px;
-  margin-bottom: 14px;
-}
-.article-header {
-  display: flex;
-  align-items: flex-start;
-  gap: 12px;
-  margin-bottom: 10px;
-}
-.article-header h3 { font-size: 15px; font-weight: 600; }
-.article-header h3 a { color: var(--text); text-decoration: none; }
-.article-header h3 a:hover { color: var(--accent-light); }
-.article-meta {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-  font-size: 13px;
-  color: var(--text-dim);
-  margin-bottom: 12px;
-}
-.score-detail { font-size: 12px; }
-.article-section {
-  font-size: 14px;
-  margin-bottom: 8px;
-  line-height: 1.6;
-  color: var(--text);
-}
-.article-section strong { color: var(--accent-light); }
-.article-section.action {
-  background: rgba(108,123,247,0.08);
-  padding: 10px 14px;
-  border-radius: 8px;
-  border-left: 3px solid var(--accent);
-}
-.ref-list { list-style: none; }
-.ref-list li {
-  padding: 8px 0;
-  border-bottom: 1px solid var(--border);
-}
-.ref-list li:last-child { border-bottom: none; }
-.ref-list a { color: var(--blue); text-decoration: none; font-size: 14px; }
-.ref-list a:hover { text-decoration: underline; }
-.editorial-card { border-left: 4px solid var(--blue); }
-.editorial-card p { font-size: 15px; line-height: 1.8; }
-
-/* Mobile hamburger & overlay sidebar */
-.mobile-header {
-  display: none;
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 56px;
-  background: var(--bg-sidebar);
-  border-bottom: 1px solid var(--border);
-  z-index: 200;
-  align-items: center;
-  padding: 0 16px;
-  gap: 12px;
-}
-.mobile-header .logo-icon { font-size: 22px; }
-.mobile-header .logo-text { font-size: 16px; font-weight: 700; color: var(--accent-light); }
-.hamburger {
-  background: none; border: none; color: var(--text); font-size: 24px;
-  cursor: pointer; padding: 4px 8px; border-radius: 6px; line-height: 1;
-}
-.hamburger:hover { background: rgba(108,123,247,0.15); }
-.sidebar-overlay {
-  display: none;
-  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 299;
-}
-.sidebar-overlay.active { display: block; }
-
-@media (max-width: 900px) {
-  .layout {
-    display: block;
-    grid-template-columns: none;
-  }
-  .mobile-header { display: flex; }
-  .sidebar {
-    position: fixed;
-    top: 0; left: 0; bottom: 0;
-    height: 100vh;
-    transform: translateX(-100%);
-    transition: transform 0.25s ease;
-    z-index: 300;
-    width: 280px;
-  }
-  .sidebar.open { transform: translateX(0); }
-  .main {
-    width: 100%;
-    padding: 16px;
-    padding-top: 72px;
-    max-width: 100vw;
-    overflow-x: hidden;
-  }
-  .header { margin-bottom: 16px; }
-  .header h1 { font-size: 20px; }
-  .subtitle { font-size: 13px; }
-  .stats-row { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .stat-card { padding: 14px 10px; }
-  .stat-value { font-size: 22px; }
-  .stat-label { font-size: 11px; }
-  .card { padding: 14px; margin-bottom: 12px; }
-  .card h2 { font-size: 16px; margin-bottom: 10px; }
-  .filter-chips { gap: 5px; }
-  .filter-btn { padding: 3px 8px; font-size: 11px; }
-  .chip-sep { font-size: 12px; margin: 0 1px; }
-  .search-input { width: 100%; }
-  .highlight-card p { font-size: 13px; }
-
-  /* Table: switch to card layout on mobile */
-  .items-table { table-layout: auto; }
-  .items-table colgroup { display: none; }
-  .items-table thead { display: none; }
-  .items-table tbody tr {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    gap: 4px 0;
-    padding: 12px 0;
-    border-bottom: 1px solid var(--border);
-  }
-  .items-table td { padding: 0; border: none; display: none; }
-  .items-table td.bm-cell {
-    display: flex;
-    align-items: center;
-    margin-right: 8px;
-    flex-shrink: 0;
-  }
-  .items-table td.title-cell {
-    display: block;
-    flex: 1;
-    min-width: 0;
-  }
-  .items-table td.title-cell a {
-    white-space: normal;
-    font-size: 14px;
-    line-height: 1.4;
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-  }
-  .items-table td.meta-mobile {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 6px;
-    align-items: center;
-    width: 100%;
-    padding-left: 36px;
-    margin-top: 4px;
-    font-size: 11px;
-  }
-  .items-table td.meta-mobile .cat-badge,
-  .items-table td.meta-mobile .score-badge,
-  .items-table td.meta-mobile .source-badge {
-    font-size: 11px;
-    padding: 1px 6px;
-  }
-  .items-table td.meta-mobile .date-cell {
-    font-size: 11px;
-  }
-  /* Hide desktop-only columns: cat, score, source, date, brief */
-  .items-table td.td-cat,
-  .items-table td.td-score,
-  .items-table td.td-source,
-  .items-table td.td-date,
-  .items-table td.td-brief {
-    display: none !important;
-  }
-
-  /* Brief grid */
-  .brief-grid { grid-template-columns: 1fr; gap: 10px; }
-  .brief-card { padding: 14px; }
-  .brief-date { font-size: 16px; }
-
-  /* Detail page article cards */
-  .article-card { padding: 14px; }
-  .article-header { flex-wrap: wrap; gap: 8px; }
-  .article-header h3 { font-size: 14px; }
-  .article-meta { font-size: 12px; gap: 8px; }
-  .article-section { font-size: 13px; }
-  .bm-btn-detail { font-size: 18px; padding: 3px 6px; }
-}
-
-@media (max-width: 480px) {
-  .stats-row { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .stat-card { padding: 10px 8px; }
-  .stat-value { font-size: 18px; }
-  .main { padding: 12px; padding-top: 68px; }
-  .filter-btn { padding: 3px 7px; font-size: 10px; }
-  .chip-sep { display: none; }
-  .filter-chips { gap: 4px; }
-}
-
-/* 2026-07-13 addendum — Opus routine brief layout */
+.main { padding: 24px 32px; min-width: 0; }
+.header { margin-bottom: 24px; }
+.header h1 { font-size: 26px; font-weight: 700; line-height: 1.3; }
+.subtitle { color: var(--text-dim); font-size: 14px; margin-top: 4px; }
+.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 16px; max-width: 100%; overflow: hidden; }
+.card h2 { font-size: 18px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
+.highlight-card { border-left: 4px solid var(--accent); }
+.highlight-card p { font-size: 15px; }
+.sub-h { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin: 18px 0 4px; }
+.article-card { border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin: 10px 0; }
+.article-card h3 { font-size: 15px; font-weight: 600; line-height: 1.5; }
+.article-card h3 a { color: var(--text); text-decoration: none; }
+.article-card h3 a:hover { color: var(--accent-light); }
+.article-meta { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; font-size: 12px; color: var(--text-dim); margin: 6px 0 8px; }
+.source-badge { background: rgba(108,123,247,0.12); color: var(--accent-light); border-radius: 10px; padding: 1px 8px; }
+.article-body { font-size: 14px; }
 .takeaway-item { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
 .takeaway-item:last-child { border-bottom: none; }
 .tw-chip { flex-shrink: 0; font-size: 11px; padding: 2px 8px; border-radius: 10px; background: rgba(108,123,247,0.15); color: var(--accent-light); font-weight: 600; white-space: nowrap; margin-top: 3px; }
@@ -575,14 +51,31 @@ body {
 .tw-src a:hover { text-decoration: underline; }
 .quote-card { border-left: 3px solid var(--yellow); padding: 10px 14px; margin: 10px 0; background: rgba(255,217,61,0.05); border-radius: 0 8px 8px 0; }
 .quote-card .q-name { font-weight: 600; color: var(--yellow); font-size: 14px; }
-.quote-card .q-text { font-size: 14px; color: var(--text); margin: 4px 0; }
-.quote-card .q-src { font-size: 12px; }
-.quote-card .q-src a { color: var(--blue); text-decoration: none; }
-.notice { font-size: 13px; color: var(--text-dim); background: var(--yellow-bg); border: 1px solid rgba(255,217,61,0.25); border-radius: 8px; padding: 10px 14px; margin-bottom: 12px; }
+.quote-card .q-name a { color: var(--yellow); }
+.quote-card .q-text { font-size: 14px; margin: 4px 0; }
+.notice { font-size: 13px; color: var(--text-dim); background: var(--yellow-bg); border: 1px solid rgba(255,217,61,0.25); border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
+.x-plain { font-size: 13px; color: var(--text-dim); margin: 8px 0; }
 .impact-h { font-size: 15px; font-weight: 600; color: var(--accent-light); margin: 14px 0 6px; }
-.impact-p { font-size: 14px; color: var(--text); }
-.sub-h { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin: 18px 0 4px; }
+.impact-p { font-size: 14px; }
 .page-footer { color: var(--text-dim); font-size: 12px; margin-top: 28px; border-top: 1px solid var(--border); padding-top: 14px; }
+.brief-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
+.brief-card-link { text-decoration: none; }
+.brief-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; height: 100%; transition: border-color 0.15s; }
+.brief-card:hover { border-color: var(--accent); }
+.brief-date { font-size: 16px; font-weight: 700; color: var(--accent-light); }
+.brief-meta { font-size: 12px; color: var(--text-dim); margin: 2px 0 8px; }
+.brief-highlight { font-size: 13px; color: var(--text); }
+.mobile-header { display: none; }
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; }
+  .mobile-header { display: flex; align-items: center; gap: 10px; position: fixed; top: 0; left: 0; right: 0; z-index: 20; background: var(--bg-sidebar); border-bottom: 1px solid var(--border); padding: 10px 14px; }
+  .hamburger { background: none; border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 18px; padding: 4px 10px; }
+  .sidebar { position: fixed; left: -260px; width: 250px; z-index: 30; transition: left 0.2s; }
+  .sidebar.open { left: 0; }
+  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 25; }
+  .sidebar-overlay.active { display: block; }
+  .main { padding: 14px; padding-top: 66px; }
+}
 </style>
 </head>
 <body>
@@ -599,326 +92,171 @@ body {
       <div class="logo-text">AI Intel Brief</div>
     </div>
     <nav class="nav">
-      <a href="index.html" class="nav-item">
-        <span class="nav-icon">📊</span>ダッシュボード
-      </a>
-      <div class="nav-section-title">ブックマーク</div>
-      <div id="bookmarkList" class="bookmark-list">
-        <div class="bookmark-empty">ブックマークはまだありません</div>
-      </div>
-      <div class="nav-section-title">過去のブリーフ</div>
-      <a href="brief-2026-07-13.html" class="nav-item active"><span class="nav-icon">📄</span>2026-07-13</a>
-      <a href="brief-2026-06-15.html" class="nav-item"><span class="nav-icon">📄</span>2026-06-15</a>
-      <a href="brief-2026-06-14.html" class="nav-item"><span class="nav-icon">📄</span>2026-06-14</a>
-      <a href="brief-2026-06-13.html" class="nav-item"><span class="nav-icon">📄</span>2026-06-13</a>
-      <a href="brief-2026-06-12.html" class="nav-item"><span class="nav-icon">📄</span>2026-06-12</a>
-      <a href="brief-2026-06-11.html" class="nav-item"><span class="nav-icon">📄</span>2026-06-11</a>
-      <a href="brief-2026-06-10.html" class="nav-item"><span class="nav-icon">📄</span>2026-06-10</a>
-      <a href="brief-2026-06-09.html" class="nav-item"><span class="nav-icon">📄</span>2026-06-09</a>
-      <a href="brief-2026-06-08.html" class="nav-item"><span class="nav-icon">📄</span>2026-06-08</a>
-      <a href="brief-2026-06-07.html" class="nav-item"><span class="nav-icon">📄</span>2026-06-07</a>
-      <a href="brief-2026-06-06.html" class="nav-item"><span class="nav-icon">📄</span>2026-06-06</a>
-      <a href="brief-2026-06-05.html" class="nav-item"><span class="nav-icon">📄</span>2026-06-05</a>
-      <a href="brief-2026-06-04.html" class="nav-item"><span class="nav-icon">📄</span>2026-06-04</a>
-      <a href="brief-2026-06-03.html" class="nav-item"><span class="nav-icon">📄</span>2026-06-03</a>
-      <a href="brief-2026-06-02.html" class="nav-item"><span class="nav-icon">📄</span>2026-06-02</a>
-      <a href="brief-2026-06-01.html" class="nav-item"><span class="nav-icon">📄</span>2026-06-01</a>
-      <a href="brief-2026-05-31.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-31</a>
-      <a href="brief-2026-05-30.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-30</a>
-      <a href="brief-2026-05-29.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-29</a>
-      <a href="brief-2026-05-28.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-28</a>
-      <a href="brief-2026-05-27.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-27</a>
-      <a href="brief-2026-05-26.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-26</a>
-      <a href="brief-2026-05-25.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-25</a>
-      <a href="brief-2026-05-24.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-24</a>
-      <a href="brief-2026-05-23.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-23</a>
-      <a href="brief-2026-05-22.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-22</a>
-      <a href="brief-2026-05-21.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-21</a>
-      <a href="brief-2026-05-19.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-19</a>
-      <a href="brief-2026-05-18.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-18</a>
-      <a href="brief-2026-05-17.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-17</a>
-      <a href="brief-2026-05-16.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-16</a>
-      <a href="brief-2026-05-15.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-15</a>
-      <a href="brief-2026-05-14.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-14</a>
-      <a href="brief-2026-05-13.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-13</a>
-      <a href="brief-2026-05-12.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-12</a>
-      <a href="brief-2026-05-11.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-11</a>
-      <a href="brief-2026-05-10.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-10</a>
-      <a href="brief-2026-05-09.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-09</a>
-      <a href="brief-2026-05-08.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-08</a>
-      <a href="brief-2026-05-07.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-07</a>
-      <a href="brief-2026-05-06.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-06</a>
-      <a href="brief-2026-05-04.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-04</a>
-      <a href="brief-2026-05-03.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-03</a>
-      <a href="brief-2026-05-02.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-02</a>
-      <a href="brief-2026-05-01.html" class="nav-item"><span class="nav-icon">📄</span>2026-05-01</a>
-      <a href="brief-2026-04-30.html" class="nav-item"><span class="nav-icon">📄</span>2026-04-30</a>
-      <a href="brief-2026-04-29.html" class="nav-item"><span class="nav-icon">📄</span>2026-04-29</a>
-      <a href="brief-2026-04-28.html" class="nav-item"><span class="nav-icon">📄</span>2026-04-28</a>
-      <a href="brief-2026-04-24.html" class="nav-item"><span class="nav-icon">📄</span>2026-04-24</a>
-      <a href="brief-2026-04-23.html" class="nav-item"><span class="nav-icon">📄</span>2026-04-23</a>
-      <a href="brief-2026-04-22.html" class="nav-item"><span class="nav-icon">📄</span>2026-04-22</a>
-      <a href="brief-2026-04-21.html" class="nav-item"><span class="nav-icon">📄</span>2026-04-21</a>
-      <a href="brief-2026-04-20.html" class="nav-item"><span class="nav-icon">📄</span>2026-04-20</a>
-      <a href="brief-2026-04-01.html" class="nav-item"><span class="nav-icon">📄</span>2026-04-01</a>
-      <a href="brief-2026-03-31.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-31</a>
-      <a href="brief-2026-03-30.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-30</a>
-      <a href="brief-2026-03-29.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-29</a>
-      <a href="brief-2026-03-28.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-28</a>
-      <a href="brief-2026-03-27.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-27</a>
-      <a href="brief-2026-03-26.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-26</a>
-      <a href="brief-2026-03-24.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-24</a>
-      <a href="brief-2026-03-23.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-23</a>
-      <a href="brief-2026-03-22.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-22</a>
-      <a href="brief-2026-03-21.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-21</a>
-      <a href="brief-2026-03-20.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-20</a>
-      <a href="brief-2026-03-19.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-19</a>
-      <a href="brief-2026-03-18.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-18</a>
-      <a href="brief-2026-03-17.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-17</a>
-      <a href="brief-2026-03-16.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-16</a>
-      <a href="brief-2026-03-15.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-15</a>
-      <a href="brief-2026-03-10.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-10</a>
-      <a href="brief-2026-03-05.html" class="nav-item"><span class="nav-icon">📄</span>2026-03-05</a>
-      <a href="brief-2026-02-24.html" class="nav-item"><span class="nav-icon">📄</span>2026-02-24</a>
-
+      <a href="index.html" class="nav-item"><span>🗂</span>ブリーフ一覧</a>
+      <div class="nav-section-title">デイリーブリーフ</div>
+      <a href="brief-2026-07-13.html" class="nav-item active"><span>📄</span>2026-07-13</a>
+      <a href="brief-2026-07-12.html" class="nav-item"><span>📄</span>2026-07-12</a>
+      <a href="brief-2026-07-11.html" class="nav-item"><span>📄</span>2026-07-11</a>
+      <a href="brief-2026-07-10.html" class="nav-item"><span>📄</span>2026-07-10</a>
+      <a href="brief-2026-07-09.html" class="nav-item"><span>📄</span>2026-07-09</a>
+      <a href="brief-2026-07-08.html" class="nav-item"><span>📄</span>2026-07-08</a>
+      <a href="brief-2026-07-07.html" class="nav-item"><span>📄</span>2026-07-07</a>
+      <a href="brief-2026-07-06.html" class="nav-item"><span>📄</span>2026-07-06</a>
+      <a href="brief-2026-07-05.html" class="nav-item"><span>📄</span>2026-07-05</a>
+      <a href="brief-2026-07-04.html" class="nav-item"><span>📄</span>2026-07-04</a>
+      <a href="brief-2026-07-03.html" class="nav-item"><span>📄</span>2026-07-03</a>
+      <a href="brief-2026-07-01.html" class="nav-item"><span>📄</span>2026-07-01</a>
     </nav>
   </aside>
   <main class="main">
     <header class="header">
       <h1>Daily AI News Brief — 医薬品開発 × CRO</h1>
-      <p class="subtitle">2026-07-13（月曜日） · 自動収集・AI生成</p>
+      <p class="subtitle">2026年7月13日（月曜日） · 自動収集・AI生成</p>
     </header>
-
-    <div class="card highlight-card">
-      <h2>📌 ハイライト</h2>
-      <p>Anthropic が「Claude Science」を正式発表（6/30）し、顧みられない疾患を対象に自社創薬へも参入。Insilico の rentosertib（AI設計 TNIK 阻害剤・IPF）が AI 起点薬剤として初の Phase III 入り（7/7-8）、同じ週に武田薬品が Insilico と最大6億ドルの戦略提携（7/2）。CRO は IQVIA（7/28 決算）・ICON（agentic AI「Orbis」）とも AI を生産性エンジンに据え、規制側は FDA/EMA 共同10原則から Q2 2026 最終ガイダンスへ、PMDA は自ら生成 AI を業務採用、ICH M15 は 7/23 発効。</p>
-    </div>
-
     <div class="card">
       <h2>🎯 本日の重要テイクアウェイ</h2>
       <div class="takeaway-item">
         <span class="tw-chip">Anthropic</span>
         <div class="tw-body">
           <div class="tw-text">「Claude Science」正式発表（6/30）— 60+ の科学DB/ツール統合、自社創薬ラボ（希少・顧みられない疾患）も始動、IPO 前の pharma 収益拡大</div>
-          <div class="tw-src"><a href="https://www.statnews.com/2026/06/30/anthropic-release-claude-science-ceo-dario-amodei/" target="_blank" rel="noopener">statnews →</a></div>
+          <div class="tw-src"><a href="https://www.statnews.com/2026/06/30/anthropic-release-claude-science-ceo-dario-amodei/" target="_blank" rel="noopener">statnews</a></div>
         </div>
       </div>
       <div class="takeaway-item">
         <span class="tw-chip">AI創薬</span>
         <div class="tw-body">
           <div class="tw-text">Insilico の rentosertib（AI設計 TNIK 阻害剤・IPF）が <strong>Phase III 開始</strong>（7/7-8）— AI起点の薬剤で初の後期ピボタル入り</div>
-          <div class="tw-src"><a href="https://insilico.com/news/xmjsn4l091-insilico-initiates-phase-iii-clinical-tr" target="_blank" rel="noopener">insilico →</a></div>
+          <div class="tw-src"><a href="https://insilico.com/news/xmjsn4l091-insilico-initiates-phase-iii-clinical-tr" target="_blank" rel="noopener">insilico</a></div>
         </div>
       </div>
       <div class="takeaway-item">
         <span class="tw-chip">国内</span>
         <div class="tw-body">
           <div class="tw-text"><strong>武田薬品×Insilico</strong> 戦略提携（7/2）— 一時金6000万ドル、契約総額最大6億ドル。国内大手のAI創薬企業囲い込み加速</div>
-          <div class="tw-src"><a href="https://www.nikkei.com/article/DGXZQOUC01A290R00C26A7000000/" target="_blank" rel="noopener">日経 →</a></div>
+          <div class="tw-src"><a href="https://www.nikkei.com/article/DGXZQOUC01A290R00C26A7000000/" target="_blank" rel="noopener">日経</a></div>
         </div>
       </div>
       <div class="takeaway-item">
         <span class="tw-chip">CRO</span>
         <div class="tw-body">
           <div class="tw-text">IQVIA が Q2FY26 決算を 7/28 に発表予定、EPS 予想 $2.74（+8.3%）。臨床AI統合の追い風</div>
-          <div class="tw-src"><a href="https://finance.yahoo.com/healthcare/articles/iqvia-holdings-q2-2026-earnings-111630452.html" target="_blank" rel="noopener">Yahoo Finance →</a></div>
+          <div class="tw-src"><a href="https://finance.yahoo.com/healthcare/articles/iqvia-holdings-q2-2026-earnings-111630452.html" target="_blank" rel="noopener">Yahoo Finance</a></div>
         </div>
       </div>
       <div class="takeaway-item">
         <span class="tw-chip">CRO</span>
         <div class="tw-body">
           <div class="tw-text">ICON は agentic AI プラットフォーム「Orbis」を軸に intelligence layer を構築中、AIを「成長スローガンでなく生産性ツール」と位置付け</div>
-          <div class="tw-src"><a href="https://www.tradingview.com/news/zacks:f8d683518094b:0-icon-stock-and-the-cro-trends-shaping-its-next-growth-phase/" target="_blank" rel="noopener">TradingView/Zacks →</a></div>
+          <div class="tw-src"><a href="https://www.tradingview.com/news/zacks:f8d683518094b:0-icon-stock-and-the-cro-trends-shaping-its-next-growth-phase/" target="_blank" rel="noopener">TradingView/Zacks</a></div>
         </div>
       </div>
       <div class="takeaway-item">
         <span class="tw-chip">規制</span>
         <div class="tw-body">
           <div class="tw-text">FDA/EMA が「Good AI Practice in Drug Development」10原則を1月に共同公表、FDA 最終ガイダンスは Q2 2026 見込み</div>
-          <div class="tw-src"><a href="https://www.fda.gov/about-fda/center-drug-evaluation-and-research-cder/artificial-intelligence-drug-development" target="_blank" rel="noopener">FDA →</a></div>
+          <div class="tw-src"><a href="https://www.fda.gov/about-fda/center-drug-evaluation-and-research-cder/artificial-intelligence-drug-development" target="_blank" rel="noopener">FDA</a></div>
         </div>
       </div>
       <div class="takeaway-item">
         <span class="tw-chip">国内規制</span>
         <div class="tw-body">
           <div class="tw-text">PMDA が「業務への生成AI利用開始」を公表（4/15）、当局自らが業務にAIを採用。ICH M15 は 7/23 法的発効</div>
-          <div class="tw-src"><a href="https://www.pmda.go.jp/0017.html" target="_blank" rel="noopener">PMDA →</a></div>
+          <div class="tw-src"><a href="https://www.pmda.go.jp/0017.html" target="_blank" rel="noopener">PMDA</a></div>
         </div>
       </div>
     </div>
-
     <div class="card">
       <h2>🌍 海外ニュース</h2>
-
-      <div class="sub-h">Anthropic</div>
+      <div class="sub-h">ANTHROPIC</div>
       <div class="article-card">
-        <div class="article-header">
-          <h3><a href="https://www.statnews.com/2026/06/30/anthropic-release-claude-science-ceo-dario-amodei/" target="_blank" rel="noopener">Anthropic releases Claude Science, a product aimed at researchers, the pharma industry</a></h3>
-        </div>
-        <div class="article-meta">
-          <span>📅 2026-06-30</span>
-          <span class="source-badge">STAT News</span>
-        </div>
-        <div class="article-section">Anthropic は 6/30、サンフランシスコの「The Briefing: AI for Science」イベント（Yerba Buena Center）で Claude Science をベータ公開。Dario Amodei が大手製薬3社のトップと登壇。既存 Claude モデル（Opus 4.8 含む）上に、コーディネーティング・エージェント＋60超の curated skills/コネクタ（ゲノミクス・単一細胞・プロテオミクス・構造生物学・ケモインフォマティクス）を載せた「研究ワークベンチ」。Pro/Max/Team/Enterprise 加入者は即時ベータ利用可。</div>
+        <h3><a href="https://www.statnews.com/2026/06/30/anthropic-release-claude-science-ceo-dario-amodei/" target="_blank" rel="noopener">Anthropic releases Claude Science, a product aimed at researchers, the pharma industry</a></h3>
+        <div class="article-meta"><span>📅 2026-06-30</span><span class="source-badge">STAT News</span></div>
+        <div class="article-body">Anthropic は 6/30、サンフランシスコの「The Briefing: AI for Science」イベント（Yerba Buena Center）で Claude Science をベータ公開。Dario Amodei が大手製薬3社のトップと登壇。既存 Claude モデル（Opus 4.8 含む）上に、コーディネーティング・エージェント＋60超の curated skills/コネクタ（ゲノミクス・単一細胞・プロテオミクス・構造生物学・ケモインフォマティクス）を載せた「研究ワークベンチ」。Pro/Max/Team/Enterprise 加入者は即時ベータ利用可。</div>
       </div>
       <div class="article-card">
-        <div class="article-header">
-          <h3><a href="https://www.cnbc.com/2026/06/30/anthropic-launches-ai-drug-discovery-program-claude-science.html" target="_blank" rel="noopener">Anthropic launches AI drug discovery program, Claude Science</a></h3>
-        </div>
-        <div class="article-meta">
-          <span>📅 2026-06-30</span>
-          <span class="source-badge">CNBC</span>
-        </div>
-        <div class="article-section">製品公開と同時に、Anthropic 自身の社内創薬プログラムを発表。対象は「顧みられない（neglected）疾患」— 希少遺伝性疾患や熱帯病など、収益性の低さから製薬・バイオが敬遠してきた領域。外部研究者向けには最大50プロジェクトへ各 $30,000 の計算クレジットを提供（応募締切 7/15、採択発表 7/31）。Novo Nordisk、Allen Institute を顧客事例に挙げる。</div>
+        <h3><a href="https://www.cnbc.com/2026/06/30/anthropic-launches-ai-drug-discovery-program-claude-science.html" target="_blank" rel="noopener">Anthropic launches AI drug discovery program, Claude Science</a></h3>
+        <div class="article-meta"><span>📅 2026-06-30</span><span class="source-badge">CNBC</span></div>
+        <div class="article-body">製品公開と同時に、Anthropic 自身の社内創薬プログラムを発表。対象は「顧みられない（neglected）疾患」— 希少遺伝性疾患や熱帯病など、収益性の低さから製薬・バイオが敬遠してきた領域。外部研究者向けには最大50プロジェクトへ各 $30,000 の計算クレジットを提供（応募締切 7/15、採択発表 7/31）。Novo Nordisk、Allen Institute を顧客事例に挙げる。</div>
       </div>
       <div class="article-card">
-        <div class="article-header">
-          <h3><a href="https://pharmaphorum.com/news/anthropic-launches-claude-science-pharma-researchers" target="_blank" rel="noopener">Anthropic launches Claude Science for pharma researchers</a></h3>
-        </div>
-        <div class="article-meta">
-          <span>📅 2026-07</span>
-          <span class="source-badge">pharmaphorum</span>
-        </div>
-        <div class="article-section">Claude Science は CRISPR スクリーン設計、単一細胞 RNA-seq 解析、3D タンパク質構造レンダリング等の実務タスクを支援。HIPAA 準拠組織は Claude for Enterprise から PubMed（3,500万件超の生物医学文献）等の既存ヘルスケア・コネクタを利用可能。5月に締結済みの Bristol Myers Squibb（従業員3万人超への Claude 展開）に続く動き。IPO を控えた enterprise/pharma 収益の拡大策として複数媒体が位置付け。</div>
+        <h3><a href="https://pharmaphorum.com/news/anthropic-launches-claude-science-pharma-researchers" target="_blank" rel="noopener">Anthropic launches Claude Science for pharma researchers</a></h3>
+        <div class="article-meta"><span>📅 2026-07</span><span class="source-badge">pharmaphorum</span></div>
+        <div class="article-body">Claude Science は CRISPR スクリーン設計、単一細胞 RNA-seq 解析、3D タンパク質構造レンダリング等の実務タスクを支援。HIPAA 準拠組織は Claude for Enterprise から PubMed（3,500万件超の生物医学文献）等の既存ヘルスケア・コネクタを利用可能。5月に締結済みの Bristol Myers Squibb（従業員3万人超への Claude 展開）に続く動き。IPO を控えた enterprise/pharma 収益の拡大策として複数媒体が位置付け。</div>
       </div>
-
       <div class="sub-h">AI創薬</div>
       <div class="article-card">
-        <div class="article-header">
-          <h3><a href="https://insilico.com/news/xmjsn4l091-insilico-initiates-phase-iii-clinical-tr" target="_blank" rel="noopener">Insilico Initiates Phase III Clinical Trial for Rentosertib (TNIK inhibitor, IPF)</a></h3>
-        </div>
-        <div class="article-meta">
-          <span>📅 2026-07-07</span>
-          <span class="source-badge">Insilico Medicine（一次）</span>
-          <span>／ <a href="https://www.prnewswire.com/news-releases/insilico-initiates-phase-iii-clinical-trial-for-rentosertib-its-ai-empowered-tnik-inhibitor-for-idiopathic-pulmonary-fibrosis-302819553.html" target="_blank" rel="noopener" style="color:var(--blue);text-decoration:none;">PR Newswire</a></span>
-        </div>
-        <div class="article-section">特発性肺線維症（IPF）に対する経口 TNIK 阻害剤 rentosertib の Phase III を開始。中国47施設で320例を組み入れる前向き・無作為化・二重盲検・プラセボ対照試験。Phase IIa（60mg 1日1回）では 12週で FVC 平均 +98.4mL（プラセボ -20.3mL）。<strong>標的をAIが同定し、構造を生成AIが設計し、臨床開発をAI予測が導いた薬剤として、初めて後期ピボタル試験に到達</strong>した点が象徴的。</div>
+        <h3><a href="https://insilico.com/news/xmjsn4l091-insilico-initiates-phase-iii-clinical-tr" target="_blank" rel="noopener">Insilico Initiates Phase III Clinical Trial for Rentosertib (TNIK inhibitor, IPF)</a></h3>
+        <div class="article-meta"><span>📅 2026-07-07</span><span class="source-badge">Insilico Medicine（一次） / <a href="https://www.prnewswire.com/news-releases/insilico-initiates-phase-iii-clinical-trial-for-rentosertib-its-ai-empowered-tnik-inhibitor-for-idiopathic-pulmonary-fibrosis-302819553.html" target="_blank" rel="noopener">PR Newswire</a></span></div>
+        <div class="article-body">特発性肺線維症（IPF）に対する経口 TNIK 阻害剤 rentosertib の Phase III を開始。中国47施設で320例を組み入れる前向き・無作為化・二重盲検・プラセボ対照試験。Phase IIa（60mg 1日1回）では 12週で FVC 平均 +98.4mL（プラセボ -20.3mL）。<strong>標的をAIが同定し、構造を生成AIが設計し、臨床開発をAI予測が導いた薬剤として、初めて後期ピボタル試験に到達</strong>した点が象徴的。</div>
       </div>
       <div class="article-card">
-        <div class="article-header">
-          <h3><a href="https://www.clinicalresearchnewsonline.com/news/2026/07/08/insilico-medicine-launches-phase-iii-trial-for-ai-developed-drug" target="_blank" rel="noopener">Insilico Medicine Launches Phase III Trial for AI-Developed Drug</a></h3>
-        </div>
-        <div class="article-meta">
-          <span>📅 2026-07-08</span>
-          <span class="source-badge">Clinical Research News</span>
-        </div>
-        <div class="article-section">CEO Alex Zhavoronkov は「会社にとっても私の人生にとっても重要なマイルストーン」「標準治療を上回り疾患修飾効果を示せれば、その種で初かつ唯一の薬になる」とコメント。discovery-to-clinic の過程は Nature Biotechnology、Phase IIa 結果は Nature Medicine に掲載済み。</div>
+        <h3><a href="https://www.clinicalresearchnewsonline.com/news/2026/07/08/insilico-medicine-launches-phase-iii-trial-for-ai-developed-drug" target="_blank" rel="noopener">Insilico Medicine Launches Phase III Trial for AI-Developed Drug</a></h3>
+        <div class="article-meta"><span>📅 2026-07-08</span><span class="source-badge">Clinical Research News</span></div>
+        <div class="article-body">CEO Alex Zhavoronkov は「会社にとっても私の人生にとっても重要なマイルストーン」「標準治療を上回り疾患修飾効果を示せれば、その種で初かつ唯一の薬になる」とコメント。discovery-to-clinic の過程は Nature Biotechnology、Phase IIa 結果は Nature Medicine に掲載済み。</div>
       </div>
       <div class="article-card">
-        <div class="article-header">
-          <h3><a href="https://aimmediahouse.com/ai-lifesciences/2026-is-the-year-ai-drug-discovery-meets-clinical-reality" target="_blank" rel="noopener">2026 Is the Year AI Drug Discovery Meets Clinical Reality</a></h3>
-        </div>
-        <div class="article-meta">
-          <span>📅 2026</span>
-          <span class="source-badge">AIM Media House</span>
-        </div>
-        <div class="article-section">2026年初時点で173超の AI 由来プログラムが臨床開発中、15〜20件が年内にピボタル入り見込み。Recursion（REC-394 / REC-1245）、Schrödinger（zasocitinib）など複数の読み出しが年内に予定され、「AIが設計した薬が実際にスケールで効くか」を問う Phase III 結果が2026年最大の焦点。</div>
+        <h3><a href="https://aimmediahouse.com/ai-lifesciences/2026-is-the-year-ai-drug-discovery-meets-clinical-reality" target="_blank" rel="noopener">2026 Is the Year AI Drug Discovery Meets Clinical Reality</a></h3>
+        <div class="article-meta"><span>📅 2026</span><span class="source-badge">AIM Media House</span></div>
+        <div class="article-body">2026年初時点で173超の AI 由来プログラムが臨床開発中、15〜20件が年内にピボタル入り見込み。Recursion（REC-394 / REC-1245）、Schrödinger（zasocitinib）など複数の読み出しが年内に予定され、「AIが設計した薬が実際にスケールで効くか」を問う Phase III 結果が2026年最大の焦点。</div>
       </div>
-
       <div class="sub-h">CRO・臨床試験</div>
       <div class="article-card">
-        <div class="article-header">
-          <h3><a href="https://finance.yahoo.com/healthcare/articles/iqvia-holdings-q2-2026-earnings-111630452.html" target="_blank" rel="noopener">IQVIA Holdings' Q2 2026 Earnings: What to Expect</a></h3>
-        </div>
-        <div class="article-meta">
-          <span>📅 2026-07</span>
-          <span class="source-badge">Yahoo Finance</span>
-        </div>
-        <div class="article-section">IQVIA は Q2FY26 決算を 7/28 寄付き前に発表（電話会議 9:00 ET）。希薄化後 EPS 予想 $2.74（前年同期 $2.53 比 +8.3%）。臨床試験市場のAI駆動の最前線に位置し、AI統合ソリューションの追い風を受ける見立て。既に商用化済みの臨床財務スイート（CTFS）は AI で予算策定・請求処理・不正検知を自動化。</div>
+        <h3><a href="https://finance.yahoo.com/healthcare/articles/iqvia-holdings-q2-2026-earnings-111630452.html" target="_blank" rel="noopener">IQVIA Holdings' Q2 2026 Earnings: What to Expect</a></h3>
+        <div class="article-meta"><span>📅 2026-07</span><span class="source-badge">Yahoo Finance</span></div>
+        <div class="article-body">IQVIA は Q2FY26 決算を 7/28 寄付き前に発表（電話会議 9:00 ET）。希薄化後 EPS 予想 $2.74（前年同期 $2.53 比 +8.3%）。臨床試験市場のAI駆動の最前線に位置し、AI統合ソリューションの追い風を受ける見立て。既に商用化済みの臨床財務スイート（CTFS）は AI で予算策定・請求処理・不正検知を自動化。</div>
       </div>
       <div class="article-card">
-        <div class="article-header">
-          <h3><a href="https://www.tradingview.com/news/zacks:f8d683518094b:0-icon-stock-and-the-cro-trends-shaping-its-next-growth-phase/" target="_blank" rel="noopener">ICON Stock and the CRO Trends Shaping Its Next Growth Phase</a></h3>
-        </div>
-        <div class="article-meta">
-          <span>📅 2026-07</span>
-          <span class="source-badge">Zacks / TradingView</span>
-        </div>
-        <div class="article-section">ICON は Q1 2026 の純受注 $2.88B、ブッキング $3.26B、book-to-bill 1.42x。AIを「成長スローガンでなく生産性ツール」と明確に位置付け、意思決定の高速化・反復作業の自動化・試験ライフサイクル全体の摩擦低減に活用。agentic AI プラットフォーム「Orbis」を支える intelligence layer を構築中。</div>
+        <h3><a href="https://www.tradingview.com/news/zacks:f8d683518094b:0-icon-stock-and-the-cro-trends-shaping-its-next-growth-phase/" target="_blank" rel="noopener">ICON Stock and the CRO Trends Shaping Its Next Growth Phase</a></h3>
+        <div class="article-meta"><span>📅 2026-07</span><span class="source-badge">Zacks / TradingView</span></div>
+        <div class="article-body">ICON は Q1 2026 の純受注 $2.88B、ブッキング $3.26B、book-to-bill 1.42x。AIを「成長スローガンでなく生産性ツール」と明確に位置付け、意思決定の高速化・反復作業の自動化・試験ライフサイクル全体の摩擦低減に活用。agentic AI プラットフォーム「Orbis」を支える intelligence layer を構築中。</div>
       </div>
       <div class="article-card">
-        <div class="article-header">
-          <h3><a href="https://www.clinicalleader.com/doc/cro-industry-outlook-the-next-stage-of-clinical-trial-transformation-0001" target="_blank" rel="noopener">CRO Industry Outlook 2026: The Next Stage Of Clinical Trial Transformation</a></h3>
-        </div>
-        <div class="article-meta">
-          <span>📅 2026</span>
-          <span class="source-badge">Clinical Leader</span>
-        </div>
-        <div class="article-section">2026年の CRO は「取引ベンダー」から「戦略的共同開発者」へ。AI はパイロットから基盤インフラへ移行。IQVIA / ICON / Thermo Fisher（PPD）/ Medpace が2025年に堅調な業績を報告、APAC の治験ハブ化・新たな規制期待・科学的複雑性の増大が試験設計と実行を再定義。</div>
+        <h3><a href="https://www.clinicalleader.com/doc/cro-industry-outlook-the-next-stage-of-clinical-trial-transformation-0001" target="_blank" rel="noopener">CRO Industry Outlook 2026: The Next Stage Of Clinical Trial Transformation</a></h3>
+        <div class="article-meta"><span>📅 2026</span><span class="source-badge">Clinical Leader</span></div>
+        <div class="article-body">2026年の CRO は「取引ベンダー」から「戦略的共同開発者」へ。AI はパイロットから基盤インフラへ移行。IQVIA / ICON / Thermo Fisher（PPD）/ Medpace が2025年に堅調な業績を報告、APAC の治験ハブ化・新たな規制期待・科学的複雑性の増大が試験設計と実行を再定義。</div>
       </div>
-
       <div class="sub-h">規制・ガイダンス</div>
       <div class="article-card">
-        <div class="article-header">
-          <h3><a href="https://www.fda.gov/about-fda/center-drug-evaluation-and-research-cder/artificial-intelligence-drug-development" target="_blank" rel="noopener">Artificial Intelligence for Drug Development | FDA</a></h3>
-        </div>
-        <div class="article-meta">
-          <span>📅 2026</span>
-          <span class="source-badge">FDA</span>
-        </div>
-        <div class="article-section">1月に FDA/EMA が「Guiding Principles of Good AI Practice in Drug Development」10原則を共同公表（人間中心設計、リスクベース、context of use の明確化、データガバナンス、ライフサイクル管理 等）。ドラフトのパブコメは2025年4月に終了、FDA 最終ガイダンスは Q2 2026 に見込まれ、CDER は製造・デジタルヘルス技術に関する追加ガイダンスも2026年に計画。</div>
+        <h3><a href="https://www.fda.gov/about-fda/center-drug-evaluation-and-research-cder/artificial-intelligence-drug-development" target="_blank" rel="noopener">Artificial Intelligence for Drug Development | FDA</a></h3>
+        <div class="article-meta"><span>📅 2026</span><span class="source-badge">FDA</span></div>
+        <div class="article-body">1月に FDA/EMA が「Guiding Principles of Good AI Practice in Drug Development」10原則を共同公表（人間中心設計、リスクベース、context of use の明確化、データガバナンス、ライフサイクル管理 等）。ドラフトのパブコメは2025年4月に終了、FDA 最終ガイダンスは Q2 2026 に見込まれ、CDER は製造・デジタルヘルス技術に関する追加ガイダンスも2026年に計画。 ---</div>
       </div>
     </div>
-
     <div class="card">
       <h2>🇯🇵 国内ニュース</h2>
       <div class="article-card">
-        <div class="article-header">
-          <h3><a href="https://www.nikkei.com/article/DGXZQOUC01A290R00C26A7000000/" target="_blank" rel="noopener">AI創薬新興、武田薬品と提携 一時金90億円受領</a></h3>
-        </div>
-        <div class="article-meta">
-          <span>📅 2026-07-02</span>
-          <span class="source-badge">日本経済新聞</span>
-        </div>
-        <div class="article-section">武田薬品工業は 7/2、Insilico Medicine と戦略的共同研究契約を締結。同社の AI 創薬基盤「Pharma.AI」で新薬候補化合物の創出を目指す。一時金6000万ドル（約97億円）、開発進捗に応じたマイルストーンを含め契約総額は最大6億ドル。国内大手による AI 創薬新興の囲い込みが加速。</div>
+        <h3><a href="https://www.nikkei.com/article/DGXZQOUC01A290R00C26A7000000/" target="_blank" rel="noopener">AI創薬新興、武田薬品と提携 一時金90億円受領</a></h3>
+        <div class="article-meta"><span>📅 2026-07-02</span><span class="source-badge">日本経済新聞</span></div>
+        <div class="article-body">武田薬品工業は 7/2、Insilico Medicine と戦略的共同研究契約を締結。同社の AI 創薬基盤「Pharma.AI」で新薬候補化合物の創出を目指す。一時金6000万ドル（約97億円）、開発進捗に応じたマイルストーンを含め契約総額は最大6億ドル。国内大手による AI 創薬新興の囲い込みが加速。</div>
       </div>
       <div class="article-card">
-        <div class="article-header">
-          <h3><a href="https://bio.nikkeibp.co.jp/atcl/news/p1/26/07/02/14758/" target="_blank" rel="noopener">武田薬品がAI創薬の米Insilico Medicine社と戦略提携、AI創薬企業の囲い込み加速</a></h3>
-        </div>
-        <div class="article-meta">
-          <span>📅 2026-07-02</span>
-          <span class="source-badge">日経バイオテク</span>
-        </div>
-        <div class="article-section">同提携の詳報。奇しくも同じ Insilico が同週に rentosertib の Phase III を開始しており、日本の大手が「臨床実証フェーズに入った AI 創薬プレイヤー」と組む構図が鮮明に。知財・共同開発設計の観点でも「AIを買うのでなく不確実性を分ける」契約設計として注目されている。</div>
+        <h3><a href="https://bio.nikkeibp.co.jp/atcl/news/p1/26/07/02/14758/" target="_blank" rel="noopener">武田薬品がAI創薬の米Insilico Medicine社と戦略提携、AI創薬企業の囲い込み加速</a></h3>
+        <div class="article-meta"><span>📅 2026-07-02</span><span class="source-badge">日経バイオテク</span></div>
+        <div class="article-body">同提携の詳報。奇しくも同じ Insilico が同週に rentosertib の Phase III を開始しており、日本の大手が「臨床実証フェーズに入った AI 創薬プレイヤー」と組む構図が鮮明に。知財・共同開発設計の観点でも「AIを買うのでなく不確実性を分ける」契約設計として注目されている。</div>
       </div>
       <div class="article-card">
-        <div class="article-header">
-          <h3><a href="https://www.pmda.go.jp/0017.html" target="_blank" rel="noopener">PMDA 新着情報 — 業務への生成AIの利用開始について</a></h3>
-        </div>
-        <div class="article-meta">
-          <span>📅 2026-04-15</span>
-          <span class="source-badge">PMDA（一次）</span>
-        </div>
-        <div class="article-section">PMDA は 4/15、「PMDA 業務への生成 AI の利用開始について」を公表し、規制当局自身が業務に生成 AI を採り入れる方向性を明示。日本は EU 型のハード規制でなくソフトロー中心の柔軟アプローチ（3省2ガイドライン、AI事業者ガイドライン、AI推進法、薬機法 SaMD 規制）。ICH M15 は 2026-07-23 に法的発効。</div>
+        <h3><a href="https://www.pmda.go.jp/0017.html" target="_blank" rel="noopener">PMDA 新着情報 — 業務への生成AIの利用開始について</a></h3>
+        <div class="article-meta"><span>📅 2026-04-15</span><span class="source-badge">PMDA（一次）</span></div>
+        <div class="article-body">PMDA は 4/15、「PMDA 業務への生成 AI の利用開始について」を公表し、規制当局自身が業務に生成 AI を採り入れる方向性を明示。日本は EU 型のハード規制でなくソフトロー中心の柔軟アプローチ（3省2ガイドライン、AI事業者ガイドライン、AI推進法、薬機法 SaMD 規制）。ICH M15 は 2026-07-23 に法的発効。</div>
       </div>
       <div class="article-card">
-        <div class="article-header">
-          <h3><a href="https://answers.and-pro.jp/pharmanews/32685/" target="_blank" rel="noopener">製薬各社 AI活用、有価証券報告書にも記述…武田や中外など大手中心に積極利用アピール</a></h3>
-        </div>
-        <div class="article-meta">
-          <span>📅 2026</span>
-          <span class="source-badge">AnswersNews</span>
-        </div>
-        <div class="article-section">武田・中外などが有報でAI活用を記述し、投資家向けにも取り組みを訴求。中外は全社プラットフォームでアクティブユーザーが6割超と公表。FRONTEO はアステラスと標的分子探索でAI契約を締結（4月）。国内は「発表」から「業績・開示への織り込み」フェーズへ。</div>
+        <h3><a href="https://answers.and-pro.jp/pharmanews/32685/" target="_blank" rel="noopener">製薬各社 AI活用、有価証券報告書にも記述…武田や中外など大手中心に積極利用アピール</a></h3>
+        <div class="article-meta"><span>📅 2026</span><span class="source-badge">AnswersNews</span></div>
+        <div class="article-body">武田・中外などが有報でAI活用を記述し、投資家向けにも取り組みを訴求。中外は全社プラットフォームでアクティブユーザーが6割超と公表。FRONTEO はアステラスと標的分子探索でAI契約を締結（4月）。国内は「発表」から「業績・開示への織り込み」フェーズへ。 ---</div>
       </div>
     </div>
-
     <div class="card">
       <h2>📱 X（旧Twitter）注目投稿</h2>
       <div class="notice">⚠️ 本日は独立検証（実在する投稿 + URL）ができる X 投稿を確認できませんでした。水増しを避け、代わりに一次媒体で確認できた当事者の公開発言を出典付きで下記に記載します（X 投稿ではない点に注意）。</div>
       <div class="quote-card">
-        <div class="q-name">Alex Zhavoronkov（Insilico Medicine CEO）— 発言（プレスリリース内）</div>
-        <div class="q-text">"It's a major milestone for the company and my life as well." / "If we outperform the standard of care and show a disease modifying effect with this drug, it's going to be the first and only of its kind."</div>
-        <div class="q-src"><a href="https://www.clinicalresearchnewsonline.com/news/2026/07/08/insilico-medicine-launches-phase-iii-trial-for-ai-developed-drug" target="_blank" rel="noopener">出典記事を見る →</a></div>
+        <div class="q-name">Alex Zhavoronkov（Insilico Medicine CEO） — 発言（プレスリリース内）</div>
+        <div class="q-text">"It's a major milestone for the company and my life as well." / "If we outperform the standard of care and show a disease modifying effect with this drug, it's going to be the first and only of its kind."</div><div class="q-text"><a href="https://www.clinicalresearchnewsonline.com/news/2026/07/08/insilico-medicine-launches-phase-iii-trial-for-ai-developed-drug" target="_blank" rel="noopener">出典記事を見る →</a></div>
       </div>
       <div class="quote-card">
-        <div class="q-name">Dario Amodei（Anthropic CEO）— Claude Science 発表イベント登壇</div>
-        <div class="q-text">大手製薬3社トップと並び「AI for Science」を掲げ、科学研究の自動化と自社創薬（顧みられない疾患）への参入を表明。</div>
-        <div class="q-src"><a href="https://www.statnews.com/2026/06/30/anthropic-release-claude-science-ceo-dario-amodei/" target="_blank" rel="noopener">出典記事を見る →</a></div>
+        <div class="q-name">Dario Amodei（Anthropic CEO） — Claude Science 発表イベント登壇</div>
+        <div class="q-text">大手製薬3社トップと並び「AI for Science」を掲げ、科学研究の自動化と自社創薬（顧みられない疾患）への参入を表明。</div><div class="q-text"><a href="https://www.statnews.com/2026/06/30/anthropic-release-claude-science-ceo-dario-amodei/" target="_blank" rel="noopener">出典記事を見る →</a></div>
       </div>
     </div>
-
     <div class="card highlight-card">
       <h2>📊 ビジネスインパクト分析</h2>
       <div class="impact-h">CROへの影響</div>
@@ -928,58 +266,15 @@ body {
       <div class="impact-h">規制環境の変化</div>
       <p class="impact-p">1月の FDA/EMA 共同10原則により、AI の context of use・リスクベース評価・ライフサイクル管理という「評価の共通言語」が国際的に整い始めた。FDA 最終ガイダンスは Q2 2026、CDER は製造・デジタルヘルスの追加ガイダンスも計画。日本は PMDA が自らの業務に生成 AI を採用（4/15）し、ソフトロー中心の柔軟路線を継続、ICH M15（7/23 発効）で国際整合も進む。rentosertib の Phase III や AI 設計薬の後期試験が増えるにつれ、規制当局は「AI が関与した証拠パッケージ」をどう査読するかという実務課題に直面し、2026 後半は原則から運用細則への移行が焦点になる。</p>
     </div>
-
-    <div class="page-footer">本ブリーフは自動収集・AI生成により作成。配信日：2026年7月13日 ／ テーマ：医薬品開発 × CRO ／ 出典は各記事のリンクを参照。</div>
+    <div class="page-footer">本ブリーフは自動収集・AI生成により作成。配信日時：2026年7月13日 ／ 正本は Obsidian vault (02_NOTES/news-briefs/)。</div>
   </main>
 </div>
 <script>
-// Bookmark sidebar (shared cross-page via URL hash)
-let bookmarks = {};
-try {
-  if (window.location.hash.length > 1) {
-    bookmarks = JSON.parse(decodeURIComponent(window.location.hash.slice(1))) || {};
-  }
-} catch (e) { bookmarks = {}; }
-
-function renderBookmarkSidebar() {
-  const list = document.getElementById('bookmarkList');
-  const keys = Object.keys(bookmarks);
-  if (keys.length === 0) {
-    list.innerHTML = '<div class="bookmark-empty">ブックマークはまだありません</div>';
-    return;
-  }
-  list.innerHTML = keys.map(key => {
-    const bm = bookmarks[key];
-    return `<div class="bookmark-item">
-      <button class="bm-remove" onclick="removeBookmark('${key}')" title="削除">✕</button>
-      <a class="bm-link" href="${bm.url}" target="_blank" rel="noopener">
-        <span class="bm-score">${bm.score}点</span>
-        <span class="bm-title">${bm.title.length > 40 ? bm.title.slice(0,40)+'…' : bm.title}</span>
-      </a>
-    </div>`;
-  }).join('');
-}
-
-function removeBookmark(key) {
-  delete bookmarks[key];
-  window.location.hash = encodeURIComponent(JSON.stringify(bookmarks));
-  renderBookmarkSidebar();
-}
-
-renderBookmarkSidebar();
-
-// Mobile menu
 const menuBtn = document.getElementById('menuBtn');
 const sidebarEl = document.getElementById('sidebar');
 const overlayEl = document.getElementById('sidebarOverlay');
-menuBtn.addEventListener('click', () => {
-  sidebarEl.classList.toggle('open');
-  overlayEl.classList.toggle('active');
-});
-overlayEl.addEventListener('click', () => {
-  sidebarEl.classList.remove('open');
-  overlayEl.classList.remove('active');
-});
+menuBtn.addEventListener('click', () => { sidebarEl.classList.toggle('open'); overlayEl.classList.toggle('active'); });
+overlayEl.addEventListener('click', () => { sidebarEl.classList.remove('open'); overlayEl.classList.remove('active'); });
 </script>
 </body>
 </html>
