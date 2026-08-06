@@ -4,261 +4,341 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="robots" content="noindex, nofollow">
-<title>AI Brief - 2026-07-18</title>
+<meta name="color-scheme" content="light dark">
+<title>2026-07-18 — Daily AI News Brief</title>
+<script>
+(function(){var t=localStorage.getItem('nb-theme');if(t)document.documentElement.dataset.theme=t;})();
+</script>
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-  --bg: #0f1117; --bg-card: #1a1d2e; --bg-sidebar: #141625; --border: #2a2d3e;
-  --text: #e4e6f0; --text-dim: #8b8fa3; --accent: #6c7bf7; --accent-light: #8b97ff;
-  --yellow: #ffd93d; --yellow-bg: rgba(255,217,61,0.1); --blue: #4ecdc4;
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f6f7fb; --bg-card:#ffffff; --bg-sidebar:#ffffff; --bg-soft:#f0f2f8;
+  --border:#e1e4ee; --border-soft:#edeff6;
+  --text:#171b26; --text-mid:#3d4456; --text-dim:#646d84;
+  --accent:#4553c9; --accent-text:#3a47bb; --accent-soft:rgba(69,83,201,.09);
+  --amber:#9a6b0d; --amber-soft:rgba(200,150,20,.10); --amber-line:rgba(200,150,20,.35);
+  --teal:#0d7d75; --shadow:0 1px 2px rgba(20,25,45,.06), 0 4px 14px rgba(20,25,45,.05);
 }
-html, body { overflow-x: hidden; }
-body { font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; }
-a { color: var(--accent-light); }
-.layout { display: grid; grid-template-columns: 240px 1fr; min-height: 100vh; }
-.sidebar { background: var(--bg-sidebar); border-right: 1px solid var(--border); position: sticky; top: 0; height: 100vh; overflow-y: auto; }
-.logo { padding: 22px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
-.logo-icon { font-size: 26px; }
-.logo-text { font-size: 16px; font-weight: 700; color: var(--accent-light); }
-.nav { padding: 12px 8px; }
-.nav-section-title { padding: 14px 12px 6px; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); }
-.nav-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 8px; color: var(--text-dim); text-decoration: none; font-size: 14px; }
-.nav-item:hover { background: rgba(108,123,247,0.1); color: var(--text); }
-.nav-item.active { background: rgba(108,123,247,0.15); color: var(--accent-light); font-weight: 600; }
-.main { padding: 24px 32px; min-width: 0; }
-.header { margin-bottom: 24px; }
-.header h1 { font-size: 26px; font-weight: 700; line-height: 1.3; }
-.subtitle { color: var(--text-dim); font-size: 14px; margin-top: 4px; }
-.card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; margin-bottom: 16px; max-width: 100%; overflow: hidden; }
-.card h2 { font-size: 18px; margin-bottom: 14px; display: flex; align-items: center; gap: 8px; }
-.highlight-card { border-left: 4px solid var(--accent); }
-.highlight-card p { font-size: 15px; }
-.sub-h { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dim); margin: 18px 0 4px; }
-.article-card { border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin: 10px 0; }
-.article-card h3 { font-size: 15px; font-weight: 600; line-height: 1.5; }
-.article-card h3 a { color: var(--text); text-decoration: none; }
-.article-card h3 a:hover { color: var(--accent-light); }
-.article-meta { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; font-size: 12px; color: var(--text-dim); margin: 6px 0 8px; }
-.source-badge { background: rgba(108,123,247,0.12); color: var(--accent-light); border-radius: 10px; padding: 1px 8px; }
-.article-body { font-size: 14px; }
-.takeaway-item { display: flex; gap: 10px; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border); flex-wrap: wrap; }
-.takeaway-item:last-child { border-bottom: none; }
-.tw-chip { flex-shrink: 0; font-size: 11px; padding: 2px 8px; border-radius: 10px; background: rgba(108,123,247,0.15); color: var(--accent-light); font-weight: 600; white-space: nowrap; margin-top: 3px; }
-.tw-body { flex: 1 1 240px; min-width: 0; }
-.tw-text { font-size: 14px; }
-.tw-src { font-size: 12px; margin-top: 2px; }
-.tw-src a { color: var(--blue); text-decoration: none; }
-.tw-src a:hover { text-decoration: underline; }
-.quote-card { border-left: 3px solid var(--yellow); padding: 10px 14px; margin: 10px 0; background: rgba(255,217,61,0.05); border-radius: 0 8px 8px 0; }
-.quote-card .q-name { font-weight: 600; color: var(--yellow); font-size: 14px; }
-.quote-card .q-name a { color: var(--yellow); }
-.quote-card .q-text { font-size: 14px; margin: 4px 0; }
-.notice { font-size: 13px; color: var(--text-dim); background: var(--yellow-bg); border: 1px solid rgba(255,217,61,0.25); border-radius: 8px; padding: 10px 14px; margin: 10px 0; }
-.x-plain { font-size: 13px; color: var(--text-dim); margin: 8px 0; }
-.impact-h { font-size: 15px; font-weight: 600; color: var(--accent-light); margin: 14px 0 6px; }
-.impact-p { font-size: 14px; }
-.page-footer { color: var(--text-dim); font-size: 12px; margin-top: 28px; border-top: 1px solid var(--border); padding-top: 14px; }
-.brief-grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); }
-.brief-card-link { text-decoration: none; }
-.brief-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; height: 100%; transition: border-color 0.15s; }
-.brief-card:hover { border-color: var(--accent); }
-.brief-date { font-size: 16px; font-weight: 700; color: var(--accent-light); }
-.brief-meta { font-size: 12px; color: var(--text-dim); margin: 2px 0 8px; }
-.brief-highlight { font-size: 13px; color: var(--text); }
-.mobile-header { display: none; }
-@media (max-width: 900px) {
-  .layout { grid-template-columns: 1fr; }
-  .mobile-header { display: flex; align-items: center; gap: 10px; position: fixed; top: 0; left: 0; right: 0; z-index: 20; background: var(--bg-sidebar); border-bottom: 1px solid var(--border); padding: 10px 14px; }
-  .hamburger { background: none; border: 1px solid var(--border); border-radius: 8px; color: var(--text); font-size: 18px; padding: 4px 10px; }
-  .sidebar { position: fixed; left: -260px; width: 250px; z-index: 30; transition: left 0.2s; }
-  .sidebar.open { left: 0; }
-  .sidebar-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 25; }
-  .sidebar-overlay.active { display: block; }
-  .main { padding: 14px; padding-top: 66px; }
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0e1016; --bg-card:#181b28; --bg-sidebar:#12141e; --bg-soft:#1f2331;
+  --border:#2a2e40; --border-soft:#222635;
+  --text:#e7e9f3; --text-mid:#c3c8d8; --text-dim:#8f95ab;
+  --accent:#7c8cff; --accent-text:#9aa6ff; --accent-soft:rgba(124,140,255,.13);
+  --amber:#f0c450; --amber-soft:rgba(240,196,80,.09); --amber-line:rgba(240,196,80,.30);
+  --teal:#57d3ca; --shadow:none;
+}}
+:root[data-theme="dark"]{
+  --bg:#0e1016; --bg-card:#181b28; --bg-sidebar:#12141e; --bg-soft:#1f2331;
+  --border:#2a2e40; --border-soft:#222635;
+  --text:#e7e9f3; --text-mid:#c3c8d8; --text-dim:#8f95ab;
+  --accent:#7c8cff; --accent-text:#9aa6ff; --accent-soft:rgba(124,140,255,.13);
+  --amber:#f0c450; --amber-soft:rgba(240,196,80,.09); --amber-line:rgba(240,196,80,.30);
+  --teal:#57d3ca; --shadow:none;
+}
+:root[data-theme="light"]{
+  --bg:#f6f7fb; --bg-card:#ffffff; --bg-sidebar:#ffffff; --bg-soft:#f0f2f8;
+  --border:#e1e4ee; --border-soft:#edeff6;
+  --text:#171b26; --text-mid:#3d4456; --text-dim:#646d84;
+  --accent:#4553c9; --accent-text:#3a47bb; --accent-soft:rgba(69,83,201,.09);
+  --amber:#9a6b0d; --amber-soft:rgba(200,150,20,.10); --amber-line:rgba(200,150,20,.35);
+  --teal:#0d7d75; --shadow:0 1px 2px rgba(20,25,45,.06), 0 4px 14px rgba(20,25,45,.05);
+}
+/* overflow-x は clip。hidden にすると html/body がスクロールコンテナ化して topbar の sticky が壊れる */
+html,body{overflow-x:clip;max-width:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Noto Sans JP",Meiryo,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.85;font-size:15px;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:var(--accent-text)}
+img{max-width:100%}
+
+/* ---- layout ---- */
+.sidebar{position:fixed;top:0;left:0;width:252px;height:100vh;overflow-y:auto;overscroll-behavior:contain;
+  background:var(--bg-sidebar);border-right:1px solid var(--border);z-index:30}
+.content{margin-left:252px;min-width:0}
+.main{padding:30px 36px 60px;min-width:0}
+.wrap{max-width:880px;margin:0 auto;min-width:0}
+.wrap-wide{max-width:1120px;margin:0 auto;min-width:0}
+
+/* ---- topbar (検索は常時表示) ---- */
+.topbar{position:sticky;top:0;z-index:15;background:var(--bg);border-bottom:1px solid var(--border);
+  padding:10px 36px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.gwrap{position:relative;flex:1 1 240px;min-width:0;max-width:560px}
+.gwrap::before{content:"🔎";position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;opacity:.6;pointer-events:none}
+#gq{width:100%;font:inherit;font-size:14px;padding:8px 13px 8px 33px;border-radius:10px;
+  border:1px solid var(--border);background:var(--bg-card);color:var(--text)}
+#gq:focus{outline:2px solid var(--accent);outline-offset:1px}
+.sres{display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--bg-card);
+  border:1px solid var(--border);border-radius:12px;box-shadow:0 10px 34px rgba(10,14,30,.20);
+  max-height:62vh;overflow-y:auto;z-index:40}
+.sres.on{display:block}
+.sr{display:block;padding:10px 14px;text-decoration:none;border-bottom:1px solid var(--border-soft)}
+.sr:last-child{border-bottom:none}
+.sr:hover{background:var(--accent-soft)}
+.sr-h{font-size:12.5px;font-weight:700;color:var(--accent-text)}
+.sr-s{font-size:12.5px;color:var(--text-mid);margin-top:3px;line-height:1.7}
+.sr-all{display:block;padding:9px 14px;text-align:center;font-size:12.5px;font-weight:700;
+  color:var(--accent-text);text-decoration:none;background:var(--bg-soft)}
+.tb-sp{flex:1}
+
+/* ---- sidebar ---- */
+.logo{padding:20px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.logo-icon{font-size:22px}
+.logo-text{font-size:15px;font-weight:700;letter-spacing:.01em}
+.logo-sub{font-size:11px;color:var(--text-dim);font-weight:500;letter-spacing:.04em}
+.nav{padding:10px 8px 40px}
+.nav-title{padding:16px 12px 6px;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--text-dim);font-weight:700}
+.nav-item{display:flex;align-items:center;gap:9px;padding:7px 12px;border-radius:8px;color:var(--text-dim);text-decoration:none;font-size:13.5px;line-height:1.4}
+.nav-item:hover{background:var(--accent-soft);color:var(--text)}
+.nav-item.active{background:var(--accent-soft);color:var(--accent-text);font-weight:700}
+.nav-item .wd{font-size:11px;opacity:.7}
+.nav-item .dot{width:5px;height:5px;border-radius:50%;background:var(--border);flex:none}
+.nav-item.active .dot{background:var(--accent)}
+details.nav-more{margin-top:2px}
+details.nav-more>summary{list-style:none;cursor:pointer;padding:7px 12px;border-radius:8px;color:var(--text-dim);font-size:13px}
+details.nav-more>summary::-webkit-details-marker{display:none}
+details.nav-more>summary:hover{background:var(--accent-soft);color:var(--text)}
+details.nav-more>summary::before{content:"▸ ";font-size:10px}
+details.nav-more[open]>summary::before{content:"▾ "}
+
+/* ---- header ---- */
+.page-head{margin-bottom:26px}
+.eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);font-weight:700}
+.page-head h1{font-size:27px;font-weight:800;line-height:1.35;letter-spacing:-.01em;margin-top:4px}
+.page-head .sub{color:var(--text-dim);font-size:13.5px;margin-top:6px}
+
+/* ---- cards ---- */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:18px;box-shadow:var(--shadow);max-width:100%;overflow-wrap:anywhere}
+.card>h2{font-size:16px;font-weight:700;letter-spacing:.01em;margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.hero{border-left:4px solid var(--accent)}
+.sub-h{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);font-weight:700;margin:20px 0 6px;padding-bottom:5px;border-bottom:1px solid var(--border-soft)}
+.sub-h:first-of-type{margin-top:4px}
+
+/* ---- takeaway ---- */
+.tw{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border-soft);flex-wrap:wrap}
+.tw:last-child{border-bottom:none;padding-bottom:0}
+.tw-chip{flex:none;font-size:11px;padding:2px 9px;border-radius:20px;background:var(--accent-soft);color:var(--accent-text);font-weight:700;white-space:nowrap;margin-top:5px}
+.tw-body{flex:1 1 260px;min-width:0}
+.tw-text{font-size:14.5px;line-height:1.8}
+.tw-src{font-size:12px;margin-top:3px}
+.tw-src a{color:var(--teal);text-decoration:none}
+.tw-src a:hover{text-decoration:underline}
+
+/* ---- article ---- */
+.art{border:1px solid var(--border-soft);border-radius:11px;padding:15px 17px;margin:11px 0;background:var(--bg-card)}
+.art:hover{border-color:var(--border)}
+.art h3{font-size:15.5px;font-weight:700;line-height:1.6;letter-spacing:-.005em}
+.art h3 a{color:var(--text);text-decoration:none}
+.art h3 a:hover{color:var(--accent-text)}
+.art-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:11.5px;color:var(--text-dim);margin:7px 0 9px}
+.src{background:var(--accent-soft);color:var(--accent-text);border-radius:20px;padding:2px 9px;font-weight:700}
+.art-body{font-size:14px;color:var(--text-mid);line-height:1.85}
+.art-body p+p{margin-top:8px}
+
+/* ---- misc blocks ---- */
+.quote{border-left:3px solid var(--amber-line);padding:10px 14px;margin:11px 0;background:var(--amber-soft);border-radius:0 8px 8px 0;font-size:13.5px;color:var(--text-mid)}
+.quote .q-name{font-weight:700;color:var(--amber);font-size:14px}
+.quote .q-name a{color:var(--amber)}
+.notice{font-size:13px;color:var(--text-mid);background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:9px;padding:10px 14px;margin:11px 0}
+.x-plain{font-size:13px;color:var(--text-dim);margin:8px 0}
+.impact-h{font-size:14.5px;font-weight:700;color:var(--accent-text);margin:16px 0 6px}
+.impact-h:first-of-type{margin-top:2px}
+.impact-p{font-size:14px;color:var(--text-mid)}
+.impact-p+.impact-p{margin-top:8px}
+ul.bl{margin:6px 0 6px 2px;list-style:none}
+ul.bl li{position:relative;padding-left:16px;font-size:14px;color:var(--text-mid);margin:6px 0}
+ul.bl li::before{content:"";position:absolute;left:2px;top:.72em;width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.55}
+.note-line{font-size:12.5px;color:var(--text-dim);margin:10px 0}
+
+/* ---- table → cards (横スクロールを作らない) ---- */
+.tcards{display:grid;gap:10px;margin:10px 0}
+.trow{border:1px solid var(--border-soft);border-radius:11px;padding:13px 15px;background:var(--bg-card)}
+.tr-h{font-size:14.5px;font-weight:700;line-height:1.6;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.tr-date{font-size:11px;font-weight:700;color:var(--text-dim);background:var(--bg-soft);border-radius:20px;padding:1px 8px;flex:none}
+.tr-f{display:flex;gap:10px;margin-top:7px;flex-wrap:wrap;font-size:13.5px}
+.tr-k{flex:none;width:88px;color:var(--text-dim);font-size:11.5px;font-weight:700;padding-top:3px;letter-spacing:.03em}
+.tr-v{flex:1 1 220px;min-width:0;color:var(--text-mid);line-height:1.75}
+
+/* ---- archive ---- */
+.mo-h{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--text-dim);margin:26px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.mo-h:first-child{margin-top:0}
+.row{display:flex;gap:12px;align-items:baseline;padding:9px 4px;border-bottom:1px solid var(--border-soft);text-decoration:none;flex-wrap:wrap}
+.row:hover{background:var(--accent-soft);border-radius:8px}
+.row-d{flex:none;font-size:13px;font-weight:700;color:var(--accent-text);width:92px}
+.row-w{flex:none;font-size:11px;color:var(--text-dim);width:52px}
+.row-t{flex:1 1 240px;min-width:0;font-size:13px;color:var(--text-mid)}
+.row.wk .row-d{color:var(--teal)}
+
+/* ---- prev/next ---- */
+.pager{display:flex;gap:10px;justify-content:space-between;margin:22px 0 0;flex-wrap:wrap}
+.pg{flex:1 1 200px;border:1px solid var(--border);border-radius:11px;padding:11px 14px;text-decoration:none;background:var(--bg-card);min-width:0}
+.pg:hover{border-color:var(--accent)}
+.pg span{display:block;font-size:11px;color:var(--text-dim)}
+.pg b{font-size:13.5px;color:var(--accent-text)}
+.pg.right{text-align:right}
+
+/* ---- search ---- */
+.sbox{display:flex;gap:10px;flex-wrap:wrap}
+#q{flex:1 1 240px;min-width:0;font:inherit;font-size:15px;padding:11px 14px;border-radius:11px;border:1px solid var(--border);background:var(--bg-card);color:var(--text)}
+#q:focus{outline:2px solid var(--accent);outline-offset:1px}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.chip{font-size:12px;padding:4px 11px;border-radius:20px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-dim);cursor:pointer;font-family:inherit}
+.chip:hover,.chip.on{background:var(--accent-soft);color:var(--accent-text);border-color:var(--accent)}
+.hits{font-size:12.5px;color:var(--text-dim);margin:16px 0 8px}
+.hit{display:block;text-decoration:none;border:1px solid var(--border-soft);border-radius:11px;padding:13px 15px;margin:9px 0;background:var(--bg-card)}
+.hit:hover{border-color:var(--accent)}
+.hit-h{font-size:13.5px;font-weight:700;color:var(--accent-text)}
+.hit-s{font-size:13px;color:var(--text-mid);margin-top:5px;line-height:1.8}
+mark{background:var(--amber-soft);color:var(--amber);padding:0 2px;border-radius:3px;font-weight:700}
+
+.foot{color:var(--text-dim);font-size:12px;margin-top:30px;border-top:1px solid var(--border);padding-top:14px}
+
+/* ---- theme toggle ---- */
+.tt{background:none;border:1px solid var(--border);border-radius:8px;color:var(--text-dim);font:inherit;font-size:13px;padding:5px 10px;cursor:pointer}
+.tt:hover{color:var(--text);border-color:var(--accent)}
+
+.mhead{display:none}
+.ovl{display:none}
+@media (max-width:900px){
+  .mhead{display:flex;align-items:center;gap:10px;position:fixed;top:0;left:0;right:0;z-index:35;height:46px;
+    background:var(--bg-sidebar);border-bottom:1px solid var(--border);padding:0 13px}
+  .mhead .logo-text{font-size:14px}
+  .mhead .sp{flex:1}
+  .burger{background:none;border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:17px;padding:3px 10px;cursor:pointer}
+  .sidebar{left:-270px;width:258px;transition:left .2s}
+  .sidebar.open{left:0}
+  .ovl{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:25}
+  .ovl.active{display:block}
+  .content{margin-left:0;padding-top:46px}
+  .topbar{top:46px;padding:8px 13px}
+  .topbar .tt{display:none}
+  .gwrap{max-width:none}
+  .main{padding:16px 15px 50px}
+  .page-head h1{font-size:22px}
+  .card{padding:16px 15px;border-radius:12px}
+  .tr-k{width:100%;padding-top:0}
 }
 </style>
 </head>
 <body>
-<div class="mobile-header">
-  <button class="hamburger" id="menuBtn" aria-label="メニュー">☰</button>
+<div class="mhead">
+  <button class="burger" id="menuBtn" aria-label="メニューを開く">☰</button>
   <div class="logo-icon">🧠</div>
   <div class="logo-text">AI Intel Brief</div>
+  <div class="sp"></div>
+  <button class="tt" type="button"></button>
 </div>
-<div class="sidebar-overlay" id="sidebarOverlay"></div>
+<div class="ovl" id="ovl"></div>
 <div class="layout">
-  <aside class="sidebar" id="sidebar">
+  <aside class="sidebar" id="sidebar" aria-label="サイドメニュー">
     <div class="logo">
       <div class="logo-icon">🧠</div>
-      <div class="logo-text">AI Intel Brief</div>
+      <div>
+        <div class="logo-text">AI Intel Brief</div>
+        <div class="logo-sub">医薬品開発 × CRO</div>
+      </div>
     </div>
     <nav class="nav">
-      <a href="index.html" class="nav-item"><span>🗂</span>ブリーフ一覧</a>
-      <div class="nav-section-title">デイリーブリーフ</div>
-      <a href="brief-2026-08-06.html" class="nav-item"><span>📄</span>2026-08-06</a>
-      <a href="brief-2026-08-05.html" class="nav-item"><span>📄</span>2026-08-05</a>
-      <a href="brief-2026-08-04.html" class="nav-item"><span>📄</span>2026-08-04</a>
-      <a href="brief-2026-08-03.html" class="nav-item"><span>📄</span>2026-08-03</a>
-      <a href="brief-2026-08-02.html" class="nav-item"><span>📄</span>2026-08-02</a>
-      <a href="brief-2026-08-01.html" class="nav-item"><span>📄</span>2026-08-01</a>
-      <a href="brief-2026-07-31.html" class="nav-item"><span>📄</span>2026-07-31</a>
-      <a href="brief-2026-07-30.html" class="nav-item"><span>📄</span>2026-07-30</a>
-      <a href="brief-2026-07-29.html" class="nav-item"><span>📄</span>2026-07-29</a>
-      <a href="brief-2026-07-28.html" class="nav-item"><span>📄</span>2026-07-28</a>
-      <a href="brief-2026-07-27.html" class="nav-item"><span>📄</span>2026-07-27</a>
-      <a href="brief-2026-07-26.html" class="nav-item"><span>📄</span>2026-07-26</a>
-      <a href="brief-2026-07-25.html" class="nav-item"><span>📄</span>2026-07-25</a>
-      <a href="brief-2026-07-24.html" class="nav-item"><span>📄</span>2026-07-24</a>
-      <a href="brief-2026-07-23.html" class="nav-item"><span>📄</span>2026-07-23</a>
-      <a href="brief-2026-07-22.html" class="nav-item"><span>📄</span>2026-07-22</a>
-      <a href="brief-2026-07-21.html" class="nav-item"><span>📄</span>2026-07-21</a>
-      <a href="brief-2026-07-20.html" class="nav-item"><span>📄</span>2026-07-20</a>
-      <a href="brief-2026-07-19.html" class="nav-item"><span>📄</span>2026-07-19</a>
-      <a href="brief-2026-07-18.html" class="nav-item active"><span>📄</span>2026-07-18</a>
-      <a href="brief-2026-07-17.html" class="nav-item"><span>📄</span>2026-07-17</a>
-      <a href="brief-2026-07-16.html" class="nav-item"><span>📄</span>2026-07-16</a>
-      <a href="brief-2026-07-15.html" class="nav-item"><span>📄</span>2026-07-15</a>
-      <a href="brief-2026-07-14.html" class="nav-item"><span>📄</span>2026-07-14</a>
-      <a href="brief-2026-07-13.html" class="nav-item"><span>📄</span>2026-07-13</a>
-      <a href="brief-2026-07-12.html" class="nav-item"><span>📄</span>2026-07-12</a>
-      <a href="brief-2026-07-11.html" class="nav-item"><span>📄</span>2026-07-11</a>
-      <a href="brief-2026-07-10.html" class="nav-item"><span>📄</span>2026-07-10</a>
-      <a href="brief-2026-07-09.html" class="nav-item"><span>📄</span>2026-07-09</a>
-      <a href="brief-2026-07-08.html" class="nav-item"><span>📄</span>2026-07-08</a>
-      <a href="brief-2026-07-07.html" class="nav-item"><span>📄</span>2026-07-07</a>
-      <a href="brief-2026-07-06.html" class="nav-item"><span>📄</span>2026-07-06</a>
-      <a href="brief-2026-07-05.html" class="nav-item"><span>📄</span>2026-07-05</a>
-      <a href="brief-2026-07-04.html" class="nav-item"><span>📄</span>2026-07-04</a>
-      <a href="brief-2026-07-03.html" class="nav-item"><span>📄</span>2026-07-03</a>
-      <a href="brief-2026-07-01.html" class="nav-item"><span>📄</span>2026-07-01</a>
+      <a href="index.html" class="nav-item"><span>🏠</span>最新ブリーフ</a>
+      <a href="search.html" class="nav-item"><span>🔎</span>検索</a>
+      <a href="archive.html" class="nav-item"><span>🗂</span>アーカイブ</a>
+      <div class="nav-title">デイリーブリーフ</div>
+      <a href="brief-2026-08-06.html" class="nav-item"><span class="dot"></span>08/06<span class="wd">木</span></a>
+      <a href="brief-2026-08-05.html" class="nav-item"><span class="dot"></span>08/05<span class="wd">水</span></a>
+      <a href="brief-2026-08-04.html" class="nav-item"><span class="dot"></span>08/04<span class="wd">火</span></a>
+      <a href="brief-2026-08-03.html" class="nav-item"><span class="dot"></span>08/03<span class="wd">月</span></a>
+      <a href="brief-2026-08-02.html" class="nav-item"><span class="dot"></span>08/02<span class="wd">日</span></a>
+      <a href="brief-2026-08-01.html" class="nav-item"><span class="dot"></span>08/01<span class="wd">土</span></a>
+      <a href="brief-2026-07-31.html" class="nav-item"><span class="dot"></span>07/31<span class="wd">金</span></a>
+      <a href="brief-2026-07-30.html" class="nav-item"><span class="dot"></span>07/30<span class="wd">木</span></a>
+      <a href="brief-2026-07-29.html" class="nav-item"><span class="dot"></span>07/29<span class="wd">水</span></a>
+      <a href="brief-2026-07-28.html" class="nav-item"><span class="dot"></span>07/28<span class="wd">火</span></a>
+      <a href="brief-2026-07-27.html" class="nav-item"><span class="dot"></span>07/27<span class="wd">月</span></a>
+      <a href="brief-2026-07-26.html" class="nav-item"><span class="dot"></span>07/26<span class="wd">日</span></a>
+      <a href="brief-2026-07-25.html" class="nav-item"><span class="dot"></span>07/25<span class="wd">土</span></a>
+      <a href="brief-2026-07-24.html" class="nav-item"><span class="dot"></span>07/24<span class="wd">金</span></a>
+      <details class="nav-more"><summary>2026年7月 (22)</summary>
+      <a href="brief-2026-07-23.html" class="nav-item"><span class="dot"></span>07/23<span class="wd">木</span></a>
+      <a href="brief-2026-07-22.html" class="nav-item"><span class="dot"></span>07/22<span class="wd">水</span></a>
+      <a href="brief-2026-07-21.html" class="nav-item"><span class="dot"></span>07/21<span class="wd">火</span></a>
+      <a href="brief-2026-07-20.html" class="nav-item"><span class="dot"></span>07/20<span class="wd">月</span></a>
+      <a href="brief-2026-07-19.html" class="nav-item"><span class="dot"></span>07/19<span class="wd">日</span></a>
+      <a href="brief-2026-07-18.html" class="nav-item active"><span class="dot"></span>07/18<span class="wd">土</span></a>
+      <a href="brief-2026-07-17.html" class="nav-item"><span class="dot"></span>07/17<span class="wd">金</span></a>
+      <a href="brief-2026-07-16.html" class="nav-item"><span class="dot"></span>07/16<span class="wd">木</span></a>
+      <a href="brief-2026-07-15.html" class="nav-item"><span class="dot"></span>07/15<span class="wd">水</span></a>
+      <a href="brief-2026-07-14.html" class="nav-item"><span class="dot"></span>07/14<span class="wd">火</span></a>
+      <a href="brief-2026-07-13.html" class="nav-item"><span class="dot"></span>07/13<span class="wd">月</span></a>
+      <a href="brief-2026-07-12.html" class="nav-item"><span class="dot"></span>07/12<span class="wd">日</span></a>
+      <a href="brief-2026-07-11.html" class="nav-item"><span class="dot"></span>07/11<span class="wd">土</span></a>
+      <a href="brief-2026-07-10.html" class="nav-item"><span class="dot"></span>07/10<span class="wd">金</span></a>
+      <a href="brief-2026-07-09.html" class="nav-item"><span class="dot"></span>07/09<span class="wd">木</span></a>
+      <a href="brief-2026-07-08.html" class="nav-item"><span class="dot"></span>07/08<span class="wd">水</span></a>
+      <a href="brief-2026-07-07.html" class="nav-item"><span class="dot"></span>07/07<span class="wd">火</span></a>
+      <a href="brief-2026-07-06.html" class="nav-item"><span class="dot"></span>07/06<span class="wd">月</span></a>
+      <a href="brief-2026-07-05.html" class="nav-item"><span class="dot"></span>07/05<span class="wd">日</span></a>
+      <a href="brief-2026-07-04.html" class="nav-item"><span class="dot"></span>07/04<span class="wd">土</span></a>
+      <a href="brief-2026-07-03.html" class="nav-item"><span class="dot"></span>07/03<span class="wd">金</span></a>
+      <a href="brief-2026-07-01.html" class="nav-item"><span class="dot"></span>07/01<span class="wd">水</span></a>
+      </details>
+      <div class="nav-title">週次インテリジェンス</div>
+      <a href="weekly-2026-W31.html" class="nav-item"><span class="dot"></span>2026-W31</a>
+      <a href="weekly-2026-W30.html" class="nav-item"><span class="dot"></span>2026-W30</a>
+      <a href="weekly-2026-W29.html" class="nav-item"><span class="dot"></span>2026-W29</a>
+      <a href="weekly-2026-W28.html" class="nav-item"><span class="dot"></span>2026-W28</a>
+      <a href="weekly-2026-W27.html" class="nav-item"><span class="dot"></span>2026-W27</a>
     </nav>
   </aside>
-  <main class="main">
-    <header class="header">
-      <h1>Daily AI News Brief — 医薬品開発 × CRO</h1>
-      <p class="subtitle">2026年7月18日（土） · 自動収集・AI生成</p>
+  <div class="content">
+  <header class="topbar">
+    <div class="gwrap">
+      <input id="gq" type="search" autocomplete="off" placeholder="ブリーフを検索（例: ICON、PMDA、book-to-bill）">
+      <div class="sres" id="gres"></div>
+    </div>
+    <div class="tb-sp"></div>
+    <button class="tt" type="button"></button>
+  </header>
+    <main class="main"><div class="wrap">
+    <header class="page-head">
+      <div class="eyebrow">Daily Brief · 医薬品開発 × CRO</div>
+      <h1>2026年7月18日（土）</h1>
+      <p class="sub">11 記事 ／ 自動収集・AI 生成</p>
     </header>
-    <div class="card">
+    <div class="card hero">
       <h2>🎯 本日の重要テイクアウェイ</h2>
-      <div class="takeaway-item">
-        <span class="tw-chip">資金調達</span>
-        <div class="tw-body">
-          <div class="tw-text">Chai Discovery が Series C で $400M 調達、評価額 $3.8B（7か月で約3倍）</div>
-          <div class="tw-src"><a href="https://www.thepharmaletter.com/pharma-news/chai-discovery-raises-400-million-to-advance-ai-designed-drug-discovery" target="_blank" rel="noopener">The Pharmaletter</a></div>
-        </div>
-      </div>
-      <div class="takeaway-item">
-        <span class="tw-chip">資金調達</span>
-        <div class="tw-body">
-          <div class="tw-text">豪 AdvanCell が Series D $315M クローズ、Pb-212 α線治療を Phase III へ</div>
-          <div class="tw-src"><a href="https://www.contractpharma.com/breaking-news/advancell-closes-oversubscribed-315m-series-d-round/" target="_blank" rel="noopener">Contract Pharma</a></div>
-        </div>
-      </div>
-      <div class="takeaway-item">
-        <span class="tw-chip">Anthropic</span>
-        <div class="tw-body">
-          <div class="tw-text">Claude Science（創薬R&amp;D向けAIワークベンチ、60+機能）を展開・自社創薬にも着手</div>
-          <div class="tw-src"><a href="https://endpoints.news/anthropic-debuts-claude-science-an-ai-product-for-bioscience/" target="_blank" rel="noopener">Endpoints</a></div>
-        </div>
-      </div>
-      <div class="takeaway-item">
-        <span class="tw-chip">市場</span>
-        <div class="tw-body">
-          <div class="tw-text">AI創薬投資が $2B 超に急増、開発期間を最大70%短縮との分析（BCC Research）</div>
-          <div class="tw-src"><a href="https://www.globenewswire.com/news-release/2026/07/14/3327157/0/en/AI-Drug-Discovery-Investment-Surges-to-2-Billion-as-Technology-Cuts-Development-Timelines-by-70-Driven-by-Breakthrough-Clinical-Success-Rates.html" target="_blank" rel="noopener">GlobeNewswire</a></div>
-        </div>
-      </div>
-      <div class="takeaway-item">
-        <span class="tw-chip">CRO</span>
-        <div class="tw-body">
-          <div class="tw-text">Charles River が AI 病理プラットフォームを拡張、創薬支援領域を強化</div>
-          <div class="tw-src"><a href="https://simplywall.st/stocks/us/pharmaceuticals-biotech/nyse-crl/charles-river-laboratories-international/news/charles-river-laboratories-international-crl-expands-ai-path" target="_blank" rel="noopener">Simply Wall St</a></div>
-        </div>
-      </div>
-      <div class="takeaway-item">
-        <span class="tw-chip">規制</span>
-        <div class="tw-body">
-          <div class="tw-text">ICH M15（AI含むモデル情報デリバリー枠組み）が 7/23 に法的発効予定</div>
-          <div class="tw-src"><a href="https://note.com/pharma_insight/n/n6b2f4b0fdc5c" target="_blank" rel="noopener">Pharma Insight Lab</a></div>
-        </div>
-      </div>
-      <div class="takeaway-item">
-        <span class="tw-chip">新規参入</span>
-        <div class="tw-body">
-          <div class="tw-text">OpenAI 研究者 Miles Wang が評価額 $2B のAI創薬スタートアップ設立協議</div>
-          <div class="tw-src"><a href="https://techcrunch.com/2026/07/14/openai-researcher-miles-wang-in-talks-to-launch-ai-drug-discovery-startup-valued-at-2b/" target="_blank" rel="noopener">TechCrunch</a></div>
-        </div>
-      </div>
+      <div class="tw"><span class="tw-chip">資金調達</span><div class="tw-body"><div class="tw-text">Chai Discovery が Series C で $400M 調達、評価額 $3.8B（7か月で約3倍）</div><div class="tw-src"><a href="<a href="https://www.thepharmaletter.com/pharma-news/chai-discovery-raises-400-million-to-advance-ai-designed-drug-discovery"" target="_blank" rel="noopener">https://www.thepharmaletter.com/pharma-news/chai-discovery-raises-400-million-to-advance-ai-designed-drug-discovery"</a> target="_blank" rel="noopener">The Pharmaletter</a></div></div></div>
+      <div class="tw"><span class="tw-chip">資金調達</span><div class="tw-body"><div class="tw-text">豪 AdvanCell が Series D $315M クローズ、Pb-212 α線治療を Phase III へ</div><div class="tw-src"><a href="<a href="https://www.contractpharma.com/breaking-news/advancell-closes-oversubscribed-315m-series-d-round/"" target="_blank" rel="noopener">https://www.contractpharma.com/breaking-news/advancell-closes-oversubscribed-315m-series-d-round/"</a> target="_blank" rel="noopener">Contract Pharma</a></div></div></div>
+      <div class="tw"><span class="tw-chip">Anthropic</span><div class="tw-body"><div class="tw-text">Claude Science（創薬R&amp;D向けAIワークベンチ、60+機能）を展開・自社創薬にも着手</div><div class="tw-src"><a href="<a href="https://endpoints.news/anthropic-debuts-claude-science-an-ai-product-for-bioscience/"" target="_blank" rel="noopener">https://endpoints.news/anthropic-debuts-claude-science-an-ai-product-for-bioscience/"</a> target="_blank" rel="noopener">Endpoints</a></div></div></div>
+      <div class="tw"><span class="tw-chip">市場</span><div class="tw-body"><div class="tw-text">AI創薬投資が $2B 超に急増、開発期間を最大70%短縮との分析（BCC Research）</div><div class="tw-src"><a href="<a href="https://www.globenewswire.com/news-release/2026/07/14/3327157/0/en/AI-Drug-Discovery-Investment-Surges-to-2-Billion-as-Technology-Cuts-Development-Timelines-by-70-Driven-by-Breakthrough-Clinical-Success-Rates.html"" target="_blank" rel="noopener">https://www.globenewswire.com/news-release/2026/07/14/3327157/0/en/AI-Drug-Discovery-Investment-Surges-to-2-Billion-as-Technology-Cuts-Development-Timelines-by-70-Driven-by-Breakthrough-Clinical-Success-Rates.html"</a> target="_blank" rel="noopener">GlobeNewswire</a></div></div></div>
+      <div class="tw"><span class="tw-chip">CRO</span><div class="tw-body"><div class="tw-text">Charles River が AI 病理プラットフォームを拡張、創薬支援領域を強化</div><div class="tw-src"><a href="<a href="https://simplywall.st/stocks/us/pharmaceuticals-biotech/nyse-crl/charles-river-laboratories-international/news/charles-river-laboratories-international-crl-expands-ai-path"" target="_blank" rel="noopener">https://simplywall.st/stocks/us/pharmaceuticals-biotech/nyse-crl/charles-river-laboratories-international/news/charles-river-laboratories-international-crl-expands-ai-path"</a> target="_blank" rel="noopener">Simply Wall St</a></div></div></div>
+      <div class="tw"><span class="tw-chip">規制</span><div class="tw-body"><div class="tw-text">ICH M15（AI含むモデル情報デリバリー枠組み）が 7/23 に法的発効予定</div><div class="tw-src"><a href="<a href="https://note.com/pharma_insight/n/n6b2f4b0fdc5c"" target="_blank" rel="noopener">https://note.com/pharma_insight/n/n6b2f4b0fdc5c"</a> target="_blank" rel="noopener">Pharma Insight Lab</a></div></div></div>
+      <div class="tw"><span class="tw-chip">新規参入</span><div class="tw-body"><div class="tw-text">OpenAI 研究者 Miles Wang が評価額 $2B のAI創薬スタートアップ設立協議</div><div class="tw-src"><a href="<a href="https://techcrunch.com/2026/07/14/openai-researcher-miles-wang-in-talks-to-launch-ai-drug-discovery-startup-valued-at-2b/"" target="_blank" rel="noopener">https://techcrunch.com/2026/07/14/openai-researcher-miles-wang-in-talks-to-launch-ai-drug-discovery-startup-valued-at-2b/"</a> target="_blank" rel="noopener">TechCrunch</a></div></div></div>
     </div>
     <div class="card">
       <h2>🌍 海外ニュース</h2>
       <div class="sub-h">ANTHROPIC</div>
-      <div class="article-card">
-        <h3><a href="https://endpoints.news/anthropic-debuts-claude-science-an-ai-product-for-bioscience/" target="_blank" rel="noopener">Anthropic launches Claude Science, a product for biopharma, starts own drug programs</a></h3>
-        <div class="article-meta"><span>📅 2026-06-30〜07-02</span><span class="source-badge">Endpoints News</span></div>
-        <div class="article-body">Anthropic は科学研究向けの AI ワークベンチ「Claude Science」を発表。ゲノミクス・構造生物学・プロテオミクス・ケモインフォマティクスなど 60 以上の機能を備え、CRISPR スクリーン設計・single-cell RNA-seq 解析・3D タンパク質構造レンダリング等を支援する。ローカル（Linux/macOS）または遠隔マシンで動作し、断片化した創薬ツール群の統合を狙う。ライフサイエンス責任者 Eric Kauderer-Abrams は、大手が手を出さない「neglected disease」を対象に自社創薬プログラムも開始すると述べた。</div>
-      </div>
-      <div class="article-card">
-        <h3><a href="https://www.bostonglobe.com/2026/07/13/newsletters/artificial-intelligence-claude-science-biomedical-pharma/" target="_blank" rel="noopener">Anthropic's Claude Science app is coming for Kendall Square</a></h3>
-        <div class="article-meta"><span>📅 2026-07-13</span><span class="source-badge">The Boston Globe</span></div>
-        <div class="article-body">ボストンの Kendall Square（世界有数のバイオクラスター）を舞台に、Claude Science が製薬・バイオメディカル研究者への浸透を狙う動きが報じられた。既存の BMS（3万人超に Claude 展開、2026年5月）や Genmab（agentic AI 協業、2026年1月）に続く商用地固めの一環。</div>
-      </div>
-      <div class="article-card">
-        <h3><a href="https://www.chalkbeat.org/2026/07/14/anthropic-launches-claude-for-teachers-as-ai-companies-battle-for-classrooms/" target="_blank" rel="noopener">Anthropic launches Claude for Teachers in AI race to influence America's classrooms</a></h3>
-        <div class="article-meta"><span>📅 2026-07-14</span><span class="source-badge">Chalkbeat</span></div>
-        <div class="article-body">規制産業以外だが同社の普及戦略として注目。米 K-12 認証教員に premium Claude を無償提供、全50州の基準に沿った教育コネクタと AI リテラシー研修を追加。エンタープライズ面では HIPAA セルフサーブ設定（BAA レビュー付き）を Enterprise/API 組織向けに提供開始しており、規制業界導入の下地が整いつつある。</div>
-      </div>
+      <div class="art"><h3><a href="https://endpoints.news/anthropic-debuts-claude-science-an-ai-product-for-bioscience/" target="_blank" rel="noopener">Anthropic launches Claude Science, a product for biopharma, starts own drug programs</a></h3><div class="art-meta"><span class="src">Endpoints News</span><span>2026-06-30〜07-02</span></div><div class="art-body">Anthropic は科学研究向けの AI ワークベンチ「Claude Science」を発表。ゲノミクス・構造生物学・プロテオミクス・ケモインフォマティクスなど 60 以上の機能を備え、CRISPR スクリーン設計・single-cell RNA-seq 解析・3D タンパク質構造レンダリング等を支援する。ローカル（Linux/macOS）または遠隔マシンで動作し、断片化した創薬ツール群の統合を狙う。ライフサイエンス責任者 Eric Kauderer-Abrams は、大手が手を出さない「neglected disease」を対象に自社創薬プログラムも開始すると述べた。</div></div>
+      <div class="art"><h3><a href="https://www.bostonglobe.com/2026/07/13/newsletters/artificial-intelligence-claude-science-biomedical-pharma/" target="_blank" rel="noopener">Anthropic's Claude Science app is coming for Kendall Square</a></h3><div class="art-meta"><span class="src">The Boston Globe</span><span>2026-07-13</span></div><div class="art-body">ボストンの Kendall Square（世界有数のバイオクラスター）を舞台に、Claude Science が製薬・バイオメディカル研究者への浸透を狙う動きが報じられた。既存の BMS（3万人超に Claude 展開、2026年5月）や Genmab（agentic AI 協業、2026年1月）に続く商用地固めの一環。</div></div>
+      <div class="art"><h3><a href="https://www.chalkbeat.org/2026/07/14/anthropic-launches-claude-for-teachers-as-ai-companies-battle-for-classrooms/" target="_blank" rel="noopener">Anthropic launches Claude for Teachers in AI race to influence America's classrooms</a></h3><div class="art-meta"><span class="src">Chalkbeat</span><span>2026-07-14</span></div><div class="art-body">規制産業以外だが同社の普及戦略として注目。米 K-12 認証教員に premium Claude を無償提供、全50州の基準に沿った教育コネクタと AI リテラシー研修を追加。エンタープライズ面では HIPAA セルフサーブ設定（BAA レビュー付き）を Enterprise/API 組織向けに提供開始しており、規制業界導入の下地が整いつつある。</div></div>
       <div class="sub-h">AI創薬</div>
-      <div class="article-card">
-        <h3><a href="https://www.thepharmaletter.com/pharma-news/chai-discovery-raises-400-million-to-advance-ai-designed-drug-discovery" target="_blank" rel="noopener">Chai Discovery raises $400 million to advance AI-designed drug discovery</a></h3>
-        <div class="article-meta"><span>📅 2026-07-15</span><span class="source-badge">The Pharmaletter / TechCrunch</span></div>
-        <div class="article-body">SF の Chai Discovery が Series C で $400M を調達、評価額 $3.8B（7か月前の $1.3B から約3倍）。Index Ventures がリード、Kleiner Perkins・Sequoia・Dimension のほか Bain Capital Ventures・Baillie Gifford 等が新規参加、既存の Thrive・OpenAI・Menlo・General Catalyst も追随。AI 設計分子の創薬に強い需要が続く。</div>
-      </div>
-      <div class="article-card">
-        <h3><a href="https://www.contractpharma.com/breaking-news/advancell-closes-oversubscribed-315m-series-d-round/" target="_blank" rel="noopener">AdvanCell Closes Oversubscribed $315M Series D Round</a></h3>
-        <div class="article-meta"><span>📅 2026-07-15〜16</span><span class="source-badge">Contract Pharma / pharmaphorum</span></div>
-        <div class="article-body">豪 AdvanCell が Series D で $315M をクローズ。鉛-212（Pb-212）ベースの標的 α 線治療 ADVC001（転移性前立腺癌、Phase II）を Phase III へ進め、米国での製造能力と同位体供給を拡張。Ally Bridge がリード、Alpha Wave 共同リード、Bain Capital Life Sciences・Fidelity・T. Rowe Price 等が新規参加、Eli Lilly・Sanofi Ventures 等既存投資家も継続。ラジオファーマの資金流入が続く。</div>
-      </div>
-      <div class="article-card">
-        <h3><a href="https://www.globenewswire.com/news-release/2026/07/14/3327157/0/en/AI-Drug-Discovery-Investment-Surges-to-2-Billion-as-Technology-Cuts-Development-Timelines-by-70-Driven-by-Breakthrough-Clinical-Success-Rates.html" target="_blank" rel="noopener">AI Drug Discovery Investment Surges to $2+ Billion, Cutting Timelines by 70%</a></h3>
-        <div class="article-meta"><span>📅 2026-07-14</span><span class="source-badge">GlobeNewswire（BCC Research）</span></div>
-        <div class="article-body">BCC Research の分析。AI 創薬が $2B 超の投資を集め、開発期間を従来の4〜5年から12〜18か月へ短縮、臨床成功率を倍増させたとする。臨床開発中の AI 由来プログラムは 173 件、うち 15〜20 件が 2026 年中にピボタル試験入りの見込み。Insilico の rentosertib が Phase III（中国、52週）へ進むなど「実験→臨床検証」への移行が進む。</div>
-      </div>
+      <div class="art"><h3><a href="https://www.thepharmaletter.com/pharma-news/chai-discovery-raises-400-million-to-advance-ai-designed-drug-discovery" target="_blank" rel="noopener">Chai Discovery raises $400 million to advance AI-designed drug discovery</a></h3><div class="art-meta"><span class="src">The Pharmaletter / TechCrunch</span><span>2026-07-15</span></div><div class="art-body">SF の Chai Discovery が Series C で $400M を調達、評価額 $3.8B（7か月前の $1.3B から約3倍）。Index Ventures がリード、Kleiner Perkins・Sequoia・Dimension のほか Bain Capital Ventures・Baillie Gifford 等が新規参加、既存の Thrive・OpenAI・Menlo・General Catalyst も追随。AI 設計分子の創薬に強い需要が続く。</div></div>
+      <div class="art"><h3><a href="https://www.contractpharma.com/breaking-news/advancell-closes-oversubscribed-315m-series-d-round/" target="_blank" rel="noopener">AdvanCell Closes Oversubscribed $315M Series D Round</a></h3><div class="art-meta"><span class="src">Contract Pharma / pharmaphorum</span><span>2026-07-15〜16</span></div><div class="art-body">豪 AdvanCell が Series D で $315M をクローズ。鉛-212（Pb-212）ベースの標的 α 線治療 ADVC001（転移性前立腺癌、Phase II）を Phase III へ進め、米国での製造能力と同位体供給を拡張。Ally Bridge がリード、Alpha Wave 共同リード、Bain Capital Life Sciences・Fidelity・T. Rowe Price 等が新規参加、Eli Lilly・Sanofi Ventures 等既存投資家も継続。ラジオファーマの資金流入が続く。</div></div>
+      <div class="art"><h3><a href="https://www.globenewswire.com/news-release/2026/07/14/3327157/0/en/AI-Drug-Discovery-Investment-Surges-to-2-Billion-as-Technology-Cuts-Development-Timelines-by-70-Driven-by-Breakthrough-Clinical-Success-Rates.html" target="_blank" rel="noopener">AI Drug Discovery Investment Surges to $2+ Billion, Cutting Timelines by 70%</a></h3><div class="art-meta"><span class="src">GlobeNewswire（BCC Research）</span><span>2026-07-14</span></div><div class="art-body">BCC Research の分析。AI 創薬が $2B 超の投資を集め、開発期間を従来の4〜5年から12〜18か月へ短縮、臨床成功率を倍増させたとする。臨床開発中の AI 由来プログラムは 173 件、うち 15〜20 件が 2026 年中にピボタル試験入りの見込み。Insilico の rentosertib が Phase III（中国、52週）へ進むなど「実験→臨床検証」への移行が進む。</div></div>
       <div class="sub-h">CRO・臨床試験</div>
-      <div class="article-card">
-        <h3><a href="https://simplywall.st/stocks/us/pharmaceuticals-biotech/nyse-crl/charles-river-laboratories-international/news/charles-river-laboratories-international-crl-expands-ai-path" target="_blank" rel="noopener">Charles River Laboratories Expands AI Pathology Platform</a></h3>
-        <div class="article-meta"><span>📅 2026-07（直近）</span><span class="source-badge">Simply Wall St</span></div>
-        <div class="article-body">Charles River が AI 病理プラットフォームを拡張。前臨床 CRO の中核である病理評価に AI を組み込み、スループットと再現性を高める狙い。CRO が「取引ベンダー」から「技術統合型の共同開発者」へ移行する 2026 年トレンドを象徴。</div>
-      </div>
-      <div class="article-card">
-        <h3><a href="https://www.clinicalleader.com/doc/cro-industry-outlook-the-next-stage-of-clinical-trial-transformation-0001" target="_blank" rel="noopener">CRO Industry Outlook 2026: The Next Stage Of Clinical Trial Transformation</a></h3>
-        <div class="article-meta"><span>📅 2026</span><span class="source-badge">Clinical Leader</span></div>
-        <div class="article-body">AI が試験運営の「基盤インフラ」に移行したと総括。サイト選定・患者リクルート・リスクベース監視・プロトコル最適化で AI を使いこなす CRO が競争評価で優位に。IQVIA は臨床試験財務スイート CTFS（Site Payments モジュールを Q1 2026 に一般提供、処理時間 50% 削減見込み）、ICON は agentic AI プラットフォーム「Orbis」を展開中。</div>
-      </div>
+      <div class="art"><h3><a href="https://simplywall.st/stocks/us/pharmaceuticals-biotech/nyse-crl/charles-river-laboratories-international/news/charles-river-laboratories-international-crl-expands-ai-path" target="_blank" rel="noopener">Charles River Laboratories Expands AI Pathology Platform</a></h3><div class="art-meta"><span class="src">Simply Wall St</span><span>2026-07（直近）</span></div><div class="art-body">Charles River が AI 病理プラットフォームを拡張。前臨床 CRO の中核である病理評価に AI を組み込み、スループットと再現性を高める狙い。CRO が「取引ベンダー」から「技術統合型の共同開発者」へ移行する 2026 年トレンドを象徴。</div></div>
+      <div class="art"><h3><a href="https://www.clinicalleader.com/doc/cro-industry-outlook-the-next-stage-of-clinical-trial-transformation-0001" target="_blank" rel="noopener">CRO Industry Outlook 2026: The Next Stage Of Clinical Trial Transformation</a></h3><div class="art-meta"><span class="src">Clinical Leader</span><span>2026</span></div><div class="art-body">AI が試験運営の「基盤インフラ」に移行したと総括。サイト選定・患者リクルート・リスクベース監視・プロトコル最適化で AI を使いこなす CRO が競争評価で優位に。IQVIA は臨床試験財務スイート CTFS（Site Payments モジュールを Q1 2026 に一般提供、処理時間 50% 削減見込み）、ICON は agentic AI プラットフォーム「Orbis」を展開中。</div></div>
       <div class="sub-h">規制・ガイダンス</div>
-      <div class="article-card">
-        <h3><a href="https://www.fda.gov/media/189581/download" target="_blank" rel="noopener">Guiding Principles of Good AI Practice in Drug Development</a></h3>
-        <div class="article-meta"><span class="source-badge">FDA / EMA 共同 · 2026-01-14（最終ガイダンスは 2026 Q2 見込み）</span></div>
-        <div class="article-body">FDA と EMA が製品ライフサイクル全体をカバーする 10 の高次原則（human-centric design、リスクベース、context of use 明確化、データガバナンス、ライフサイクル管理等）を共同公表。ドラフト「Considerations for the Use of AI to Support Regulatory Decision Making」の最終版は 2026 Q2 に発出見込みで、7 段階の credibility framework が実務の要点となる。<strong>ICH M15 は 7/23 に法的発効予定</strong>で、AI を含むモデル情報の規制提出枠組みが動き出す。 ---</div>
-      </div>
+      <div class="art"><h3><a href="https://www.fda.gov/media/189581/download" target="_blank" rel="noopener">Guiding Principles of Good AI Practice in Drug Development</a></h3><div class="art-meta"><span class="src">FDA / EMA 共同 · 2026-01-14（最終ガイダンスは 2026 Q2 見込み）</span></div><div class="art-body">FDA と EMA が製品ライフサイクル全体をカバーする 10 の高次原則（human-centric design、リスクベース、context of use 明確化、データガバナンス、ライフサイクル管理等）を共同公表。ドラフト「Considerations for the Use of AI to Support Regulatory Decision Making」の最終版は 2026 Q2 に発出見込みで、7 段階の credibility framework が実務の要点となる。<strong>ICH M15 は 7/23 に法的発効予定</strong>で、AI を含むモデル情報の規制提出枠組みが動き出す。 ---</div></div>
     </div>
     <div class="card">
       <h2>🇯🇵 国内ニュース</h2>
-      <div class="article-card">
-        <h3><a href="https://www.pmda.go.jp/about-pmda/news-release/0093.html" target="_blank" rel="noopener">PMDA業務への生成AIの利用開始について</a></h3>
-        <div class="article-meta"><span>📅 2026-04-15（継続動向）</span><span class="source-badge">PMDA</span></div>
-        <div class="article-body">PMDA は全役職員向けに Microsoft Copilot の導入を完了し利用を開始。2025年10月公表の「PMDA業務のAI利用行動計画」に基づく動きで、規制当局側の AI 実装が業界全体の導入を後押ししている。プログラム医療機器審査体制も「審査部」へ格上げ済みで、AI/ML 医療機器の審査基盤が整備されつつある。</div>
-      </div>
-      <div class="article-card">
-        <h3><a href="https://note.com/pharma_insight/n/n6b2f4b0fdc5c" target="_blank" rel="noopener">AND-E（AMED IND ENGINE）始動 ほか国内AI創薬動向</a></h3>
-        <div class="article-meta"><span>📅 2026</span><span class="source-badge">Pharma Insight Lab（note）</span></div>
-        <div class="article-body">2026年1月に AMED と日本製薬工業協会が「AND-E」を立ち上げ、AI 創薬の産学官連携を強化。国内でも複数の AI 由来候補薬がピボタル試験に進み、「実験段階から臨床検証段階」への移行が伝えられている。ICH M15 の 7/23 発効を控え、国内でも規制提出実務の準備が焦点。 ---</div>
-      </div>
+      <div class="art"><h3><a href="https://www.pmda.go.jp/about-pmda/news-release/0093.html" target="_blank" rel="noopener">PMDA業務への生成AIの利用開始について</a></h3><div class="art-meta"><span class="src">PMDA</span><span>2026-04-15（継続動向）</span></div><div class="art-body">PMDA は全役職員向けに Microsoft Copilot の導入を完了し利用を開始。2025年10月公表の「PMDA業務のAI利用行動計画」に基づく動きで、規制当局側の AI 実装が業界全体の導入を後押ししている。プログラム医療機器審査体制も「審査部」へ格上げ済みで、AI/ML 医療機器の審査基盤が整備されつつある。</div></div>
+      <div class="art"><h3><a href="https://note.com/pharma_insight/n/n6b2f4b0fdc5c" target="_blank" rel="noopener">AND-E（AMED IND ENGINE）始動 ほか国内AI創薬動向</a></h3><div class="art-meta"><span class="src">Pharma Insight Lab（note）</span><span>2026</span></div><div class="art-body">2026年1月に AMED と日本製薬工業協会が「AND-E」を立ち上げ、AI 創薬の産学官連携を強化。国内でも複数の AI 由来候補薬がピボタル試験に進み、「実験段階から臨床検証段階」への移行が伝えられている。ICH M15 の 7/23 発効を控え、国内でも規制提出実務の準備が焦点。 ---</div></div>
     </div>
     <div class="card">
       <h2>📱 X（旧Twitter）注目投稿</h2>
       <div class="notice">本日は X の個別投稿を一次情報として独立検証できなかったため、憶測での掲載は見送る（実在確認できた投稿のみ載せる方針）。手動で気になった投稿があれば watchlist に貼っていただければ次回反映する。上記の一次ソース（Endpoints / TechCrunch / GlobeNewswire 等）で本日の主要動向はカバー済み。</div>
     </div>
-    <div class="card highlight-card">
+    <div class="card hero">
       <h2>📊 ビジネスインパクト分析</h2>
       <div class="impact-h">CROへの影響</div>
       <p class="impact-p">CRO は AI を「差別化オプション」から「基盤インフラ」へと位置づけを変えつつある。Charles River の AI 病理拡張、IQVIA の CTFS、ICON の Orbis はいずれも、サイト選定・患者リクルート・監視・財務ワークフローに AI を織り込む競争が本格化したことを示す。Anthropic の Claude Science が創薬 R&amp;D の上流を押さえに来たことで、CRO は「スポンサーの AI スタックにどう接続するか」という統合力が受注要件になる。レガシー・ワークフローに留まる中小 CRO は競争評価で不利になりやすい。</p>
@@ -267,15 +347,49 @@ a { color: var(--accent-light); }
       <div class="impact-h">規制環境の変化</div>
       <p class="impact-p">FDA–EMA の共同「Guiding Principles」と Q2 見込みの最終ガイダンス、そして 7/23 の ICH M15 発効で、AI を用いた申請データの「context of use・credibility・ライフサイクル管理」を証跡として示す実務が国際的に標準化に向かう。PMDA も Copilot 全庁導入で当局側の AI 活用を先行させており、日本の製薬・CRO は国際整合を前提に AI モデルの検証文書（validation / provenance）を早期に整えることが、申請リスク低減の鍵になる。</p>
     </div>
-    <div class="page-footer">本ブリーフは自動収集・AI生成により作成。配信日時：2026年7月18日 ／ 正本は Obsidian vault (02_NOTES/news-briefs/)。</div>
-  </main>
+    <div class="pager">
+      <a class="pg" href="brief-2026-07-17.html"><span>← 前の日</span><b>2026-07-17（金）</b></a>
+      <a class="pg right" href="brief-2026-07-19.html"><span>次の日 →</span><b>2026-07-19（日）</b></a>
+    </div>
+    <div class="foot">本ブリーフは自動収集・AI生成により作成。配信日時：2026年7月18日 ／ 正本は Obsidian vault (02_NOTES/news-briefs/)。</div>
+    </div></main>
+  </div>
 </div>
 <script>
-const menuBtn = document.getElementById('menuBtn');
-const sidebarEl = document.getElementById('sidebar');
-const overlayEl = document.getElementById('sidebarOverlay');
-menuBtn.addEventListener('click', () => { sidebarEl.classList.toggle('open'); overlayEl.classList.toggle('active'); });
-overlayEl.addEventListener('click', () => { sidebarEl.classList.remove('open'); overlayEl.classList.remove('active'); });
+var mb=document.getElementById('menuBtn'),sb=document.getElementById('sidebar'),ov=document.getElementById('ovl');
+if(mb){mb.addEventListener('click',function(){sb.classList.toggle('open');ov.classList.toggle('active');});
+ov.addEventListener('click',function(){sb.classList.remove('open');ov.classList.remove('active');});}
+function tw(){var r=document.documentElement;var cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+var nx=cur==='dark'?'light':'dark';r.dataset.theme=nx;localStorage.setItem('nb-theme',nx);
+document.querySelectorAll('.tt').forEach(function(b){b.textContent=nx==='dark'?'☀ ライト':'☾ ダーク';});}
+document.querySelectorAll('.tt').forEach(function(b){b.addEventListener('click',tw);
+var d=document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
+b.textContent=d==='dark'?'☀ ライト':'☾ ダーク';});
+
+/* ---- topbar 検索 (index は初回フォーカス時に遅延ロード) ---- */
+var GI=null,GP=null,gq=document.getElementById('gq'),gr=document.getElementById('gres');
+function gload(){if(!GP)GP=fetch('search-index.json').then(function(r){return r.json()}).then(function(j){GI=j});return GP}
+function ge(s){return s.replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+function gsnip(t,q){var i=t.toLowerCase().indexOf(q.toLowerCase());if(i<0)return '';
+var s=Math.max(0,i-30),e=Math.min(t.length,i+q.length+70);
+return (s>0?'…':'')+ge(t.slice(s,i))+'<mark>'+ge(t.slice(i,i+q.length))+'</mark>'+ge(t.slice(i+q.length,e))+(e<t.length?'…':'');}
+function grun(){if(!gq)return;var q=gq.value.trim();
+if(!q||!GI){gr.classList.remove('on');gr.innerHTML='';return;}
+var lq=q.toLowerCase(),hits=[];
+GI.forEach(function(d){for(var i=0;i<d.x.length;i++){if(d.x[i].toLowerCase().indexOf(lq)>=0){hits.push({d:d,l:d.x[i]});return;}}});
+if(!hits.length){gr.innerHTML='<div class="sr"><div class="sr-s">該当なし</div></div>';gr.classList.add('on');return;}
+gr.innerHTML=hits.slice(0,7).map(function(h){
+return '<a class="sr" href="'+h.d.u+'"><div class="sr-h">'+ge(h.d.t)+'</div><div class="sr-s">'+gsnip(h.l,q)+'</div></a>'}).join('')
++'<a class="sr-all" href="search.html?q='+encodeURIComponent(q)+'">'+hits.length+' 件すべての結果を見る →</a>';
+gr.classList.add('on');}
+if(gq){gq.addEventListener('focus',function(){gload().then(grun)});
+gq.addEventListener('input',function(){gload().then(grun)});
+gq.addEventListener('keydown',function(e){
+if(e.key==='Enter'&&gq.value.trim()){location.href='search.html?q='+encodeURIComponent(gq.value.trim());}
+if(e.key==='Escape'){gr.classList.remove('on');gq.blur();}});
+document.addEventListener('click',function(e){if(!e.target.closest('.gwrap'))gr.classList.remove('on')});
+document.addEventListener('keydown',function(e){
+if((e.key==='/'||((e.ctrlKey||e.metaKey)&&e.key==='k'))&&document.activeElement!==gq){e.preventDefault();gq.focus();}});}
 </script>
 </body>
 </html>
