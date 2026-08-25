@@ -41,17 +41,39 @@ def esc(t: str) -> str:
     return t.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
+def _bold(t: str) -> str:
+    return re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", t)
+
+
 def inline(t: str) -> str:
-    """インライン markdown (リンク・太字) を HTML に。先に HTML エスケープ。"""
+    """インライン markdown (リンク・太字) を HTML に。先に HTML エスケープ。
+
+    生成済みの <a href="..."> を退避してから裸 URL を拾う。退避しないと、
+    直前に作った href 属性の中の URL をもう一度リンク化してしまい
+    href="<a href= という壊れた属性が出る。
+    """
     t = esc(t)
+    slots = []
+
+    def stash(html):
+        slots.append(html)
+        return "\x00%d\x00" % (len(slots) - 1)
+
+    def anchor(url, label):
+        return '<a href="%s" target="_blank" rel="noopener">%s</a>' % (url, label)
+
     t = re.sub(
         r"\[([^\]]+)\]\((https?://[^)\s]+)\)",
-        r'<a href="\2" target="_blank" rel="noopener">\1</a>',
+        lambda m: stash(anchor(m.group(2), _bold(m.group(1)))),
         t,
     )
-    t = re.sub(r"(?<!\w)(https?://[^\s<>「」（）]+)", r'<a href="\1" target="_blank" rel="noopener">\1</a>', t)
-    t = re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", t)
-    return t
+    t = re.sub(
+        r"(?<!\w)(https?://[^\s<>「」（）]+)",
+        lambda m: stash(anchor(m.group(1), m.group(1))),
+        t,
+    )
+    t = _bold(t)
+    return re.sub(r"\x00(\d+)\x00", lambda m: slots[int(m.group(1))], t)
 
 
 def plain(t: str) -> str:
