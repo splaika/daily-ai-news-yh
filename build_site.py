@@ -42,7 +42,14 @@ def esc(t: str) -> str:
 
 
 def _bold(t: str) -> str:
-    return re.sub(r"\*\*([^*]+)\*\*", r"<strong>\1</strong>", t)
+    """**太字** と *強調*。
+
+    太字は非貪欲。`[^*]+` にすると `**A *b* C**` のように中に単独の `*` を含む行で
+    マッチが途切れ、`**` が生のまま残る (週次サマリーで実際に出た)。
+    斜体は両端が非空白のときだけ拾い、掛け算やワイルドカードを巻き込まない。
+    """
+    t = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", t)
+    return re.sub(r"\*(?=\S)(.+?)(?<=\S)\*", r"<em>\1</em>", t)
 
 
 def inline(t: str) -> str:
@@ -309,6 +316,26 @@ def brief_article_count(b: dict) -> int:
     return sum(len(a) for _, a in b["overseas"]) + len(b["domestic"])
 
 
+def brief_lead(b: dict) -> str:
+    """その日の代表見出し。テイクアウェイ1行目のテーマ、無ければ最初の記事タイトル。"""
+    if b["takeaways"]:
+        return plain(b["takeaways"][0][0])
+    for _sub, arts in b["overseas"]:
+        for a in arts:
+            if a.get("title"):
+                return plain(a["title"])
+    for a in b["domestic"]:
+        if a.get("title"):
+            return plain(a["title"])
+    return ""
+
+
+def iso_week(date: str) -> str:
+    y, m, d = (int(x) for x in date.split("-"))
+    iy, iw, _ = datetime.date(y, m, d).isocalendar()
+    return f"{iy}-W{iw:02d}"
+
+
 # ---------------------------------------------------------------- 週次パーサ
 
 
@@ -445,6 +472,13 @@ img{max-width:100%}
 .nav-item:hover{background:var(--accent-soft);color:var(--text)}
 .nav-item.active{background:var(--accent-soft);color:var(--accent-text);font-weight:700}
 .nav-item .wd{font-size:11px;opacity:.7}
+/* 日付 + その日の代表見出し */
+.nav-day{display:block;padding:7px 12px}
+.nav-day .nd-d{display:flex;align-items:center;gap:9px;font-size:13.5px;line-height:1.4}
+.nav-day .nd-l{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  margin:2px 0 0 14px;font-size:11px;line-height:1.5;color:var(--text-dim);
+  overflow:hidden;overflow-wrap:anywhere}
+.nav-day.active .nd-l{color:var(--text-mid)}
 .nav-item .dot{width:5px;height:5px;border-radius:50%;background:var(--border);flex:none}
 .nav-item.active .dot{background:var(--accent)}
 details.nav-more{margin-top:2px}
@@ -461,35 +495,35 @@ details.nav-more[open]>summary::before{content:"▾ "}
 .page-head .sub{color:var(--text-dim);font-size:13.5px;margin-top:6px}
 
 /* ---- cards ---- */
-.card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:20px 22px;margin-bottom:18px;box-shadow:var(--shadow);max-width:100%;overflow-wrap:anywhere}
-.card>h2{font-size:16px;font-weight:700;letter-spacing:.01em;margin-bottom:14px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.hero{border-left:4px solid var(--accent)}
-.sub-h{font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--text-dim);font-weight:700;margin:20px 0 6px;padding-bottom:5px;border-bottom:1px solid var(--border-soft)}
+/* 縦のアクセント線は全廃 (2026-09-20)。枠線と背景だけで区別する。 */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:22px;box-shadow:var(--shadow);max-width:100%;overflow-wrap:anywhere}
+.card>h2{font-size:15.5px;font-weight:700;letter-spacing:.01em;margin-bottom:16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sub-h{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);font-weight:700;margin:22px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border-soft)}
 .sub-h:first-of-type{margin-top:4px}
 
 /* ---- takeaway ---- */
 .tw{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border-soft);flex-wrap:wrap}
 .tw:last-child{border-bottom:none;padding-bottom:0}
-.tw-chip{flex:none;font-size:11px;padding:2px 9px;border-radius:20px;background:var(--accent-soft);color:var(--accent-text);font-weight:700;white-space:nowrap;margin-top:5px}
+.tw-chip{flex:none;font-size:10.5px;padding:2px 9px;border-radius:20px;background:var(--accent-soft);color:var(--accent-text);font-weight:700;white-space:nowrap;margin-top:6px}
 .tw-body{flex:1 1 260px;min-width:0}
-.tw-text{font-size:14.5px;line-height:1.8}
+.tw-text{font-size:14px;line-height:1.9}
 .tw-src{font-size:12px;margin-top:3px}
 .tw-src a{color:var(--teal);text-decoration:none}
 .tw-src a:hover{text-decoration:underline}
 
 /* ---- article ---- */
-.art{border:1px solid var(--border-soft);border-radius:11px;padding:15px 17px;margin:11px 0;background:var(--bg-card)}
+.art{border:1px solid var(--border-soft);border-radius:12px;padding:16px 18px;margin:13px 0;background:var(--bg-card)}
 .art:hover{border-color:var(--border)}
-.art h3{font-size:15.5px;font-weight:700;line-height:1.6;letter-spacing:-.005em}
+.art h3{font-size:15px;font-weight:700;line-height:1.55;letter-spacing:-.005em}
 .art h3 a{color:var(--text);text-decoration:none}
 .art h3 a:hover{color:var(--accent-text)}
-.art-meta{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;font-size:11.5px;color:var(--text-dim);margin:7px 0 9px}
-.src{background:var(--accent-soft);color:var(--accent-text);border-radius:20px;padding:2px 9px;font-weight:700}
-.art-body{font-size:14px;color:var(--text-mid);line-height:1.85}
+.art-meta{display:flex;flex-wrap:wrap;gap:6px 9px;align-items:center;font-size:11px;color:var(--text-dim);margin:8px 0 10px}
+.src{background:var(--accent-soft);color:var(--accent-text);border-radius:20px;padding:2px 9px;font-weight:700;font-size:10.5px}
+.art-body{font-size:13.5px;color:var(--text-mid);line-height:1.95}
 .art-body p+p{margin-top:8px}
 
 /* ---- misc blocks ---- */
-.quote{border-left:3px solid var(--amber-line);padding:10px 14px;margin:11px 0;background:var(--amber-soft);border-radius:0 8px 8px 0;font-size:13.5px;color:var(--text-mid)}
+.quote{border:1px solid var(--amber-line);padding:11px 15px;margin:12px 0;background:var(--amber-soft);border-radius:10px;font-size:13.5px;color:var(--text-mid)}
 .quote .q-name{font-weight:700;color:var(--amber);font-size:14px}
 .quote .q-name a{color:var(--amber)}
 .notice{font-size:13px;color:var(--text-mid);background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:9px;padding:10px 14px;margin:11px 0}
@@ -546,9 +580,25 @@ mark{background:var(--amber-soft);color:var(--amber);padding:0 2px;border-radius
 
 .foot{color:var(--text-dim);font-size:12px;margin-top:30px;border-top:1px solid var(--border);padding-top:14px}
 
-/* ---- theme toggle ---- */
-.tt{background:none;border:1px solid var(--border);border-radius:8px;color:var(--text-dim);font:inherit;font-size:13px;padding:5px 10px;cursor:pointer}
-.tt:hover{color:var(--text);border-color:var(--accent)}
+/* ---- theme toggle (☀｜🌙 の二状態セグメント) ---- */
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden;
+  background:var(--bg-card);flex:none}
+.seg-b{background:none;border:0;font:inherit;font-size:13px;line-height:1.5;padding:5px 12px;
+  cursor:pointer;color:var(--text-dim)}
+.seg-b+.seg-b{border-left:1px solid var(--border)}
+.seg-b:hover{color:var(--text)}
+.seg-b.on{background:var(--accent-soft);color:var(--accent-text)}
+
+/* ---- 今週のここまで (日次 → 週次の接続) ---- */
+.wkband{padding:15px 20px}
+.wk-l{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);font-weight:700}
+.wk-sum{list-style:none;margin:9px 0 0;padding:0}
+.wk-sum li{position:relative;padding-left:15px;font-size:13px;line-height:1.9;color:var(--text-mid)}
+.wk-sum li+li{margin-top:5px}
+.wk-sum li::before{content:"";position:absolute;left:2px;top:.85em;width:5px;height:5px;
+  border-radius:50%;background:var(--border)}
+.wk-more{display:inline-block;margin-top:11px;font-size:12.5px;text-decoration:none;font-weight:700}
+.wk-more:hover{text-decoration:underline}
 
 .mhead{display:none}
 .ovl{display:none}
@@ -564,7 +614,7 @@ mark{background:var(--amber-soft);color:var(--amber);padding:0 2px;border-radius
   .ovl.active{display:block}
   .content{margin-left:0;padding-top:46px}
   .topbar{top:46px;padding:8px 13px}
-  .topbar .tt{display:none}
+  .topbar .seg{display:none}
   .gwrap{max-width:none}
   .main{padding:16px 15px 50px}
   .page-head h1{font-size:22px}
@@ -583,12 +633,21 @@ JS = """
 var mb=document.getElementById('menuBtn'),sb=document.getElementById('sidebar'),ov=document.getElementById('ovl');
 if(mb){mb.addEventListener('click',function(){sb.classList.toggle('open');ov.classList.toggle('active');});
 ov.addEventListener('click',function(){sb.classList.remove('open');ov.classList.remove('active');});}
-function tw(){var r=document.documentElement;var cur=r.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
-var nx=cur==='dark'?'light':'dark';r.dataset.theme=nx;localStorage.setItem('nb-theme',nx);
-document.querySelectorAll('.tt').forEach(function(b){b.textContent=nx==='dark'?'☀ ライト':'☾ ダーク';});}
-document.querySelectorAll('.tt').forEach(function(b){b.addEventListener('click',tw);
-var d=document.documentElement.dataset.theme||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');
-b.textContent=d==='dark'?'☀ ライト':'☾ ダーク';});
+/* ---- 配色テーマ: ☀｜🌙 の二状態セグメント ---- */
+function curTheme(){return document.documentElement.dataset.theme
+  ||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');}
+function paintSeg(){var d=curTheme();
+  document.querySelectorAll('.seg-b').forEach(function(b){
+    var on=b.dataset.setTheme===d;b.classList.toggle('on',on);
+    b.setAttribute('aria-pressed',on?'true':'false');});}
+document.querySelectorAll('.seg-b').forEach(function(b){
+  b.addEventListener('click',function(){var nx=b.dataset.setTheme;
+    document.documentElement.dataset.theme=nx;
+    try{localStorage.setItem('nb-theme',nx);}catch(e){}
+    paintSeg();});});
+paintSeg();
+if(window.matchMedia){var mq=matchMedia('(prefers-color-scheme:dark)');
+  if(mq.addEventListener)mq.addEventListener('change',paintSeg);}
 
 /* ---- topbar 検索 (index は初回フォーカス時に遅延ロード) ---- */
 var GI=null,GP=null,gq=document.getElementById('gq'),gr=document.getElementById('gres');
@@ -623,9 +682,13 @@ if((e.key==='/'||((e.ctrlKey||e.metaKey)&&e.key==='k'))&&document.activeElement!
 def render_sidebar(dailies, weeklies, active: str) -> str:
     def d_item(b):
         cls = " active" if b["slug"] == active else ""
+        lead = brief_lead(b)
+        lead_html = f'<span class="nd-l">{esc(lead)}</span>' if lead else ""
         return (
-            f'      <a href="{b["slug"]}.html" class="nav-item{cls}"><span class="dot"></span>'
-            f'{b["date"][5:].replace("-", "/")}<span class="wd">{weekday_of(b["date"])}</span></a>'
+            f'      <a href="{b["slug"]}.html" class="nav-item nav-day{cls}">'
+            f'<span class="nd-d"><span class="dot"></span>'
+            f'{b["date"][5:].replace("-", "/")}<span class="wd">{weekday_of(b["date"])}</span></span>'
+            f"{lead_html}</a>"
         )
 
     def w_item(w):
@@ -673,7 +736,7 @@ def render_sidebar(dailies, weeklies, active: str) -> str:
   <div class="logo-icon">🧠</div>
   <div class="logo-text">AI Intel Brief</div>
   <div class="sp"></div>
-  <button class="tt" type="button"></button>
+  {THEME_SEG}
 </div>
 <div class="ovl" id="ovl"></div>
 <div class="layout">
@@ -695,19 +758,24 @@ def render_sidebar(dailies, weeklies, active: str) -> str:
   </aside>"""
 
 
-TOPBAR = """  <header class="topbar">
+THEME_SEG = """<div class="seg" role="group" aria-label="配色テーマ">
+      <button class="seg-b" type="button" data-set-theme="light" aria-label="ライトモード" title="ライト">☀</button>
+      <button class="seg-b" type="button" data-set-theme="dark" aria-label="ダークモード" title="ダーク">🌙</button>
+    </div>"""
+
+TOPBAR = f"""  <header class="topbar">
     <div class="gwrap">
       <input id="gq" type="search" autocomplete="off" placeholder="ブリーフを検索（例: ICON、PMDA、book-to-bill）">
       <div class="sres" id="gres"></div>
     </div>
     <div class="tb-sp"></div>
-    <button class="tt" type="button"></button>
+    {THEME_SEG}
   </header>
 """
 
-TOPBAR_PLAIN = """  <header class="topbar">
+TOPBAR_PLAIN = f"""  <header class="topbar">
     <div class="tb-sp"></div>
-    <button class="tt" type="button"></button>
+    {THEME_SEG}
   </header>
 """
 
@@ -875,6 +943,30 @@ def brief_body(b: dict) -> list:
     return p
 
 
+def week_band(b: dict, dailies, weeklies) -> str:
+    """日次ページ上部の週次リンク。
+
+    日付で引く面は左サイドバーが担うので、ここでは日付を並べない（再掲になるため）。
+    その週の週次インテリジェンスが既にある場合だけ、総括を数行と入口を出す。
+    「この件のこれまで」(記事単位の続報の糸) は別途、出来事台帳から描く。
+    """
+    wk = iso_week(b["date"])
+    wpage = next((w for w in weeklies if w["week"] == wk), None)
+    if not wpage:
+        return ""
+    lines = "".join(f"<li>{inline(x)}</li>" for x in wpage["summary"][:2] if x.strip())
+    body = f'\n      <ul class="wk-sum">{lines}</ul>' if lines else ""
+    return "\n".join(
+        [
+            '    <div class="card wkband">',
+            f'      <div class="wk-l">この週の総括 — {esc(wk)}</div>{body}',
+            f'      <a class="wk-more" href="{wpage["slug"]}.html">'
+            f"{esc(wk)} の週次インテリジェンスを見る →</a>",
+            "    </div>",
+        ]
+    )
+
+
 def pager(older, newer, l_old="← 前の日", l_new="次の日 →") -> str:
     if not older and not newer:
         return ""
@@ -899,6 +991,7 @@ def render_brief(b: dict, dailies, weeklies, idx: int) -> str:
       <p class="sub">{brief_article_count(b)} 記事 ／ 自動収集・AI 生成</p>
     </header>"""
     ]
+    p.append(week_band(b, dailies, weeklies))
     p += brief_body(b)
     newer = d_ref(dailies[idx - 1]) if idx > 0 else None
     older = d_ref(dailies[idx + 1]) if idx + 1 < len(dailies) else None
@@ -969,6 +1062,7 @@ def render_index(dailies, weeklies) -> str:
       <p class="sub">{brief_article_count(b)} 記事 ／ 自動収集・AI 生成</p>
     </header>"""
     ]
+    p.append(week_band(b, dailies, weeklies))
     p += brief_body(b)
     older = d_ref(dailies[1]) if len(dailies) > 1 else None
     p.append(pager(older, ("archive.html", f"全 {len(dailies)} 本"), "← 前の日", "アーカイブ →"))
