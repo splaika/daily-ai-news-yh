@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light dark">
+<title>2026-W39 — 週次インテリジェンス</title>
+<script>
+(function(){var t=localStorage.getItem('nb-theme');if(t)document.documentElement.dataset.theme=t;})();
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#f6f7fb; --bg-card:#ffffff; --bg-sidebar:#ffffff; --bg-soft:#f0f2f8;
+  --border:#e1e4ee; --border-soft:#edeff6;
+  --text:#171b26; --text-mid:#3d4456; --text-dim:#646d84;
+  --accent:#4553c9; --accent-text:#3a47bb; --accent-soft:rgba(69,83,201,.09);
+  --amber:#9a6b0d; --amber-soft:rgba(200,150,20,.10); --amber-line:rgba(200,150,20,.35);
+  --teal:#0d7d75; --shadow:0 1px 2px rgba(20,25,45,.06), 0 4px 14px rgba(20,25,45,.05);
+}
+@media (prefers-color-scheme:dark){:root{
+  --bg:#0e1016; --bg-card:#181b28; --bg-sidebar:#12141e; --bg-soft:#1f2331;
+  --border:#2a2e40; --border-soft:#222635;
+  --text:#e7e9f3; --text-mid:#c3c8d8; --text-dim:#8f95ab;
+  --accent:#7c8cff; --accent-text:#9aa6ff; --accent-soft:rgba(124,140,255,.13);
+  --amber:#f0c450; --amber-soft:rgba(240,196,80,.09); --amber-line:rgba(240,196,80,.30);
+  --teal:#57d3ca; --shadow:none;
+}}
+:root[data-theme="dark"]{
+  --bg:#0e1016; --bg-card:#181b28; --bg-sidebar:#12141e; --bg-soft:#1f2331;
+  --border:#2a2e40; --border-soft:#222635;
+  --text:#e7e9f3; --text-mid:#c3c8d8; --text-dim:#8f95ab;
+  --accent:#7c8cff; --accent-text:#9aa6ff; --accent-soft:rgba(124,140,255,.13);
+  --amber:#f0c450; --amber-soft:rgba(240,196,80,.09); --amber-line:rgba(240,196,80,.30);
+  --teal:#57d3ca; --shadow:none;
+}
+:root[data-theme="light"]{
+  --bg:#f6f7fb; --bg-card:#ffffff; --bg-sidebar:#ffffff; --bg-soft:#f0f2f8;
+  --border:#e1e4ee; --border-soft:#edeff6;
+  --text:#171b26; --text-mid:#3d4456; --text-dim:#646d84;
+  --accent:#4553c9; --accent-text:#3a47bb; --accent-soft:rgba(69,83,201,.09);
+  --amber:#9a6b0d; --amber-soft:rgba(200,150,20,.10); --amber-line:rgba(200,150,20,.35);
+  --teal:#0d7d75; --shadow:0 1px 2px rgba(20,25,45,.06), 0 4px 14px rgba(20,25,45,.05);
+}
+/* overflow-x は clip。hidden にすると html/body がスクロールコンテナ化して topbar の sticky が壊れる */
+html,body{overflow-x:clip;max-width:100%}
+body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Noto Sans JP",Meiryo,sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.85;font-size:15px;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:var(--accent-text)}
+img{max-width:100%}
+
+/* ---- layout ---- */
+.sidebar{position:fixed;top:0;left:0;width:252px;height:100vh;overflow-y:auto;overscroll-behavior:contain;
+  background:var(--bg-sidebar);border-right:1px solid var(--border);z-index:30}
+.content{margin-left:252px;min-width:0}
+.main{padding:30px 36px 60px;min-width:0}
+.wrap{max-width:880px;margin:0 auto;min-width:0}
+.wrap-wide{max-width:1120px;margin:0 auto;min-width:0}
+
+/* ---- topbar (検索は常時表示) ---- */
+.topbar{position:sticky;top:0;z-index:15;background:var(--bg);border-bottom:1px solid var(--border);
+  padding:10px 36px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.gwrap{position:relative;flex:1 1 240px;min-width:0;max-width:560px}
+.gwrap::before{content:"🔎";position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:13px;opacity:.6;pointer-events:none}
+#gq{width:100%;font:inherit;font-size:14px;padding:8px 13px 8px 33px;border-radius:10px;
+  border:1px solid var(--border);background:var(--bg-card);color:var(--text)}
+#gq:focus{outline:2px solid var(--accent);outline-offset:1px}
+.sres{display:none;position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--bg-card);
+  border:1px solid var(--border);border-radius:12px;box-shadow:0 10px 34px rgba(10,14,30,.20);
+  max-height:62vh;overflow-y:auto;z-index:40}
+.sres.on{display:block}
+.sr{display:block;padding:10px 14px;text-decoration:none;border-bottom:1px solid var(--border-soft)}
+.sr:last-child{border-bottom:none}
+.sr:hover{background:var(--accent-soft)}
+.sr-h{font-size:12.5px;font-weight:700;color:var(--accent-text)}
+.sr-s{font-size:12.5px;color:var(--text-mid);margin-top:3px;line-height:1.7}
+.sr-all{display:block;padding:9px 14px;text-align:center;font-size:12.5px;font-weight:700;
+  color:var(--accent-text);text-decoration:none;background:var(--bg-soft)}
+.tb-sp{flex:1}
+
+/* ---- sidebar ---- */
+.logo{padding:20px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px}
+.logo-icon{font-size:22px}
+.logo-text{font-size:15px;font-weight:700;letter-spacing:.01em}
+.logo-sub{font-size:11px;color:var(--text-dim);font-weight:500;letter-spacing:.04em}
+.nav{padding:10px 8px 40px}
+.nav-title{padding:16px 12px 6px;font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--text-dim);font-weight:700}
+.nav-item{display:flex;align-items:center;gap:9px;padding:7px 12px;border-radius:8px;color:var(--text-dim);text-decoration:none;font-size:13.5px;line-height:1.4}
+.nav-item:hover{background:var(--accent-soft);color:var(--text)}
+.nav-item.active{background:var(--accent-soft);color:var(--accent-text);font-weight:700}
+.nav-item .wd{font-size:11px;opacity:.7}
+/* 日付 + その日の代表見出し */
+.nav-day{display:block;padding:7px 12px}
+.nav-day .nd-d{display:flex;align-items:center;gap:9px;font-size:13.5px;line-height:1.4}
+.nav-day .nd-l{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+  margin:2px 0 0 14px;font-size:11px;line-height:1.5;color:var(--text-dim);
+  overflow:hidden;overflow-wrap:anywhere}
+.nav-day.active .nd-l{color:var(--text-mid)}
+.nav-item .dot{width:5px;height:5px;border-radius:50%;background:var(--border);flex:none}
+.nav-item.active .dot{background:var(--accent)}
+details.nav-more{margin-top:2px}
+details.nav-more>summary{list-style:none;cursor:pointer;padding:7px 12px;border-radius:8px;color:var(--text-dim);font-size:13px}
+details.nav-more>summary::-webkit-details-marker{display:none}
+details.nav-more>summary:hover{background:var(--accent-soft);color:var(--text)}
+details.nav-more>summary::before{content:"▸ ";font-size:10px}
+details.nav-more[open]>summary::before{content:"▾ "}
+
+/* ---- header ---- */
+.page-head{margin-bottom:26px}
+.eyebrow{font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);font-weight:700}
+.page-head h1{font-size:27px;font-weight:800;line-height:1.35;letter-spacing:-.01em;margin-top:4px}
+.page-head .sub{color:var(--text-dim);font-size:13.5px;margin-top:6px}
+
+/* ---- cards ---- */
+/* 縦のアクセント線は全廃 (2026-09-20)。枠線と背景だけで区別する。 */
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:22px 24px;margin-bottom:22px;box-shadow:var(--shadow);max-width:100%;overflow-wrap:anywhere}
+.card>h2{font-size:15.5px;font-weight:700;letter-spacing:.01em;margin-bottom:16px;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.sub-h{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);font-weight:700;margin:22px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border-soft)}
+.sub-h:first-of-type{margin-top:4px}
+
+/* ---- takeaway ---- */
+.tw{display:flex;gap:12px;align-items:flex-start;padding:12px 0;border-bottom:1px solid var(--border-soft);flex-wrap:wrap}
+.tw:last-child{border-bottom:none;padding-bottom:0}
+.tw-chip{flex:none;font-size:10.5px;padding:2px 9px;border-radius:20px;background:var(--accent-soft);color:var(--accent-text);font-weight:700;white-space:nowrap;margin-top:6px}
+.tw-body{flex:1 1 260px;min-width:0}
+.tw-text{font-size:14px;line-height:1.9}
+.tw-src{font-size:12px;margin-top:3px}
+.tw-src a{color:var(--teal);text-decoration:none}
+.tw-src a:hover{text-decoration:underline}
+
+/* ---- article ---- */
+.art{border:1px solid var(--border-soft);border-radius:12px;padding:16px 18px;margin:13px 0;background:var(--bg-card)}
+.art:hover{border-color:var(--border)}
+.art h3{font-size:15px;font-weight:700;line-height:1.55;letter-spacing:-.005em}
+.art h3 a{color:var(--text);text-decoration:none}
+.art h3 a:hover{color:var(--accent-text)}
+.art-meta{display:flex;flex-wrap:wrap;gap:6px 9px;align-items:center;font-size:11px;color:var(--text-dim);margin:8px 0 10px}
+.src{background:var(--accent-soft);color:var(--accent-text);border-radius:20px;padding:2px 9px;font-weight:700;font-size:10.5px}
+.art-body{font-size:13.5px;color:var(--text-mid);line-height:1.95}
+.art-body p+p{margin-top:8px}
+
+/* ---- misc blocks ---- */
+.quote{border:1px solid var(--amber-line);padding:11px 15px;margin:12px 0;background:var(--amber-soft);border-radius:10px;font-size:13.5px;color:var(--text-mid)}
+.quote .q-name{font-weight:700;color:var(--amber);font-size:14px}
+.quote .q-name a{color:var(--amber)}
+.notice{font-size:13px;color:var(--text-mid);background:var(--bg-soft);border:1px solid var(--border-soft);border-radius:9px;padding:10px 14px;margin:11px 0}
+.x-plain{font-size:13px;color:var(--text-dim);margin:8px 0}
+.impact-h{font-size:14.5px;font-weight:700;color:var(--accent-text);margin:16px 0 6px}
+.impact-h:first-of-type{margin-top:2px}
+.impact-p{font-size:14px;color:var(--text-mid)}
+.impact-p+.impact-p{margin-top:8px}
+ul.bl{margin:6px 0 6px 2px;list-style:none}
+ul.bl li{position:relative;padding-left:16px;font-size:14px;color:var(--text-mid);margin:6px 0}
+ul.bl li::before{content:"";position:absolute;left:2px;top:.72em;width:5px;height:5px;border-radius:50%;background:var(--accent);opacity:.55}
+.note-line{font-size:12.5px;color:var(--text-dim);margin:10px 0}
+
+/* ---- table → cards (横スクロールを作らない) ---- */
+.tcards{display:grid;gap:10px;margin:10px 0}
+.trow{border:1px solid var(--border-soft);border-radius:11px;padding:13px 15px;background:var(--bg-card)}
+.tr-h{font-size:14.5px;font-weight:700;line-height:1.6;display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.tr-date{font-size:11px;font-weight:700;color:var(--text-dim);background:var(--bg-soft);border-radius:20px;padding:1px 8px;flex:none}
+.tr-f{display:flex;gap:10px;margin-top:7px;flex-wrap:wrap;font-size:13.5px}
+.tr-k{flex:none;width:88px;color:var(--text-dim);font-size:11.5px;font-weight:700;padding-top:3px;letter-spacing:.03em}
+.tr-v{flex:1 1 220px;min-width:0;color:var(--text-mid);line-height:1.75}
+
+/* ---- archive ---- */
+.mo-h{font-size:13px;font-weight:800;letter-spacing:.06em;color:var(--text-dim);margin:26px 0 8px;padding-bottom:6px;border-bottom:1px solid var(--border)}
+.mo-h:first-child{margin-top:0}
+.row{display:flex;gap:12px;align-items:baseline;padding:9px 4px;border-bottom:1px solid var(--border-soft);text-decoration:none;flex-wrap:wrap}
+.row:hover{background:var(--accent-soft);border-radius:8px}
+.row-d{flex:none;font-size:13px;font-weight:700;color:var(--accent-text);width:92px}
+.row-w{flex:none;font-size:11px;color:var(--text-dim);width:52px}
+.row-t{flex:1 1 240px;min-width:0;font-size:13px;color:var(--text-mid)}
+.row.wk .row-d{color:var(--teal)}
+
+/* ---- prev/next ---- */
+.pager{display:flex;gap:10px;justify-content:space-between;margin:22px 0 0;flex-wrap:wrap}
+.pg{flex:1 1 200px;border:1px solid var(--border);border-radius:11px;padding:11px 14px;text-decoration:none;background:var(--bg-card);min-width:0}
+.pg:hover{border-color:var(--accent)}
+.pg span{display:block;font-size:11px;color:var(--text-dim)}
+.pg b{font-size:13.5px;color:var(--accent-text)}
+.pg.right{text-align:right}
+
+/* ---- search ---- */
+.sbox{display:flex;gap:10px;flex-wrap:wrap}
+#q{flex:1 1 240px;min-width:0;font:inherit;font-size:15px;padding:11px 14px;border-radius:11px;border:1px solid var(--border);background:var(--bg-card);color:var(--text)}
+#q:focus{outline:2px solid var(--accent);outline-offset:1px}
+.chips{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.chip{font-size:12px;padding:4px 11px;border-radius:20px;border:1px solid var(--border);background:var(--bg-card);color:var(--text-dim);cursor:pointer;font-family:inherit}
+.chip:hover,.chip.on{background:var(--accent-soft);color:var(--accent-text);border-color:var(--accent)}
+.hits{font-size:12.5px;color:var(--text-dim);margin:16px 0 8px}
+.hit{display:block;text-decoration:none;border:1px solid var(--border-soft);border-radius:11px;padding:13px 15px;margin:9px 0;background:var(--bg-card)}
+.hit:hover{border-color:var(--accent)}
+.hit-h{font-size:13.5px;font-weight:700;color:var(--accent-text)}
+.hit-s{font-size:13px;color:var(--text-mid);margin-top:5px;line-height:1.8}
+mark{background:var(--amber-soft);color:var(--amber);padding:0 2px;border-radius:3px;font-weight:700}
+
+.foot{color:var(--text-dim);font-size:12px;margin-top:30px;border-top:1px solid var(--border);padding-top:14px}
+
+/* ---- theme toggle (☀｜🌙 の二状態セグメント) ---- */
+.seg{display:inline-flex;border:1px solid var(--border);border-radius:9px;overflow:hidden;
+  background:var(--bg-card);flex:none}
+.seg-b{background:none;border:0;font:inherit;font-size:13px;line-height:1.5;padding:5px 12px;
+  cursor:pointer;color:var(--text-dim)}
+.seg-b+.seg-b{border-left:1px solid var(--border)}
+.seg-b:hover{color:var(--text)}
+.seg-b.on{background:var(--accent-soft);color:var(--accent-text)}
+
+/* ---- 今週のここまで (日次 → 週次の接続) ---- */
+.wkband{padding:15px 20px}
+.wk-l{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);font-weight:700}
+.wk-sum{list-style:none;margin:9px 0 0;padding:0}
+.wk-sum li{position:relative;padding-left:15px;font-size:13px;line-height:1.9;color:var(--text-mid)}
+.wk-sum li+li{margin-top:5px}
+.wk-sum li::before{content:"";position:absolute;left:2px;top:.85em;width:5px;height:5px;
+  border-radius:50%;background:var(--border)}
+.wk-more{display:inline-block;margin-top:11px;font-size:12.5px;text-decoration:none;font-weight:700}
+.wk-more:hover{text-decoration:underline}
+
+.mhead{display:none}
+.ovl{display:none}
+@media (max-width:900px){
+  .mhead{display:flex;align-items:center;gap:10px;position:fixed;top:0;left:0;right:0;z-index:35;height:46px;
+    background:var(--bg-sidebar);border-bottom:1px solid var(--border);padding:0 13px}
+  .mhead .logo-text{font-size:14px}
+  .mhead .sp{flex:1}
+  .burger{background:none;border:1px solid var(--border);border-radius:8px;color:var(--text);font-size:17px;padding:3px 10px;cursor:pointer}
+  .sidebar{left:-270px;width:258px;transition:left .2s}
+  .sidebar.open{left:0}
+  .ovl{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:25}
+  .ovl.active{display:block}
+  .content{margin-left:0;padding-top:46px}
+  .topbar{top:46px;padding:8px 13px}
+  .topbar .seg{display:none}
+  .gwrap{max-width:none}
+  .main{padding:16px 15px 50px}
+  .page-head h1{font-size:22px}
+  .card{padding:16px 15px;border-radius:12px}
+  .tr-k{width:100%;padding-top:0}
+}
+</style>
+</head>
+<body>
+<div class="mhead">
+  <button class="burger" id="menuBtn" aria-label="メニューを開く">☰</button>
+  <div class="logo-icon">🧠</div>
+  <div class="logo-text">AI Intel Brief</div>
+  <div class="sp"></div>
+  <div class="seg" role="group" aria-label="配色テーマ">
+      <button class="seg-b" type="button" data-set-theme="light" aria-label="ライトモード" title="ライト">☀</button>
+      <button class="seg-b" type="button" data-set-theme="dark" aria-label="ダークモード" title="ダーク">🌙</button>
+    </div>
+</div>
+<div class="ovl" id="ovl"></div>
+<div class="layout">
+  <aside class="sidebar" id="sidebar" aria-label="サイドメニュー">
+    <div class="logo">
+      <div class="logo-icon">🧠</div>
+      <div>
+        <div class="logo-text">AI Intel Brief</div>
+        <div class="logo-sub">医薬品開発 × CRO</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <a href="index.html" class="nav-item"><span>🏠</span>最新ブリーフ</a>
+      <a href="search.html" class="nav-item"><span>🔎</span>検索</a>
+      <a href="archive.html" class="nav-item"><span>🗂</span>アーカイブ</a>
+      <div class="nav-title">デイリーブリーフ</div>
+      <a href="brief-2026-09-26.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/26<span class="wd">土</span></span><span class="nd-l">AI創薬の資金</span></a>
+      <a href="brief-2026-09-25.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/25<span class="wd">金</span></span><span class="nd-l">Anthropic × 基礎生物学</span></a>
+      <a href="brief-2026-09-24.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/24<span class="wd">木</span></span><span class="nd-l">AI創薬の資金調達</span></a>
+      <a href="brief-2026-09-23.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/23<span class="wd">水</span></span><span class="nd-l">規制（米）</span></a>
+      <a href="brief-2026-09-22.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/22<span class="wd">火</span></span><span class="nd-l">AI創薬の大型提携</span></a>
+      <a href="brief-2026-09-21.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/21<span class="wd">月</span></span><span class="nd-l">日本の規制が「進行中の試験を見る」側へ</span></a>
+      <a href="brief-2026-09-20.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/20<span class="wd">日</span></span><span class="nd-l">生成AI医療機器の薬事評価</span></a>
+      <a href="brief-2026-09-19.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/19<span class="wd">土</span></span><span class="nd-l">Anthropic の生命科学向け利用審査</span></a>
+      <a href="brief-2026-09-18.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/18<span class="wd">金</span></span><span class="nd-l">画像AIが第III相の中間判断を前倒し</span></a>
+      <a href="brief-2026-09-17.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/17<span class="wd">木</span></span><span class="nd-l">Anthropic × 製薬</span></a>
+      <a href="brief-2026-09-16.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/16<span class="wd">水</span></span><span class="nd-l">FDA Expedited IND Pilot が応募受付開始</span></a>
+      <a href="brief-2026-09-15.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/15<span class="wd">火</span></span><span class="nd-l">規制 × 試験設計</span></a>
+      <a href="brief-2026-09-14.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/14<span class="wd">月</span></span><span class="nd-l">エージェンティックAI × 規制</span></a>
+      <a href="brief-2026-09-13.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/13<span class="wd">日</span></span><span class="nd-l">規制・精密医療</span></a>
+      <details class="nav-more"><summary>2026年9月 (11)</summary>
+      <a href="brief-2026-09-12.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/12<span class="wd">土</span></span><span class="nd-l">規制×AI</span></a>
+      <a href="brief-2026-09-11.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/11<span class="wd">金</span></span><span class="nd-l">CRO×AI</span></a>
+      <a href="brief-2026-09-10.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/10<span class="wd">木</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-09-08.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/08<span class="wd">火</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-09-07.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/07<span class="wd">月</span></span><span class="nd-l">承認の根拠</span></a>
+      <a href="brief-2026-09-06.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/06<span class="wd">日</span></span><span class="nd-l">エンドポイント設計</span></a>
+      <a href="brief-2026-09-05.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/05<span class="wd">土</span></span><span class="nd-l">CRO構造</span></a>
+      <a href="brief-2026-09-04.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/04<span class="wd">金</span></span><span class="nd-l">規制</span></a>
+      <a href="brief-2026-09-03.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/03<span class="wd">木</span></span><span class="nd-l">CRO再編</span></a>
+      <a href="brief-2026-09-02.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/02<span class="wd">水</span></span><span class="nd-l">汎用AI大手のヘルスケア侵食</span></a>
+      <a href="brief-2026-09-01.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>09/01<span class="wd">火</span></span><span class="nd-l">CRO が試験シミュレーションを提携で調達した — HiRO × Differentia Biotech が MoU</span></a>
+      </details>
+      <details class="nav-more"><summary>2026年8月 (29)</summary>
+      <a href="brief-2026-08-31.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/31<span class="wd">月</span></span><span class="nd-l">厚労省が 27年度概算要求で創薬・先端医療に 1969億円、AI 創薬拠点に 153億円</span></a>
+      <a href="brief-2026-08-30.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/30<span class="wd">日</span></span><span class="nd-l">Anthropic がエージェント↔実験機器の共通仕様 MHS を research preview で公開</span></a>
+      <a href="brief-2026-08-29.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/29<span class="wd">土</span></span><span class="nd-l">「自律的臨床試験」は本番運用にまだ存在しない</span></a>
+      <a href="brief-2026-08-28.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/28<span class="wd">金</span></span><span class="nd-l">臨床モニタリングAIの ROI が初めて数字になった</span></a>
+      <a href="brief-2026-08-27.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/27<span class="wd">木</span></span><span class="nd-l">規制当局のAI内製</span></a>
+      <a href="brief-2026-08-26.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/26<span class="wd">水</span></span><span class="nd-l">当局パイロット</span></a>
+      <a href="brief-2026-08-25.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/25<span class="wd">火</span></span><span class="nd-l">生成AI規制</span></a>
+      <a href="brief-2026-08-24.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/24<span class="wd">月</span></span><span class="nd-l">FDA 人事</span></a>
+      <a href="brief-2026-08-23.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/23<span class="wd">日</span></span><span class="nd-l">採血ロボットが De Novo で新カテゴリ化</span></a>
+      <a href="brief-2026-08-22.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/22<span class="wd">土</span></span><span class="nd-l">規制 × AI検証</span></a>
+      <a href="brief-2026-08-21.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/21<span class="wd">金</span></span><span class="nd-l">AI創薬提携</span></a>
+      <a href="brief-2026-08-20.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/20<span class="wd">木</span></span><span class="nd-l">AI創薬</span></a>
+      <a href="brief-2026-08-19.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/19<span class="wd">水</span></span><span class="nd-l">FDA が PDUFA ミーティング最終ガイダンスを発出</span></a>
+      <a href="brief-2026-08-18.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/18<span class="wd">火</span></span><span class="nd-l">AI エージェント実装</span></a>
+      <a href="brief-2026-08-17.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/17<span class="wd">月</span></span><span class="nd-l">AI安全性・開示</span></a>
+      <a href="brief-2026-08-16.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/16<span class="wd">日</span></span><span class="nd-l">AI透明性規制</span></a>
+      <a href="brief-2026-08-15.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/15<span class="wd">土</span></span><span class="nd-l">AI モニタリングの金額換算</span></a>
+      <a href="brief-2026-08-14.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/14<span class="wd">金</span></span><span class="nd-l">AIエージェントの経済価値が初めて数字になった</span></a>
+      <a href="brief-2026-08-13.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/13<span class="wd">木</span></span><span class="nd-l">CRO×AI モニタリング</span></a>
+      <a href="brief-2026-08-12.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/12<span class="wd">水</span></span><span class="nd-l">規制</span></a>
+      <a href="brief-2026-08-11.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/11<span class="wd">火</span></span><span class="nd-l">Novo Nordisk が AWS を「優先クラウド＋戦略 AI パートナー」に指名</span></a>
+      <a href="brief-2026-08-10.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/10<span class="wd">月</span></span><span class="nd-l">AI計算基盤の自社保有競争</span></a>
+      <a href="brief-2026-08-07.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/07<span class="wd">金</span></span><span class="nd-l">AI×バイオ製造</span></a>
+      <a href="brief-2026-08-06.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/06<span class="wd">木</span></span><span class="nd-l">CRO×Anthropic</span></a>
+      <a href="brief-2026-08-05.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/05<span class="wd">水</span></span><span class="nd-l">AIネイティブ創薬</span></a>
+      <a href="brief-2026-08-04.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/04<span class="wd">火</span></span><span class="nd-l">AI創薬</span></a>
+      <a href="brief-2026-08-03.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/03<span class="wd">月</span></span><span class="nd-l">EU AI Act 施行</span></a>
+      <a href="brief-2026-08-02.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/02<span class="wd">日</span></span><span class="nd-l">FDA諮問委の振れ幅</span></a>
+      <a href="brief-2026-08-01.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>08/01<span class="wd">土</span></span><span class="nd-l">AI創薬ベンチマーク</span></a>
+      </details>
+      <details class="nav-more"><summary>2026年7月 (30)</summary>
+      <a href="brief-2026-07-31.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/31<span class="wd">金</span></span><span class="nd-l">AI創薬提携</span></a>
+      <a href="brief-2026-07-30.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/30<span class="wd">木</span></span><span class="nd-l">Anthropic×CRO</span></a>
+      <a href="brief-2026-07-29.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/29<span class="wd">水</span></span><span class="nd-l">規制×AI</span></a>
+      <a href="brief-2026-07-28.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/28<span class="wd">火</span></span><span class="nd-l">AIエージェント</span></a>
+      <a href="brief-2026-07-27.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/27<span class="wd">月</span></span><span class="nd-l">CRO決算</span></a>
+      <a href="brief-2026-07-26.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/26<span class="wd">日</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-25.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/25<span class="wd">土</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-24.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/24<span class="wd">金</span></span><span class="nd-l">規制</span></a>
+      <a href="brief-2026-07-23.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/23<span class="wd">木</span></span><span class="nd-l">規制（本日発効）</span></a>
+      <a href="brief-2026-07-22.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/22<span class="wd">水</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-21.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/21<span class="wd">火</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-20.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/20<span class="wd">月</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-19.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/19<span class="wd">日</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-18.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/18<span class="wd">土</span></span><span class="nd-l">資金調達</span></a>
+      <a href="brief-2026-07-17.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/17<span class="wd">金</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-16.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/16<span class="wd">木</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-15.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/15<span class="wd">水</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-14.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/14<span class="wd">火</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-13.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/13<span class="wd">月</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-12.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/12<span class="wd">日</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-11.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/11<span class="wd">土</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-10.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/10<span class="wd">金</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-09.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/09<span class="wd">木</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-08.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/08<span class="wd">水</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-07.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/07<span class="wd">火</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-06.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/06<span class="wd">月</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-05.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/05<span class="wd">日</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-04.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/04<span class="wd">土</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-03.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/03<span class="wd">金</span></span><span class="nd-l">Anthropic</span></a>
+      <a href="brief-2026-07-01.html" class="nav-item nav-day"><span class="nd-d"><span class="dot"></span>07/01<span class="wd">水</span></span><span class="nd-l">Anthropic</span></a>
+      </details>
+      <div class="nav-title">週次インテリジェンス</div>
+      <a href="weekly-2026-W39.html" class="nav-item active"><span class="dot"></span>2026-W39</a>
+      <a href="weekly-2026-W38.html" class="nav-item"><span class="dot"></span>2026-W38</a>
+      <a href="weekly-2026-W37.html" class="nav-item"><span class="dot"></span>2026-W37</a>
+      <a href="weekly-2026-W36.html" class="nav-item"><span class="dot"></span>2026-W36</a>
+      <a href="weekly-2026-W35.html" class="nav-item"><span class="dot"></span>2026-W35</a>
+      <a href="weekly-2026-W34.html" class="nav-item"><span class="dot"></span>2026-W34</a>
+      <a href="weekly-2026-W33.html" class="nav-item"><span class="dot"></span>2026-W33</a>
+      <a href="weekly-2026-W32.html" class="nav-item"><span class="dot"></span>2026-W32</a>
+      <details class="nav-more"><summary>過去の週次 (5)</summary>
+      <a href="weekly-2026-W31.html" class="nav-item"><span class="dot"></span>2026-W31</a>
+      <a href="weekly-2026-W30.html" class="nav-item"><span class="dot"></span>2026-W30</a>
+      <a href="weekly-2026-W29.html" class="nav-item"><span class="dot"></span>2026-W29</a>
+      <a href="weekly-2026-W28.html" class="nav-item"><span class="dot"></span>2026-W28</a>
+      <a href="weekly-2026-W27.html" class="nav-item"><span class="dot"></span>2026-W27</a>
+      </details>
+    </nav>
+  </aside>
+  <div class="content">
+  <header class="topbar">
+    <div class="gwrap">
+      <input id="gq" type="search" autocomplete="off" placeholder="ブリーフを検索（例: ICON、PMDA、book-to-bill）">
+      <div class="sres" id="gres"></div>
+    </div>
+    <div class="tb-sp"></div>
+    <div class="seg" role="group" aria-label="配色テーマ">
+      <button class="seg-b" type="button" data-set-theme="light" aria-label="ライトモード" title="ライト">☀</button>
+      <button class="seg-b" type="button" data-set-theme="dark" aria-label="ダークモード" title="ダーク">🌙</button>
+    </div>
+  </header>
+    <main class="main"><div class="wrap">
+    <header class="page-head">
+      <div class="eyebrow">Weekly Intelligence · 医薬品開発 × CRO</div>
+      <h1>2026-W39 週次インテリジェンス</h1>
+      <p class="sub">対象期間 2026/09/21 - 2026/09/27 ／ 日次ブリーフを前段入力に週単位で再構成</p>
+    </header>
+    <div class="card">
+      <h2>📌 今週の3行</h2>
+<p class="impact-p">1. <strong>Veeva が「プロトコルを読んで EDC を1日で組む」エージェントを出した</strong> — 9/24 発表の Study Builder Agent。治験実施計画書と社内標準・CDISC USDM を読み、フォーム・来院・エディットチェック・テストデータまで自動で作る。<strong>EDC ライセンスに追加費用なしで同梱し、Claude Cowork のプラグインとして Veeva 管理の GitHub から配る</strong>。早期提供は 2026年12月。<strong>臨床システムの大手が、自社のエージェントを Anthropic の配布形式に載せた</strong>最初の例になった</p>
+<p class="impact-p">2. <strong>AI 創薬の金は「後払い」で入り、公開市場の窓は開いた</strong> — 日次既報の提携を並べると、Roche×Atavistik は一時金7,000万ドル／総額19億ドル超（約3.6%）、Lilly×InnoCare は近い時期の支払い最大1億ドル／総額33.5億ドル（約3%）。一方で IPO は ADARx が <strong>4.46億ドルで今年3番目の規模</strong>（9/25）、今年の新規上場は27件以上で2021年以来の多さ。Iambic の S-1（日次既報）もこの窓に入った</p>
+<p class="impact-p">3. <strong>vault への効き</strong>: 今週 AI エージェントが入った先は、分子ではなく<strong>試験の設定（Veeva）・試験予算（Condor）・規制情報の調査（Biolevate）</strong>だった。どれも「1回の設定が後の全工程に効く」場所で、検証をどの工程の出力に置くかがそのまま品質を決める → [[concept-verification-placement-vs-thickness]]。設定を機械が作るなら、<strong>誰が作り・何を根拠にし・誰が承認し・どの単位で巻き戻すか</strong>を同じ図に描く必要がある（[[hub-pharma-ai-harness]] / [[concept-agent-harness]]）</p>
+<div class="notice">この3行だけ読めば今週は取り切れる、という水準で書く。エグゼクティブサマリー（5項目）はこの下位互換ではなく、3行に入らなかったものを拾う欄。</div>
+    </div>
+    <div class="card">
+      <h2>⚡ エグゼクティブサマリー</h2>
+<ul class="bl"><li><strong>今週の流れ①「エージェントは <em>書類と設定の側</em> に入った」</strong> — Parexel が DPHARM で出した自社数値（施設選定50%短縮・CSR 作成30%短縮・PV 症例処理60%削減、9/23 日次既報）と、<strong>新規</strong>の Veeva Study Builder Agent（試験の設定を1日に）・Condor の試験予算エージェント（9/22）・Biolevate の規制情報エージェント（€3,000万調達、9/22）。4件とも、患者に近い側ではなく<strong>文書・設定・予算の側</strong>に効いている。W38 の Certara（外部データの入口検査）と同じ層である</li><li><strong>今週の流れ②「規制は <em>何で測るか</em> を入れ替え、<em>いつ見るか</em> を早めている」</strong> — FDA の「動物試験」→「非臨床試験」置換と NIH の AI 統合ラボ（9/21 日次既報）、厚労省のリアルタイム治験試行（9/18 日次既報）、そして<strong>新規</strong>の EU Biotech Act 審議（治験の Part I 審査を28日→21日、Part II を42日→21日、9/21 時点）。合否の基準ではなく、<strong>計測の手段と審査の時間軸</strong>が動いている</li><li><strong>Novo は1週間で3本の取引を積んだ</strong> — Capital Markets Day（9/21、2030年までに5本超のマルチブロックバスター、2035年にパイプライン売上230億ドル超、株価は約8%下落）の同じ週に、Kallyope から早期の肥満3資産を取得（9/21）、Nanexa と長時間作用型注射の製剤技術で最大11.65億ユーロの契約（9/24）。W38 の Anthropic・Orbis と合わせ、<strong>2週間で「汎用 AI」「分子設計基盤」「資産」「製剤基盤」を別々の相手から揃えた</strong></li><li><strong>「AI が設計した薬」と言わない会社が出た</strong> — 武田が40億ドルで買った TYK2 阻害薬 zasocitinib について、開発元 Nimbus の研究開発責任者が「AI 設計とは呼ばない、道具の一つ」と述べた（9/25）。計算で1.3万化合物超を評価し、実験なら5年超かかったという。<strong>AI の寄与を大きく言わない側に、実績のある会社が立った</strong></li><li><strong>国内の AI 関連一次発表は今週も確認できなかった</strong> — アステラスの KRAS G12D 分解薬の第III相開始（9/24）、厚労省の英語申請資料の受入れ拡大方針（9/25）はあったが、AI 創薬・治験 DX の新規発表はゼロ。PMDA の生成 AI SaMD 審査ポイント案（9/23 日次既報）が唯一</li></ul>
+    </div>
+    <div class="card">
+      <h2>1. 製薬企業ニュース 🏭</h2>
+<div class="notice">日次既報: AbbVie×Iambic（9/22 日次既報）／Boehringer×Envisagenics 最大10億ドル超（9/23 日次既報）／Roche×Atavistik・Genentech×Earendil（9/25 日次既報）／Lilly×InnoCare 最大33.5億ドル（9/25 日次既報）／エンハーツ肺がん1次治療・Kerendia 承認（9/21 日次既報）／Genentech CMO の AI 談（9/24 日次既報）</div>
+      <div class="art"><h3><a href="https://www.biopharmadive.com/news/novo-capital-markets-day-obesity-sales-outlook/830882/" target="_blank" rel="noopener">Novo talks up drug launches in effort to win back investors</a></h3><div class="art-body"><p class="impact-p"><strong>発表日</strong>: 2026-09-21</p>
+<p class="impact-p">Novo がロンドンで Capital Markets Day を開き、<strong>2030年までに5本超のマルチブロックバスターを上市し、2035年にはパイプライン由来の売上が年230億ドル超</strong>になると見通しを示した。セマグルチドへの依存を減らせるかが投資家の関心で、発表後に株価は約8%下落した。同じ日に Kallyope から早期の肥満3資産（IND 申請準備済みの週1回ペプチド K-554 ほか低分子2本、GLP-1・アミリン以外の経路、条件非開示）を取得している。</p>
+<p class="impact-p"><strong>週単位で読むと</strong>: 数字を先に出した日に、その数字の裏付けになる資産（Kallyope）と製剤基盤（Nanexa、§5）を同じ週に積んだ。</p>
+<div class="notice">参考リンク: <a href="https://www.biopharmadive.com/news/novo-capital-markets-day-obesity-sales-outlook/830882/" target="_blank" rel="noopener">BioPharma Dive</a> / <a href="https://www.biospace.com/deals/novo-buys-three-early-stage-obesity-assets-from-kallyope-as-investor-pressure-mounts" target="_blank" rel="noopener">BioSpace（Kallyope）</a></div></div></div>
+      <div class="art"><h3><a href="https://nanexa.com/mfn_news/nanexa-and-novo-enter-into-eur-1-165-billion-global-license-and-collaboration-agreement-for-long-acting-injectables/" target="_blank" rel="noopener">Nanexa and Novo enter into EUR 1.165 billion global license and collaboration agreement for long-acting injectables</a></h3><div class="art-body"><p class="impact-p"><strong>発表日</strong>: 2026-09-24（Nanexa 公式）</p>
+<p class="impact-p">Nanexa の無機コーティング技術 PharmaShell を、肥満・2型糖尿病・心代謝のペプチド薬に使う契約。最大5プログラムで、<strong>月1回〜四半期1回の投与</strong>を狙う。総額は最大11.65億ユーロで、うち6.15億ユーロが一時金と開発・規制マイルストン、残りが販売マイルストン。ロイヤルティは低い1桁台。一部報道の「一時金7.01億ドル」は公式と合わないため採らない。狙いは Lilly・Pfizer との次世代長時間作用型 GLP-1 競争。</p>
+<div class="notice">参考リンク: <a href="https://nanexa.com/mfn_news/nanexa-and-novo-enter-into-eur-1-165-billion-global-license-and-collaboration-agreement-for-long-acting-injectables/" target="_blank" rel="noopener">Nanexa 公式</a> / <a href="https://www.fiercebiotech.com/biotech/novo-inks-13b-nanexa-deal-unlock-long-acting-obesity-injectables" target="_blank" rel="noopener">FierceBiotech</a></div></div></div>
+      <div class="art"><h3><a href="https://investor.lilly.com/news-releases/news-release-details/us-food-and-drug-administration-fda-approves-lillys-onswiktm" target="_blank" rel="noopener">FDA approves Lilly's Onswik (insulin efsitora alfa), once-weekly basal insulin</a></h3><div class="art-body"><p class="impact-p"><strong>発表日</strong>: 2026-09-24</p>
+<p class="impact-p">成人2型糖尿病向けの<strong>週1回基礎インスリン</strong>が FDA 承認。3,400人超の QWINT プログラムが根拠で、毎日の基礎インスリンより年300回以上注射が減る。EMA・メキシコ COFEPRIS・日本の PMDA では既に承認済みで、<strong>米国が最後</strong>になった。</p>
+<div class="notice">参考リンク: <a href="https://investor.lilly.com/news-releases/news-release-details/us-food-and-drug-administration-fda-approves-lillys-onswiktm" target="_blank" rel="noopener">Lilly 公式</a></div></div></div>
+      <div class="art"><h3><a href="https://www.merck.com/news/u-s-fda-approves-welireg-belzutifan-plus-lenvima-lenvatinib-for-certain-previously-treated-adult-patients-with-advanced-renal-cell-carcinoma-with-a-clear-cell-component-ccrcc/" target="_blank" rel="noopener">FDA Approves WELIREG plus LENVIMA for previously treated advanced ccRCC</a></h3><div class="art-body"><p class="impact-p"><strong>発表日</strong>: 2026-09-25（Merck 公式）</p>
+<p class="impact-p">Merck の HIF-2α 阻害薬 Welireg と<strong>エーザイの Lenvima</strong> の併用が、PD-1/PD-L1 治療後の淡明細胞型腎細胞がんで承認。第III相 LITESPARK-011（747人、対カボザンチニブ）で PFS 中央値 14.6 vs 10.6ヶ月（HR 0.74）、奏効率 53% vs 40%。エーザイ側の日本語リリースは確認時点で未掲載。</p>
+<div class="notice">参考リンク: <a href="https://www.merck.com/news/u-s-fda-approves-welireg-belzutifan-plus-lenvima-lenvatinib-for-certain-previously-treated-adult-patients-with-advanced-renal-cell-carcinoma-with-a-clear-cell-component-ccrcc/" target="_blank" rel="noopener">Merck 公式</a></div></div></div>
+      <div class="art"><h3><a href="https://jp.newsroom.astellas.com/2026-09-24-astellas-doses-first-patient-in-phase-3-study-of-setidegrasib-in-previously-treated-kras-g12d-mutated-advanced-non-small-cell-lung-cancer" target="_blank" rel="noopener">アステラス、KRAS G12D 分解誘導薬 setidegrasib の非小細胞肺がん第III相で初回投与</a></h3><div class="art-body"><p class="impact-p"><strong>発表日</strong>: 2026-09-24（アステラス公式）</p>
+<p class="impact-p">プラチナ化学療法＋免疫チェックポイント阻害薬の後に進行した KRAS G12D 変異 NSCLC 356人を対象に、ドセタキセルと比較するグローバル第III相（NCT07566052）。主要評価項目は盲検下中央判定の PFS と OS。<strong>半年で2本目の第III相</strong>。翌 9/25 には谷口 CRDO がボストンの WMIF で T 細胞エンゲージャーを「3〜5年で免疫療法のゲームチェンジャー」と述べ、注力4領域（がん免疫・誘導近接・遺伝子制御・失明と再生）を示した（<a href="https://www.mixonline.jp/tabid55.html?artid=80901" target="_blank" rel="noopener">ミクスOnline</a>）。</p>
+<div class="notice">参考リンク: <a href="https://jp.newsroom.astellas.com/2026-09-24-astellas-doses-first-patient-in-phase-3-study-of-setidegrasib-in-previously-treated-kras-g12d-mutated-advanced-non-small-cell-lung-cancer" target="_blank" rel="noopener">アステラス公式</a></div></div></div>
+      <div class="art"><h3>国内その他</h3><div class="art-body"><ul class="bl"><li><strong>マルホ×BMS、TYK2 阻害薬ソーティクツの国内コ・プロモーション</strong>（10/1〜、<a href="https://answers.and-pro.jp/pharmanews/33242/" target="_blank" rel="noopener">AnswersNews</a> 9/25）— 武田 zasocitinib（§3）が来る前の既存 TYK2 薬の販売体制強化</li><li><strong>シンバイオ、米 HHS（NIH/NINDS）とブリンシドフォビルの多発性硬化症向け全世界独占ライセンス</strong>（<a href="https://bio.nikkeibp.co.jp/atcl/release/26/09/24/28809/" target="_blank" rel="noopener">日経バイオテク掲載リリース</a> 9/24）</li></ul></div></div>
+    </div>
+    <div class="card">
+      <h2>2. CROニュース 🔬</h2>
+<div class="notice">日次既報: Charles River Investor Day（2027〜30年オーガニック成長5〜7%、営業利益率約24%目標、9/25 日次既報）／IQVIA 20億ドル社債の 8-K（9/24 日次既報）／PharmaVoice の CRO 統合論（9/23 日次既報）／Parexel の DPHARM 数値（9/23 日次既報）／Syngene×BMS（9/23 日次既報）</div>
+      <div class="art"><h3><a href="https://www.prnewswire.com/news-releases/new-veeva-study-builder-agent-to-configure-clinical-studies-in-as-little-as-one-day-302888423.html" target="_blank" rel="noopener">New Veeva Study Builder Agent to Configure Clinical Studies in as Little as One Day</a></h3><div class="art-body"><p class="impact-p"><strong>発表日</strong>: 2026-09-24（Veeva 公式）</p>
+<p class="impact-p">治験実施計画書を読み、社内標準と CDISC USDM（試験デザインの標準データモデル）を使って <strong>Veeva EDC の設定（フォーム・来院・エディットチェック）と Veeva DQS の CQL リストを自動で組む</strong>エージェント。テストデータの生成とテストの自動化まで含む。試験の設定は最短1日。<strong>EDC ライセンスに追加費用なしで同梱</strong>、2026年12月に早期提供。<strong>配布形態は Claude Cowork プラグイン（Veeva 管理の GitHub リポジトリ）</strong>。</p>
+<p class="impact-p"><strong>なぜ厚く書くか</strong>: 試験の立ち上げ（study build）は CRO と製薬のデータマネジメント部門が数週間かけている工程で、ここが1日になると CRO の DM 業務の単価の根拠が変わる。しかも無償同梱なので、<strong>CRO が同じ機能を別料金で売る余地がなくなる</strong>。設定の誤りは全来院・全施設に波及するため、生成された設定を誰がどの単位で承認するかが次の論点になる（[[concept-verification-placement-vs-thickness]]）。</p>
+<div class="notice">参考リンク: <a href="https://www.prnewswire.com/news-releases/new-veeva-study-builder-agent-to-configure-clinical-studies-in-as-little-as-one-day-302888423.html" target="_blank" rel="noopener">Veeva 公式（PR Newswire）</a></div></div></div>
+      <div class="art"><h3><a href="https://www.clinicalresearchnewsonline.com/news/2026/09/22/condor-launches-clinical-trial-finance-agent" target="_blank" rel="noopener">Condor Launches Clinical Trial Finance Agent</a></h3><div class="art-body"><p class="impact-p"><strong>発表日</strong>: 2026-09-22</p>
+<p class="impact-p">試験予算の予実差の分析、what-if シナリオ、完了までのコスト予測、変更指示（change order）による増額を運用上の原因まで遡る、を担うエージェント。Big 4 の会計・コンサル会社と共同で作った。「数週間かかっていた回答を数秒で」と主張するが、<strong>顧客名・性能数値の開示はない</strong>。CRO と製薬の間で揉めやすい「なぜ増額したか」を機械で遡れるようにするもので、交渉の材料がスポンサー側に寄る。</p>
+<div class="notice">参考リンク: <a href="https://www.clinicalresearchnewsonline.com/news/2026/09/22/condor-launches-clinical-trial-finance-agent" target="_blank" rel="noopener">Clinical Research News</a></div></div></div>
+      <div class="art"><h3><a href="https://www.biospace.com/press-releases/novotech-to-acquire-agilex-biolabs" target="_blank" rel="noopener">Novotech to acquire Agilex Biolabs</a></h3><div class="art-body"><p class="impact-p"><strong>発表日</strong>: 2026-09-25</p>
+<p class="impact-p">TPG・Temasek・GIC が出資するアジア太平洋の CRO Novotech が、豪アデレードの生体試料分析ラボ Agilex Biolabs を Healius（ASX: HLS）の子会社から買う。金額非開示、規制承認待ち。豪州で<strong>生体試料分析と臨床試験を一体で受ける</strong>体制にし、APAC のラボ網を厚くする。豪州は第I相の誘致拠点で、ここでもラボの内製化が進んだ（W38 の Medpace 第I相ユニット内製化と同じ向き）。</p>
+<div class="notice">参考リンク: <a href="https://www.biospace.com/press-releases/novotech-to-acquire-agilex-biolabs" target="_blank" rel="noopener">BioSpace（プレスリリース）</a></div></div></div>
+      <div class="art"><h3><a href="https://www.prnewswire.com/news-releases/vault-crm-extends-market-leadership-as-another-top-20-biopharma-chooses-veeva-302886722.html" target="_blank" rel="noopener">Vault CRM Extends Market Leadership as Another Top 20 Biopharma Chooses Veeva</a></h3><div class="art-body"><p class="impact-p"><strong>発表日</strong>: 2026-09-23（Veeva 公式）</p>
+<p class="impact-p">上位20社のうち14社が Vault CRM を選んだ（稼働190社超）。Veeva は「Agentic Call Report」が生む <strong>Commercial Evidence</strong> を、エージェント型営業の土台として売り出している。臨床（Study Builder）と商業（CRM）の両方で、同じ週にエージェントを前に出した。</p>
+<div class="notice">参考リンク: <a href="https://www.prnewswire.com/news-releases/vault-crm-extends-market-leadership-as-another-top-20-biopharma-chooses-veeva-302886722.html" target="_blank" rel="noopener">Veeva 公式</a></div>
+<p class="impact-p"><strong>CRO 大手の今週</strong>: ICON・Fortrea・PPD・Medidata は期間内の新規リリースなし。Medpace は第3四半期決算の日程（10/21）のみ。</p></div></div>
+    </div>
+    <div class="card">
+      <h2>3. AI・デジタル化トレンド 🤖</h2>
+<div class="notice">日次既報: Claude の新規酵素系 ART 発見（約950エージェント・21時間、9/25 日次既報）／Anthropic の AI 開発速度3指標（AI R&amp;D の26%を Claude が主導、9/21 日次既報）／Iambic Enchant v3（410億パラメータ、9/22 日次既報）／互変異性体予測 AI（9/24 日次既報）</div>
+      <div class="art"><h3><a href="https://www.pharmavoice.com/news/nimbus-takeda-zasocitinib-ai-drug-discovery/831289/" target="_blank" rel="noopener">Nimbus used AI to help develop Takeda's $4B psoriasis bet</a></h3><div class="art-body"><p class="impact-p"><strong>発表日</strong>: 2026-09-25</p>
+<p class="impact-p">武田が一時金40億ドル＋最大20億ドルで買った TYK2 阻害薬 zasocitinib（米国で優先審査中）の、計算化学の舞台裏。Nimbus は<strong>1.3万化合物超を計算で評価</strong>し、実験なら5年超かかったとする。それでも研究開発責任者は「AI 設計とは呼ばない、多くの道具の一つ」と述べた。</p>
+<p class="impact-p"><strong>読み方</strong>: 今週は Iambic が「分子超知能」と銘打ち、Anthropic が「新規酵素系の発見」を出し、Bloomberg が専門家の慎重な声を報じた週である（いずれも日次既報）。<strong>最も大きな実績を持つ側が、最も控えめな言い方をした</strong>。AI の寄与を主張するときに何を分母に置くか（[[concept-verification-independence]]）の見本になる。</p>
+<div class="notice">参考リンク: <a href="https://www.pharmavoice.com/news/nimbus-takeda-zasocitinib-ai-drug-discovery/831289/" target="_blank" rel="noopener">PharmaVoice</a></div></div></div>
+      <div class="art"><h3><a href="https://www.pymnts.com/news/artificial-intelligence/2026/anthropic-and-openevidence-team-to-expand-reach-of-medical-ai/" target="_blank" rel="noopener">Anthropic and OpenEvidence team to expand reach of medical AI</a></h3><div class="art-body"><p class="impact-p"><strong>発表日</strong>: 2026-09-23</p>
+<p class="impact-p">OpenEvidence の臨床意思決定支援を、ウガンダ・アンゴラ・スーダン・ハイチ・モンゴルなど<strong>約100の低中所得国の医師に無償提供</strong>する。モデルは Anthropic。ルワンダ・ボツワナで現地医師45人が試した実証の拡大版。OpenEvidence は8月に米国の臨床医に4,200万回使われた。金額条件は非開示。</p>
+<div class="notice">参考リンク: <a href="https://www.pymnts.com/news/artificial-intelligence/2026/anthropic-and-openevidence-team-to-expand-reach-of-medical-ai/" target="_blank" rel="noopener">PYMNTS</a></div></div></div>
+      <div class="art"><h3><a href="https://www.vcbeathealth.com/article/63106" target="_blank" rel="noopener">XtalPi licenses XtalPi Science platform to HanXbio</a></h3><div class="art-body"><p class="impact-p"><strong>発表日</strong>: 2026-09-21</p>
+<p class="impact-p">香港上場の HanXbio（03378.HK）が XtalPi と戦略協力枠組みとプラットフォーム利用ライセンスを結んだ。抗体候補の設計・最適化、ADC ペイロード開発などに使う。<strong>購入量と商業条件は個別発注で後から決める＝計算クレジットとして買う従量課金</strong>。欧米の「一時金＋マイルストン」とは違う、AI 創薬基盤の売り方がもう一つ出ている。</p>
+<div class="notice">参考リンク: <a href="https://www.vcbeathealth.com/article/63106" target="_blank" rel="noopener">VCBeat</a></div></div></div>
+      <div class="art"><h3><a href="https://www.prnewswire.com/news-releases/flagship-pioneering-awarded-first-of-its-kind-contract-by-department-of-war-to-advance-next-generation-medical-countermeasure-technologies-against-evolving-biological-threats-302886903.html" target="_blank" rel="noopener">Flagship Pioneering awarded first-of-its-kind contract by Department of War</a></h3><div class="art-body"><p class="impact-p"><strong>発表日</strong>: 2026-09-23（Flagship 公式）</p>
+<p class="impact-p">5年・最大4,700万ドルの契約で、単発の研究ではなく<strong>国防総省が Flagship の複数プラットフォームに広くアクセスする</strong>形。最初の案件は Apriori Bio（変異株に強い対抗手段を AI で設計）と Prologue Medicines（数百万のウイルス蛋白を AI で探索）。「AI/ML の統合」が優先領域として明記された。<strong>プラットフォーム単位で公的資金が付く</strong>のは、W38 に書いた「資産から基盤へ」の公的版。</p>
+<div class="notice">参考リンク: <a href="https://www.prnewswire.com/news-releases/flagship-pioneering-awarded-first-of-its-kind-contract-by-department-of-war-to-advance-next-generation-medical-countermeasure-technologies-against-evolving-biological-threats-302886903.html" target="_blank" rel="noopener">Flagship 公式（PR Newswire）</a></div></div></div>
+      <div class="art"><h3>背景記事</h3><div class="art-body"><ul class="bl"><li><a href="https://www.biospace.com/drug-development/deep-dive-how-ai-is-now-essential-in-biopharma" target="_blank" rel="noopener">BioSpace: How AI is now essential in biopharma</a>（9/22）— Pfizer Bourla が AI を「構造転換の機会」と呼ぶ。AI ネイティブ企業の資金調達の俯瞰</li><li><a href="https://www.biopharmadive.com/news/novo-nordisk-share-price-ai-drug-discovery/831366/" target="_blank" rel="noopener">BioPharma Dive 週次チャート: AI biotechs' big haul</a>（9/25）— 2024年初以降、1億ドル超のラウンドを取った AI バイオは少なくとも12社。投資家は「約束」から「具体的な使い道」へ移っている</li></ul></div></div>
+    </div>
+    <div class="card">
+      <h2>4. 規制・PMDA動向 ⚖️</h2>
+<div class="notice">日次既報: FDA「動物試験」→「非臨床試験」の直接最終規則と HHS/NIH の NAMs パッケージ（9/23 日次既報）／PMDA 生成 AI SaMD 審査ポイント案の意見募集〜2027/3/17（9/23 日次既報）／厚労省リアルタイム治験の試行（9/21 日次既報）／Galleri 諮問委 7対2（9/24 日次既報）／FDA 長官候補 Overton 公聴会（9/24・9/25 日次既報）</div>
+      <div class="art"><h3><a href="https://goodlifesci.sidley.com/2026/09/21/eu-biotech-act-i-parliament-and-council-back-europes-biotech-competitiveness-agenda-spc-incentive-now-the-key-battleground/" target="_blank" rel="noopener">EU Biotech Act I: Parliament and Council back Europe's biotech competitiveness agenda — SPC incentive now the key battleground</a></h3><div class="art-body"><p class="impact-p"><strong>発表日</strong>: 2026-09-21（Sidley GoodLifeSci）</p>
+<p class="impact-p">EU Biotech Act の審議状況。<strong>治験審査の短縮案</strong>＝ Part I 28日→21日、Part II 42日→21日、スポンサーの回答期限 14日→7日。修正案は3,000件超。本体規則は2026年12月に委員会採決、本会議は年末〜2027年初、適用は2027年末〜2028年初の見込み。最大の争点は補充的保護証明（SPC）の延長で、欧州委案12ヶ月に対し会派は24ヶ月から削除まで割れている。背景の数字は、<strong>EEA の治験シェアが22%（2013）→12%（2023）、中国は5%→18%</strong>。</p>
+<p class="impact-p"><strong>週単位で読むと</strong>: 米国は動物試験の置換（何で測るか）、日本はリアルタイム治験（いつ見るか）、EU は審査日数（どれだけ待つか）。3極とも<strong>判定の基準ではなく、判定までの手段と時間</strong>を動かしている。W38 の「基準を下げず手続きを先に出させる」の続き。</p>
+<div class="notice">参考リンク: <a href="https://goodlifesci.sidley.com/2026/09/21/eu-biotech-act-i-parliament-and-council-back-europes-biotech-competitiveness-agenda-spc-incentive-now-the-key-battleground/" target="_blank" rel="noopener">Sidley GoodLifeSci</a></div></div></div>
+      <div class="art"><h3><a href="https://www.pmda.go.jp/about-pmda/news-release/0099.pdf" target="_blank" rel="noopener">PMDA、USB メモリ紛失事案で職員を懲戒</a></h3><div class="art-body"><p class="impact-p"><strong>発表日</strong>: 2026-09-25（PMDA 公式）</p>
+<p class="impact-p">8/7 に公表済みの事案の処分。審査部門の職員が非公開情報と個人情報を含む機構の USB メモリを無断で持ち出し、現在も所在不明。要配慮個人情報は含まれない。9/25 付で停職3日。<strong>当局自身の機密情報の扱い</strong>の話で、申請者が生成 AI や外部クラウドに申請資料を載せる議論をするとき、当局側の管理水準も同じ物差しで問われる。</p>
+<div class="notice">参考リンク: <a href="https://www.pmda.go.jp/about-pmda/news-release/0099.pdf" target="_blank" rel="noopener">PMDA 公式（PDF）</a></div></div></div>
+      <div class="art"><h3>厚労省：英語の承認申請資料の受入れ拡大／希少疾病用医薬品12件指定</h3><div class="art-body"><p class="impact-p">厚労省の新任の医薬担当審議官が、ドラッグ・ラグ／ロス対策として<strong>英語で書かれた承認申請資料の受入れを広げる</strong>方針を示した。同日（9/25）に希少疾病用医薬品12件の新規指定と1件の取消の通知が出た。いずれも詳細は一次情報で未確認で、報道の冒頭部分のみ（🔒 <a href="https://nk.jiho.jp/article/305358" target="_blank" rel="noopener">日刊薬業</a> 有料）。英語資料の受入れが広がると、<strong>翻訳工程の位置づけ</strong>（申請に必須の工程か、審査の補助か）が変わる。一次発出を確認したら翻訳系の [[concept-ctn]] とは別系統で追う。</p></div></div>
+    </div>
+    <div class="card">
+      <h2>5. M&amp;A・提携トラッカー 💰</h2>
+<div class="notice">日次既報: AbbVie×Iambic／Boehringer×Envisagenics（最大10億ドル超）／Roche×Atavistik（一時金7,000万ドル・最大19億ドル）／Genentech×Earendil／Lilly×InnoCare（最大33.5億ドル）／Novartis 放射性リガンド9億ドル／Bayer Stivarga→Grünenthal（最大4.31億ドル）／Telix×ITM（16.5億ドル＋最大7億ドル）／SK 3.15億ドル（いずれも 9/21〜9/25 日次既報）</div>
+<div class="tcards"><div class="trow"><div class="tr-h"><span class="tr-date">9/21</span><span><a href="https://www.biospace.com/deals/novo-buys-three-early-stage-obesity-assets-from-kallyope-as-investor-pressure-mounts" target="_blank" rel="noopener">Novo × Kallyope</a></span></div><div class="tr-f"><span class="tr-k">動向</span><span class="tr-v">早期の肥満3資産を取得</span></div><div class="tr-f"><span class="tr-k">金額/規模</span><span class="tr-v">非開示</span></div><div class="tr-f"><span class="tr-k">戦略的意図</span><span class="tr-v">GLP-1・アミリン以外の経路でセマグルチド依存を下げる</span></div></div><div class="trow"><div class="tr-h"><span class="tr-date">9/21</span><span><a href="https://www.vcbeathealth.com/article/63106" target="_blank" rel="noopener">XtalPi × HanXbio</a></span></div><div class="tr-f"><span class="tr-k">動向</span><span class="tr-v">AI 創薬基盤の利用ライセンス</span></div><div class="tr-f"><span class="tr-k">金額/規模</span><span class="tr-v">非開示（従量の個別発注）</span></div><div class="tr-f"><span class="tr-k">戦略的意図</span><span class="tr-v">基盤を計算クレジットとして売る</span></div></div><div class="trow"><div class="tr-h"><span class="tr-date">9/23</span><span><a href="https://www.prnewswire.com/news-releases/flagship-pioneering-awarded-first-of-its-kind-contract-by-department-of-war-to-advance-next-generation-medical-countermeasure-technologies-against-evolving-biological-threats-302886903.html" target="_blank" rel="noopener">Flagship × 米国防総省</a></span></div><div class="tr-f"><span class="tr-k">動向</span><span class="tr-v">医療対抗手段の基盤契約</span></div><div class="tr-f"><span class="tr-k">金額/規模</span><span class="tr-v">5年・最大4,700万ドル</span></div><div class="tr-f"><span class="tr-k">戦略的意図</span><span class="tr-v">案件単位でなく基盤単位の公的調達</span></div></div><div class="trow"><div class="tr-h"><span class="tr-date">9/23</span><span><a href="https://www.biospace.com/press-releases/bio-techne-shareholders-approve-acquisition-by-merck-kgaa-darmstadt-germany" target="_blank" rel="noopener">Merck KGaA × Bio-Techne</a></span></div><div class="tr-f"><span class="tr-k">動向</span><span class="tr-v">株主総会で買収承認（HSR 待機期間は 9/18 満了）</span></div><div class="tr-f"><span class="tr-k">金額/規模</span><span class="tr-v">1株73ドル・約113億ドル（6月発表）</span></div><div class="tr-f"><span class="tr-k">戦略的意図</span><span class="tr-v">ライフサイエンス・ツールの強化。完了は2026年末〜2027年初</span></div></div><div class="trow"><div class="tr-h"><span class="tr-date">9/24</span><span><a href="https://nanexa.com/mfn_news/nanexa-and-novo-enter-into-eur-1-165-billion-global-license-and-collaboration-agreement-for-long-acting-injectables/" target="_blank" rel="noopener">Novo × Nanexa</a></span></div><div class="tr-f"><span class="tr-k">動向</span><span class="tr-v">長時間作用型注射の製剤技術</span></div><div class="tr-f"><span class="tr-k">金額/規模</span><span class="tr-v">最大11.65億ユーロ（うち6.15億ユーロが一時金＋開発・規制マイルストン）</span></div><div class="tr-f"><span class="tr-k">戦略的意図</span><span class="tr-v">月1回〜四半期1回投与で Lilly・Pfizer に対抗</span></div></div><div class="trow"><div class="tr-h"><span class="tr-date">9/25</span><span><a href="https://www.biospace.com/press-releases/novotech-to-acquire-agilex-biolabs" target="_blank" rel="noopener">Novotech × Agilex Biolabs</a></span></div><div class="tr-f"><span class="tr-k">動向</span><span class="tr-v">豪州の生体試料分析ラボを取得</span></div><div class="tr-f"><span class="tr-k">金額/規模</span><span class="tr-v">非開示</span></div><div class="tr-f"><span class="tr-k">戦略的意図</span><span class="tr-v">APAC CRO がラボを内製化</span></div></div><div class="trow"><div class="tr-h"><span class="tr-date">9/25</span><span><a href="https://answers.and-pro.jp/pharmanews/33242/" target="_blank" rel="noopener">マルホ × BMS</a></span></div><div class="tr-f"><span class="tr-k">動向</span><span class="tr-v">ソーティクツの国内コ・プロモーション</span></div><div class="tr-f"><span class="tr-k">金額/規模</span><span class="tr-v">—</span></div><div class="tr-f"><span class="tr-k">戦略的意図</span><span class="tr-v">皮膚科・リウマチ科の販売体制</span></div></div></div>
+<p class="impact-p"><strong>今週の型</strong>: 日次既報を含めた AI 創薬の提携4件（Atavistik・InnoCare・Envisagenics・Iambic）は、どれも<strong>総額の大半がマイルストン</strong>で、確認できた一時金比率は約3〜4%。対照的に XtalPi は従量課金、Flagship は基盤単位の公的契約。<strong>AI 創薬基盤の値付けが「後払い型」「従量型」「基盤アクセス型」の3つに分かれてきた</strong>。</p>
+    </div>
+    <div class="card">
+      <h2>6. スタートアップ・新興プレイヤー 🚀</h2>
+<div class="notice">日次既報: Enveda シリーズE 3.11億ドル（評価額20億ドル、9/24 日次既報）／Basecamp Research 1.4億ドル（Anthropic の Anthology Fund 参加、9/24 日次既報）／Iambic の S-1 提出（9/23 日次既報）</div>
+      <div class="art"><h3><a href="https://tech.eu/2026/09/22/biolevate-lands-eur30m-series-a-to-scale-life-sciences-ai/" target="_blank" rel="noopener">Biolevate lands €30M Series A to scale life sciences AI</a></h3><div class="art-body"><p class="impact-p"><strong>発表日</strong>: 2026-09-22</p>
+<p class="impact-p">元 Dataiku のエンジニアがパリで創業。RAISE France と Orange Ventures が共同主導、MSD Global Health Innovation Fund・EQT Ventures も参加。科学・規制の知識を<strong>監査可能なワークフロー</strong>に変えるエージェント基盤で、最大10万エージェントを同時に動かせるという。自社数値で系統的文献レビュー16倍速、規制情報業務の効率80%改善、企業顧客12社超。ボストンに拠点を開き米国に入る。<strong>製薬の規制・メディカル部門の書類仕事が、AI 創薬とは別の投資テーマとして資金を集めた</strong>。</p>
+<div class="notice">参考リンク: <a href="https://tech.eu/2026/09/22/biolevate-lands-eur30m-series-a-to-scale-life-sciences-ai/" target="_blank" rel="noopener">Tech.eu</a></div></div></div>
+      <div class="art"><h3><a href="https://www.biospace.com/deals/adarx-raises-446m-in-biotechs-third-largest-ipo-of-2026-city-files-to-go-public" target="_blank" rel="noopener">ADARx raises $446M in biotech's third-largest IPO of 2026; City files to go public</a></h3><div class="art-body"><p class="impact-p"><strong>発表日</strong>: 2026-09-25</p>
+<p class="impact-p">siRNA の ADARx が1株17ドルで2,625万株を売り <strong>4.463億ドル</strong>を調達（当初計画は16ドル・約3.19億ドル、<strong>増額・価格引上げ</strong>）。同じ RNA 系の City Therapeutics も 9/24 に上場申請。9/22 には Iambic・ADARx・TRex Bio・Retension の4社が一斉に申請していた（<a href="https://www.biospace.com/business/2026-ipo-blitz-continues-with-4-new-biotech-filings" target="_blank" rel="noopener">BioSpace</a>）。今年のバイオ新規上場は27件以上で2021年以来の多さ。AI 専業ではないが、<strong>Iambic が出ていく市場の温度</strong>を示す。</p>
+<div class="notice">参考リンク: <a href="https://www.biospace.com/deals/adarx-raises-446m-in-biotechs-third-largest-ipo-of-2026-city-files-to-go-public" target="_blank" rel="noopener">BioSpace</a></div></div></div>
+      <div class="art"><h3>その他</h3><div class="art-body"><ul class="bl"><li><strong><a href="https://www.financialcontent.com/article/bizwire-2026-9-25-endpoints-news-announces-the-2026-winners-of-the-endpoints-11-awards-showcasing-biotechs-most-exciting-startups" target="_blank" rel="noopener">Endpoints 11（2026）</a></strong>（9/25）— 150社超から11社。AI・自動化枠は Anew Labs（W38 日次既報の ByteDance 切り出し）と自動実験室の Medra。ヒト組織モデルの Vivodyne も入り、今週の FDA 非臨床置換と噛み合う</li><li><strong><a href="https://thequantuminsider.com/2026/09/23/azulene-labs-secures-3-4-million-pre-seed-round-for-drug-and-materials-simulation/" target="_blank" rel="noopener">Azulene Labs プレシード 340万ドル</a></strong>（9/23）— 量子力学データで学習した分子シミュレーション。「競合比100倍効率・200分の1コスト」は自社主張のみ</li></ul></div></div>
+    </div>
+    <div class="card">
+      <h2>7. 競合インテリジェンス 📊</h2>
+<div class="tcards"><div class="trow"><div class="tr-h"><span>Veeva</span></div><div class="tr-f"><span class="tr-k">今週の主要動向</span><span class="tr-v">Study Builder Agent（試験設定を最短1日、EDC に無償同梱、Claude Cowork プラグインで配布、12月早期提供）＋ Vault CRM 上位20社中14社</span></div><div class="tr-f"><span class="tr-k">重要度</span><span class="tr-v">⭐⭐⭐</span></div></div><div class="trow"><div class="tr-h"><span>Charles River</span></div><div class="tr-f"><span class="tr-k">今週の主要動向</span><span class="tr-v">Investor Day で2030年目標（オーガニック5〜7%、利益率約24%、自動化で累計3億ドル超削減）、2026年はガイダンス上限へ（9/25 日次既報）。<strong>同じ週に FDA が動物試験の語を規則から外した</strong>＝非臨床事業の中身の置換が始まる前提での中期計画</span></div><div class="tr-f"><span class="tr-k">重要度</span><span class="tr-v">⭐⭐⭐</span></div></div><div class="trow"><div class="tr-h"><span>IQVIA</span></div><div class="tr-f"><span class="tr-k">今週の主要動向</span><span class="tr-v">20億ドル社債の 8-K（9/24 日次既報）。新規の AI 発表なし</span></div><div class="tr-f"><span class="tr-k">重要度</span><span class="tr-v">⭐⭐</span></div></div><div class="trow"><div class="tr-h"><span>Parexel</span></div><div class="tr-f"><span class="tr-k">今週の主要動向</span><span class="tr-v">DPHARM で施設選定50%短縮・CSR 30%短縮・PV 60%削減を公表（9/23 日次既報）</span></div><div class="tr-f"><span class="tr-k">重要度</span><span class="tr-v">⭐⭐</span></div></div><div class="trow"><div class="tr-h"><span>Novotech</span></div><div class="tr-f"><span class="tr-k">今週の主要動向</span><span class="tr-v">豪 Agilex Biolabs 買収（9/25）、APAC でラボ内製化</span></div><div class="tr-f"><span class="tr-k">重要度</span><span class="tr-v">⭐⭐</span></div></div><div class="trow"><div class="tr-h"><span>Merck KGaA</span></div><div class="tr-f"><span class="tr-k">今週の主要動向</span><span class="tr-v">Bio-Techne 買収を株主承認（約113億ドル）。Thermo Fisher と競るツール事業の再編</span></div><div class="tr-f"><span class="tr-k">重要度</span><span class="tr-v">⭐</span></div></div><div class="trow"><div class="tr-h"><span>ICON / Fortrea / PPD / Medpace</span></div><div class="tr-f"><span class="tr-k">今週の主要動向</span><span class="tr-v">期間内の新規リリースなし（Medpace は Q3 決算日 10/21 のみ）</span></div><div class="tr-f"><span class="tr-k">重要度</span><span class="tr-v">⭐</span></div></div></div>
+<p class="impact-p"><strong>読み方</strong>: 今週いちばん CRO に効くのは CRO 自身の発表ではなく、<strong>Veeva の無償同梱</strong>である。試験の設定が EDC ベンダーの標準機能になれば、CRO のデータマネジメントは「作る」から「生成された設定を検収する」に移る。Charles River の自動化による3億ドル削減計画と合わせ、CRO の差別化は<strong>作業量ではなく検収の質</strong>で測られる方向に動いた（[[hub-agentic-ai-clinical-dev]]）。</p>
+    </div>
+    <div class="card">
+      <h2>来週の注目点 👀</h2>
+<ul class="bl"><li><strong>Veeva Study Builder Agent への CRO の反応</strong> — 大手 CRO が「自社の study build サービス」をどう位置づけ直すか。10月の Q3 決算（Medpace 10/21 から）で、データマネジメントの受注・単価への言及が出るかを見る</li><li><strong>希少疾患 RISE ワークショップ 9/29 ／ サイケデリック書面意見の締切 10/5</strong>（W38 から継続）— 今週の流れ②（手段と時間を動かす）が、FDA の具体的な要件にどう降りるか</li><li><strong>Overton の上院 HELP 委員会採決</strong> — 公聴会で具体策に踏み込まなかった「治験プロセスの近代化」（Operation Trialblazer）が、承認後にどの順で出てくるか</li><li><strong>厚労省の英語申請資料の受入れ拡大</strong> — 通知・事務連絡として一次発出されるか。出れば翻訳・申請業務の工程設計に直接効く</li><li><strong>AI 創薬 IPO の続報</strong> — Iambic の価格設定。ADARx の増額が続くなら、提携の後払い型と公開市場の前払い型のどちらで資金を取るかの選択が AI 創薬企業に生まれる</li><li><strong>Galleri の FDA 最終判断</strong>（数か月以内）と <strong>EU Biotech Act の付随指令の本会議採決（11月）</strong></li></ul>
+<div class="note-line">このレポートは Claude（Anthropic）によって自動生成されました。情報の正確性は各一次ソースをご確認ください。</div>
+    </div>
+    <div class="pager">
+      <a class="pg" href="weekly-2026-W38.html"><span>← 前の週</span><b>2026-W38</b></a>
+    </div>
+    <div class="foot">Claude により自動生成。正本は Obsidian vault (02_NOTES/weeklies/)。</div>
+    </div></main>
+  </div>
+</div>
+<script>
+var mb=document.getElementById('menuBtn'),sb=document.getElementById('sidebar'),ov=document.getElementById('ovl');
+if(mb){mb.addEventListener('click',function(){sb.classList.toggle('open');ov.classList.toggle('active');});
+ov.addEventListener('click',function(){sb.classList.remove('open');ov.classList.remove('active');});}
+/* ---- 配色テーマ: ☀｜🌙 の二状態セグメント ---- */
+function curTheme(){return document.documentElement.dataset.theme
+  ||(matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light');}
+function paintSeg(){var d=curTheme();
+  document.querySelectorAll('.seg-b').forEach(function(b){
+    var on=b.dataset.setTheme===d;b.classList.toggle('on',on);
+    b.setAttribute('aria-pressed',on?'true':'false');});}
+document.querySelectorAll('.seg-b').forEach(function(b){
+  b.addEventListener('click',function(){var nx=b.dataset.setTheme;
+    document.documentElement.dataset.theme=nx;
+    try{localStorage.setItem('nb-theme',nx);}catch(e){}
+    paintSeg();});});
+paintSeg();
+if(window.matchMedia){var mq=matchMedia('(prefers-color-scheme:dark)');
+  if(mq.addEventListener)mq.addEventListener('change',paintSeg);}
+
+/* ---- topbar 検索 (index は初回フォーカス時に遅延ロード) ---- */
+var GI=null,GP=null,gq=document.getElementById('gq'),gr=document.getElementById('gres');
+function gload(){if(!GP)GP=fetch('search-index.json').then(function(r){return r.json()}).then(function(j){GI=j});return GP}
+function ge(s){return s.replace(/[&<>]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;'}[c]})}
+function gsnip(t,q){var i=t.toLowerCase().indexOf(q.toLowerCase());if(i<0)return '';
+var s=Math.max(0,i-30),e=Math.min(t.length,i+q.length+70);
+return (s>0?'…':'')+ge(t.slice(s,i))+'<mark>'+ge(t.slice(i,i+q.length))+'</mark>'+ge(t.slice(i+q.length,e))+(e<t.length?'…':'');}
+function grun(){if(!gq)return;var q=gq.value.trim();
+if(!q||!GI){gr.classList.remove('on');gr.innerHTML='';return;}
+var lq=q.toLowerCase(),hits=[];
+GI.forEach(function(d){for(var i=0;i<d.x.length;i++){if(d.x[i].toLowerCase().indexOf(lq)>=0){hits.push({d:d,l:d.x[i]});return;}}});
+if(!hits.length){gr.innerHTML='<div class="sr"><div class="sr-s">該当なし</div></div>';gr.classList.add('on');return;}
+gr.innerHTML=hits.slice(0,7).map(function(h){
+return '<a class="sr" href="'+h.d.u+'"><div class="sr-h">'+ge(h.d.t)+'</div><div class="sr-s">'+gsnip(h.l,q)+'</div></a>'}).join('')
++'<a class="sr-all" href="search.html?q='+encodeURIComponent(q)+'">'+hits.length+' 件すべての結果を見る →</a>';
+gr.classList.add('on');}
+if(gq){gq.addEventListener('focus',function(){gload().then(grun)});
+gq.addEventListener('input',function(){gload().then(grun)});
+gq.addEventListener('keydown',function(e){
+if(e.key==='Enter'&&gq.value.trim()){location.href='search.html?q='+encodeURIComponent(gq.value.trim());}
+if(e.key==='Escape'){gr.classList.remove('on');gq.blur();}});
+document.addEventListener('click',function(e){if(!e.target.closest('.gwrap'))gr.classList.remove('on')});
+document.addEventListener('keydown',function(e){
+if((e.key==='/'||((e.ctrlKey||e.metaKey)&&e.key==='k'))&&document.activeElement!==gq){e.preventDefault();gq.focus();}});}
+</script>
+</body>
+</html>
