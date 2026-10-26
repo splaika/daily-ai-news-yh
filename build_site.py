@@ -626,7 +626,7 @@ mark{background:var(--amber-soft);color:var(--amber);padding:0 2px;border-radius
 CSS = CSS.replace("__LIGHT__", LIGHT).replace("__DARK__", DARK)
 
 THEME_BOOT = """
-(function(){var t=localStorage.getItem('nb-theme');if(t)document.documentElement.dataset.theme=t;})();
+(function(){try{var t=localStorage.getItem('nb-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}})();
 """
 
 JS = """
