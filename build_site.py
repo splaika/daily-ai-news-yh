@@ -2,7 +2,7 @@
 """
 build_site.py v2 — Obsidian の日次ブリーフ + 週次インテリジェンスから GitHub Pages サイトを全量再生成する。
 
-  ソース: 02_NOTES/news-briefs/YYYY-MM-DD_daily-ai-news-brief.md
+  ソース: 02_NOTES/news-briefs/YYYY-MM/YYYY-MM-DD_daily-ai-news-brief.md（2026-11-17〜 月フォルダ。直下も拾う）
           02_NOTES/weeklies/YYYY-WXX-Intelligence.md
   出力:   index.html / archive.html / search.html / search-index.json
           brief-YYYY-MM-DD.html / weekly-YYYY-WXX.html / robots.txt
@@ -1251,7 +1251,7 @@ def main():
         out = Path(argv[argv.index("--out") + 1]).resolve()
         out.mkdir(parents=True, exist_ok=True)
 
-    dsrc = sorted(p for p in VAULT_BRIEFS.glob("*_daily-ai-news-brief.md") if p.name[:10] >= SITE_START)
+    dsrc = sorted(p for p in VAULT_BRIEFS.rglob("*_daily-ai-news-brief.md") if p.name[:10] >= SITE_START)
     if not dsrc:
         print("no source briefs found")
         return 1
