@@ -13,6 +13,7 @@ build_site.py v2 — Obsidian の日次ブリーフ + 週次インテリジェ�
   python build_site.py                 # リポジトリ直下に生成
   python build_site.py --out DIR       # 別ディレクトリに生成 (プレビュー用)
   python build_site.py --publish       # 生成 + git add/commit/push
+  python build_site.py --out DIR --artifact   # claude.ai の Artifact 版（開いた記事を db に記録する）
 """
 import re
 import sys
@@ -629,6 +630,27 @@ THEME_BOOT = """
 (function(){try{var t=localStorage.getItem('nb-theme');if(t)document.documentElement.dataset.theme=t;}catch(e){}})();
 """
 
+# Artifact 版だけに入れる「開いた記事」の記録（2026-11-17 追加・会話で承認。☑ の代わり）。
+# 日次ブリーフの記事リンクを開くと、Artifact の db の clicks/<id> に1件残す。
+# 夜の Routine podcast-asset-nightly がこれを読み、☑ と同じ扱いで summary にする。
+# 公開サイト（GitHub Pages）には入れない（window.claude が無いので動かない）。
+ARTIFACT = False
+CLICK_JS = """
+(function(){
+if(!window.claude||!window.claude.use)return;
+var dbp=window.claude.use('db');
+function key(s){var h=5381;for(var i=0;i<s.length;i++){h=((h<<5)+h+s.charCodeAt(i))|0;}return (h>>>0).toString(36);}
+document.addEventListener('click',function(e){
+var a=e.target&&e.target.closest?e.target.closest('a[target="_blank"]'):null;if(!a)return;
+var card=a.closest('[data-brief]');if(!card)return;
+var b=card.getAttribute('data-brief'),u=a.href;
+var rec={url:u,title:(a.textContent||'').trim().slice(0,200),brief:b,at:new Date().toISOString()};
+dbp.then(function(db){if(!db)return;var ref=db.doc('clicks/'+b+'-'+key(u));
+return ref.get().then(function(s){if(!s.exists)return ref.set(rec);});}).catch(function(){});
+},true);
+})();
+"""
+
 JS = """
 var mb=document.getElementById('menuBtn'),sb=document.getElementById('sidebar'),ov=document.getElementById('ovl');
 if(mb){mb.addEventListener('click',function(){sb.classList.toggle('open');ov.classList.toggle('active');});
@@ -801,7 +823,7 @@ def shell(title: str, sidebar: str, main_html: str, extra_js: str = "", wide=Fal
     </div></main>
   </div>
 </div>
-<script>{JS}{extra_js}</script>
+<script>{JS}{extra_js}{CLICK_JS if ARTIFACT else ""}</script>
 </body>
 </html>
 """
@@ -897,17 +919,19 @@ def takeaway_rows(b: dict) -> str:
 def brief_body(b: dict) -> list:
     """ブリーフ本文 (テイクアウェイ〜インパクト分析)。日次ページとホームで共用。"""
     p = []
+    # Artifact 版では記事の入った枠にブリーフの日付を持たせる（開いた記事の記録が、どの日の記事かを知るため）
+    db_attr = f' data-brief="{b["date"]}"' if ARTIFACT else ""
     if b["takeaways"]:
         p.append('    <div class="card hero">\n      <h2>🎯 本日の重要テイクアウェイ</h2>\n' + takeaway_rows(b) + "\n    </div>")
     if b["overseas"]:
-        seg = ['    <div class="card">\n      <h2>🌍 海外ニュース</h2>']
+        seg = [f'    <div class="card"{db_attr}>\n      <h2>🌍 海外ニュース</h2>']
         for sub, arts in b["overseas"]:
             seg.append(f'      <div class="sub-h">{inline(sub)}</div>')
             seg.extend(render_article(a) for a in arts)
         seg.append("    </div>")
         p.append("\n".join(seg))
     if b["domestic"] or b["domestic_note"]:
-        seg = ['    <div class="card">\n      <h2>🇯🇵 国内ニュース</h2>']
+        seg = [f'    <div class="card"{db_attr}>\n      <h2>🇯🇵 国内ニュース</h2>']
         if b["domestic"]:
             seg.extend(render_article(a) for a in b["domestic"])
         else:
@@ -915,7 +939,7 @@ def brief_body(b: dict) -> list:
         seg.append("    </div>")
         p.append("\n".join(seg))
     if b["x_items"]:
-        seg = ['    <div class="card">\n      <h2>📱 X（旧Twitter）注目投稿</h2>']
+        seg = [f'    <div class="card"{db_attr}>\n      <h2>📱 X（旧Twitter）注目投稿</h2>']
         for kind, item in b["x_items"]:
             if kind == "notice":
                 seg.append(f'      <div class="notice">{inline(item)}</div>')
@@ -1215,8 +1239,13 @@ def build_search_index(dailies, weeklies):
 
 
 def main():
+    global ARTIFACT
     argv = sys.argv[1:]
     publish = "--publish" in argv
+    ARTIFACT = "--artifact" in argv   # Artifact 版（開いた記事を記録する）。--out と組で使う
+    if ARTIFACT and publish:
+        print("--artifact は --publish と一緒に使わない（公開サイトに記録の仕組みを入れないため）")
+        return 2
     out = REPO
     if "--out" in argv:
         out = Path(argv[argv.index("--out") + 1]).resolve()
